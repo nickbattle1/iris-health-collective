@@ -78,7 +78,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
         <div class="ms-auto d-flex align-items-center gap-2">
           <RouterLink to="/crisis" class="btn-iris-outline">Crisis help</RouterLink>
-          <button type="button" class="btn-iris" @click="exitSite">Exit site</button>
+          <button type="button" class="btn-iris" @click="exitSite">Quick exit</button>
         </div>
       </div>
     </div>
