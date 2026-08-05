@@ -1,0 +1,37 @@
+/* Iris palette, carried over from the A1 design report.
+   Contrast against white: purple-900 10.9:1, ink 11.7:1, danger 8.9:1.
+   purple-100 is a background only, never text. */
+
+:root {
+  --iris-purple-900: #522e63;
+  --iris-purple-700: #6b3d80;
+  --iris-purple-500: #8a5aa1;
+  --iris-purple-100: #f4d7ff;
+  --iris-purple-50: #faeeff;
+
+  --iris-ink: #243b47;
+  --iris-ink-muted: #566a75;
+  --iris-surface: #ffffff;
+  --iris-surface-muted: #edf1f3;
+  --iris-border: #d4dde2;
+
+  --iris-danger: #8e1b36;
+  --iris-success: #1c6b47;
+
+  --iris-radius-sm: 8px;
+  --iris-radius-md: 14px;
+  --iris-radius-lg: 22px;
+  --iris-radius-pill: 999px;
+
+  /*48px, well over the 24px WCAG asks for*/
+  --iris-target: 48px;
+
+  /* bootstrap overrides */
+  --bs-body-color: var(--iris-ink);
+  --bs-body-bg: var(--iris-surface);
+  --bs-link-color: var(--iris-purple-900);
+  --bs-link-hover-color: var(--iris-purple-700);
+  --bs-border-color: var(--iris-border);
+  --bs-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
