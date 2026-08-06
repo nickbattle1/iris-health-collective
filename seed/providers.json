@@ -1,0 +1,1810 @@
+[
+  {
+    "slug": "dr-r-chen-brunswick",
+    "name": "Dr R. Chen",
+    "practiceName": "Northside Practice",
+    "disciplines": [
+      "gp",
+      "endocrinology"
+    ],
+    "suburb": "Brunswick",
+    "postcode": "3056",
+    "state": "VIC",
+    "lat": -37.76801,
+    "lng": 144.95585,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "neurodivergent-aware",
+      "culturally-safe",
+      "first-nations-affirming"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1000",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "charity-verified",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 4,
+    "ratingCount": 1,
+    "ratingAvg": 3.7,
+    "contactPhone": "03 9326 1763",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-j-ferreira-fitzroy",
+    "name": "Dr J. Ferreira",
+    "practiceName": "Fernway Medical Centre",
+    "disciplines": [
+      "gp",
+      "psychology"
+    ],
+    "suburb": "Fitzroy",
+    "postcode": "3065",
+    "state": "VIC",
+    "lat": -37.79571,
+    "lng": 144.97724,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "neurodivergent-aware"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2025-02-19",
+        "expiresAt": "2029-04-15",
+        "evidenceRef": "applications/APP-1001",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1001",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 74,
+    "ratingCount": 19,
+    "ratingAvg": 3.9,
+    "contactPhone": "03 9407 9604",
+    "hours": "Mon to Fri, 8:30am to 5:30pm"
+  },
+  {
+    "slug": "dr-b-okonkwo-collingwood",
+    "name": "Dr B. Okonkwo",
+    "practiceName": "Threshold Family Practice",
+    "disciplines": [
+      "sexual-health"
+    ],
+    "suburb": "Collingwood",
+    "postcode": "3066",
+    "state": "VIC",
+    "lat": -37.79481,
+    "lng": 144.98214,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Vietnamese"
+    ],
+    "approachTags": [
+      "over-50s"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1002",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 63,
+    "ratingCount": 15,
+    "ratingAvg": 4.2,
+    "contactPhone": "03 9585 2064",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-c-nguyen-st-kilda",
+    "name": "Dr C. Nguyen",
+    "practiceName": "Lantern Family Practice",
+    "disciplines": [
+      "endocrinology",
+      "peer-support"
+    ],
+    "suburb": "St Kilda",
+    "postcode": "3182",
+    "state": "VIC",
+    "lat": -37.86954,
+    "lng": 144.98594,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Hindi"
+    ],
+    "approachTags": [
+      "culturally-safe",
+      "youth-friendly"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2026-06-10",
+        "expiresAt": "2028-06-12",
+        "evidenceRef": "applications/APP-1003",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 90,
+    "ratingCount": 23,
+    "ratingAvg": 3.9,
+    "contactPhone": "03 9254 2359",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-a-kaur-prahran",
+    "name": "Dr A. Kaur",
+    "practiceName": "Clearwater Family Practice",
+    "disciplines": [
+      "gp"
+    ],
+    "suburb": "Prahran",
+    "postcode": "3181",
+    "state": "VIC",
+    "lat": -37.8543,
+    "lng": 144.98461,
+    "telehealth": false,
+    "inPerson": false,
+    "bulkBilling": false,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Hindi",
+      "Cantonese"
+    ],
+    "approachTags": [
+      "culturally-safe",
+      "first-nations-affirming"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1004",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 50,
+    "ratingCount": 11,
+    "ratingAvg": 4.5,
+    "contactPhone": "03 9593 7560",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-m-mitchell-footscray",
+    "name": "Dr M. Mitchell",
+    "practiceName": "Inclusive Medical Centre",
+    "disciplines": [
+      "counselling"
+    ],
+    "suburb": "Footscray",
+    "postcode": "3011",
+    "state": "VIC",
+    "lat": -37.79755,
+    "lng": 144.90729,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Vietnamese"
+    ],
+    "approachTags": [
+      "first-nations-affirming"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2024-02-10",
+        "expiresAt": "2029-03-18",
+        "evidenceRef": "applications/APP-1005",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1005",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 78,
+    "ratingCount": 19,
+    "ratingAvg": 4.1,
+    "contactPhone": "03 9867 6613",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-t-alvarez-northcote",
+    "name": "Dr T. Alvarez",
+    "practiceName": "Bayside Health Collective",
+    "disciplines": [
+      "counselling"
+    ],
+    "suburb": "Northcote",
+    "postcode": "3070",
+    "state": "VIC",
+    "lat": -37.76419,
+    "lng": 145.00254,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Greek"
+    ],
+    "approachTags": [
+      "youth-friendly",
+      "neurodivergent-aware",
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1006",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 45,
+    "ratingCount": 9,
+    "ratingAvg": 5.0,
+    "contactPhone": "03 9857 4714",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-p-osei-preston",
+    "name": "Dr P. Osei",
+    "practiceName": "Harbourview Clinic",
+    "disciplines": [
+      "gp",
+      "endocrinology"
+    ],
+    "suburb": "Preston",
+    "postcode": "3072",
+    "state": "VIC",
+    "lat": -37.74367,
+    "lng": 145.00553,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Auslan"
+    ],
+    "approachTags": [
+      "first-nations-affirming"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1007",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 54,
+    "ratingCount": 11,
+    "ratingAvg": 4.9,
+    "contactPhone": "03 9497 4265",
+    "hours": "Mon to Fri, 8:30am to 5:30pm"
+  },
+  {
+    "slug": "dr-b-bianchi-coburg",
+    "name": "Dr B. Bianchi",
+    "practiceName": "Bayside Practice",
+    "disciplines": [
+      "sexual-health",
+      "gp"
+    ],
+    "suburb": "Coburg",
+    "postcode": "3058",
+    "state": "VIC",
+    "lat": -37.74255,
+    "lng": 144.96545,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [
+      "Mandarin",
+      "Arabic"
+    ],
+    "approachTags": [
+      "first-nations-affirming"
+    ],
+    "accreditations": [],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 36,
+    "ratingCount": 9,
+    "ratingAvg": 4.0,
+    "contactPhone": "03 9639 3281",
+    "hours": "Mon to Fri, 8:30am to 5:30pm"
+  },
+  {
+    "slug": "dr-e-haddad-richmond",
+    "name": "Dr E. Haddad",
+    "practiceName": "Riverbend Community Health",
+    "disciplines": [
+      "gp"
+    ],
+    "suburb": "Richmond",
+    "postcode": "3121",
+    "state": "VIC",
+    "lat": -37.81326,
+    "lng": 145.00027,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "first-nations-affirming",
+      "youth-friendly",
+      "neurodivergent-aware"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2025-09-13",
+        "expiresAt": "2029-06-14",
+        "evidenceRef": "applications/APP-1009",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1009",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 63,
+    "ratingCount": 14,
+    "ratingAvg": 4.5,
+    "contactPhone": "03 9244 8757",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-p-petrov-carlton",
+    "name": "Dr P. Petrov",
+    "practiceName": "Community Clinic",
+    "disciplines": [
+      "psychology",
+      "endocrinology"
+    ],
+    "suburb": "Carlton",
+    "postcode": "3053",
+    "state": "VIC",
+    "lat": -37.79988,
+    "lng": 144.96799,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Turkish"
+    ],
+    "approachTags": [
+      "neurodivergent-aware",
+      "culturally-safe",
+      "over-50s"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1010",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "charity-verified",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 5,
+    "ratingCount": 1,
+    "ratingAvg": 4.7,
+    "contactPhone": "03 9353 9572",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-b-yilmaz-south-yarra",
+    "name": "Dr B. Yilmaz",
+    "practiceName": "Marlowe Medical Centre",
+    "disciplines": [
+      "counselling"
+    ],
+    "suburb": "South Yarra",
+    "postcode": "3141",
+    "state": "VIC",
+    "lat": -37.84504,
+    "lng": 144.99743,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": true,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "culturally-safe",
+      "youth-friendly"
+    ],
+    "accreditations": [],
+    "inclusionBasis": "charity-verified",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 84,
+    "ratingCount": 21,
+    "ratingAvg": 4.0,
+    "contactPhone": "03 9783 4665",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-c-kowalski-hawthorn",
+    "name": "Dr C. Kowalski",
+    "practiceName": "Fernway Health Collective",
+    "disciplines": [
+      "sexual-health"
+    ],
+    "suburb": "Hawthorn",
+    "postcode": "3122",
+    "state": "VIC",
+    "lat": -37.82385,
+    "lng": 145.03528,
+    "telehealth": true,
+    "inPerson": false,
+    "bulkBilling": true,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "over-50s",
+      "first-nations-affirming"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1012",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "charity-verified",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 64,
+    "ratingCount": 14,
+    "ratingAvg": 4.6,
+    "contactPhone": "03 9897 3974",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-h-rahman-box-hill",
+    "name": "Dr H. Rahman",
+    "practiceName": "Northside Community Health",
+    "disciplines": [
+      "endocrinology"
+    ],
+    "suburb": "Box Hill",
+    "postcode": "3128",
+    "state": "VIC",
+    "lat": -37.82407,
+    "lng": 145.12932,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [
+      "Vietnamese"
+    ],
+    "approachTags": [
+      "first-nations-affirming",
+      "over-50s"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1013",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 28,
+    "ratingCount": 6,
+    "ratingAvg": 4.7,
+    "contactPhone": "03 9666 7844",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-n-sokolova-ringwood",
+    "name": "Dr N. Sokolova",
+    "practiceName": "Northside Health",
+    "disciplines": [
+      "endocrinology",
+      "counselling"
+    ],
+    "suburb": "Ringwood",
+    "postcode": "3134",
+    "state": "VIC",
+    "lat": -37.81871,
+    "lng": 145.22813,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": false,
+    "auslanAvailable": true,
+    "afterHours": true,
+    "languages": [
+      "Spanish",
+      "Greek"
+    ],
+    "approachTags": [
+      "culturally-safe",
+      "youth-friendly",
+      "neurodivergent-aware"
+    ],
+    "accreditations": [],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 39,
+    "ratingCount": 9,
+    "ratingAvg": 4.3,
+    "contactPhone": "03 9208 8080",
+    "hours": "Mon to Fri, 8:30am to 5:30pm"
+  },
+  {
+    "slug": "dr-p-mbeki-dandenong",
+    "name": "Dr P. Mbeki",
+    "practiceName": "Redgum Health Collective",
+    "disciplines": [
+      "endocrinology"
+    ],
+    "suburb": "Dandenong",
+    "postcode": "3175",
+    "state": "VIC",
+    "lat": -37.99091,
+    "lng": 145.20961,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [
+      "Arabic"
+    ],
+    "approachTags": [
+      "youth-friendly",
+      "neurodivergent-aware"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2025-06-13",
+        "expiresAt": "2029-03-16",
+        "evidenceRef": "applications/APP-1015",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 92,
+    "ratingCount": 20,
+    "ratingAvg": 4.6,
+    "contactPhone": "03 9375 8304",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-j-tanaka-frankston",
+    "name": "Dr J. Tanaka",
+    "practiceName": "Wattle Clinic",
+    "disciplines": [
+      "sexual-health",
+      "counselling"
+    ],
+    "suburb": "Frankston",
+    "postcode": "3199",
+    "state": "VIC",
+    "lat": -38.14955,
+    "lng": 145.12707,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [
+      "Mandarin",
+      "Hindi"
+    ],
+    "approachTags": [
+      "culturally-safe",
+      "youth-friendly"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2025-04-15",
+        "expiresAt": "2027-01-15",
+        "evidenceRef": "applications/APP-1016",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 75,
+    "ratingCount": 16,
+    "ratingAvg": 4.7,
+    "contactPhone": "03 9390 3371",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-e-silva-geelong",
+    "name": "Dr E. Silva",
+    "practiceName": "Greenline Family Practice",
+    "disciplines": [
+      "endocrinology"
+    ],
+    "suburb": "Geelong",
+    "postcode": "3220",
+    "state": "VIC",
+    "lat": -38.14361,
+    "lng": 144.36463,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [
+      "Spanish"
+    ],
+    "approachTags": [
+      "first-nations-affirming"
+    ],
+    "accreditations": [],
+    "inclusionBasis": "charity-verified",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 92,
+    "ratingCount": 21,
+    "ratingAvg": 4.4,
+    "contactPhone": "03 9741 9707",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-t-novak-ballarat",
+    "name": "Dr T. Novak",
+    "practiceName": "Meridian Health",
+    "disciplines": [
+      "gp"
+    ],
+    "suburb": "Ballarat",
+    "postcode": "3350",
+    "state": "VIC",
+    "lat": -37.56901,
+    "lng": 143.84655,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Italian"
+    ],
+    "approachTags": [
+      "neurodivergent-aware"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 60,
+    "ratingCount": 15,
+    "ratingAvg": 4.0,
+    "contactPhone": "03 9747 4248",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-n-duarte-bendigo",
+    "name": "Dr N. Duarte",
+    "practiceName": "Northside Clinic",
+    "disciplines": [
+      "endocrinology"
+    ],
+    "suburb": "Bendigo",
+    "postcode": "3550",
+    "state": "VIC",
+    "lat": -36.76341,
+    "lng": 144.27488,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Greek",
+      "Italian"
+    ],
+    "approachTags": [
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1019",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 40,
+    "ratingCount": 8,
+    "ratingAvg": 5.0,
+    "contactPhone": "03 9117 5744",
+    "hours": "Mon to Fri, 8:30am to 5:30pm"
+  },
+  {
+    "slug": "dr-l-ahmed-shepparton",
+    "name": "Dr L. Ahmed",
+    "practiceName": "Greenline Practice",
+    "disciplines": [
+      "peer-support"
+    ],
+    "suburb": "Shepparton",
+    "postcode": "3630",
+    "state": "VIC",
+    "lat": -36.38005,
+    "lng": 145.3957,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Mandarin"
+    ],
+    "approachTags": [
+      "over-50s",
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2025-02-19",
+        "expiresAt": "2027-03-18",
+        "evidenceRef": "applications/APP-1020",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 38,
+    "ratingCount": 8,
+    "ratingAvg": 4.8,
+    "contactPhone": "03 9423 2980",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-s-lindqvist-werribee",
+    "name": "Dr S. Lindqvist",
+    "practiceName": "Threshold Community Health",
+    "disciplines": [
+      "peer-support"
+    ],
+    "suburb": "Werribee",
+    "postcode": "3030",
+    "state": "VIC",
+    "lat": -37.89433,
+    "lng": 144.65649,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Greek"
+    ],
+    "approachTags": [
+      "culturally-safe",
+      "first-nations-affirming"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2025-01-14",
+        "expiresAt": "2028-06-11",
+        "evidenceRef": "applications/APP-1021",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 61,
+    "ratingCount": 13,
+    "ratingAvg": 4.7,
+    "contactPhone": "03 9931 7554",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-c-moreau-sunshine",
+    "name": "Dr C. Moreau",
+    "practiceName": "Inclusive Health",
+    "disciplines": [
+      "peer-support",
+      "endocrinology"
+    ],
+    "suburb": "Sunshine",
+    "postcode": "3020",
+    "state": "VIC",
+    "lat": -37.79124,
+    "lng": 144.83682,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "first-nations-affirming"
+    ],
+    "accreditations": [],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 77,
+    "ratingCount": 18,
+    "ratingAvg": 4.3,
+    "contactPhone": "03 9312 9201",
+    "hours": "Mon to Fri, 8:30am to 5:30pm"
+  },
+  {
+    "slug": "dr-p-kelly-reservoir",
+    "name": "Dr P. Kelly",
+    "practiceName": "Clearwater Practice",
+    "disciplines": [
+      "peer-support"
+    ],
+    "suburb": "Reservoir",
+    "postcode": "3073",
+    "state": "VIC",
+    "lat": -37.72187,
+    "lng": 145.00711,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Arabic"
+    ],
+    "approachTags": [
+      "over-50s",
+      "neurodivergent-aware"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1023",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 39,
+    "ratingCount": 10,
+    "ratingAvg": 3.9,
+    "contactPhone": "03 9228 9247",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-l-rossi-thornbury",
+    "name": "Dr L. Rossi",
+    "practiceName": "Meridian Medical Centre",
+    "disciplines": [
+      "peer-support"
+    ],
+    "suburb": "Thornbury",
+    "postcode": "3071",
+    "state": "VIC",
+    "lat": -37.75278,
+    "lng": 145.00487,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Turkish"
+    ],
+    "approachTags": [
+      "first-nations-affirming"
+    ],
+    "accreditations": [],
+    "inclusionBasis": "charity-verified",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 4,
+    "ratingCount": 1,
+    "ratingAvg": 4.2,
+    "contactPhone": "03 9329 3529",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-p-park-williamstown",
+    "name": "Dr P. Park",
+    "practiceName": "Open Door Community Health",
+    "disciplines": [
+      "endocrinology",
+      "peer-support"
+    ],
+    "suburb": "Williamstown",
+    "postcode": "3016",
+    "state": "VIC",
+    "lat": -37.86687,
+    "lng": 144.89539,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": true,
+    "afterHours": false,
+    "languages": [
+      "Italian"
+    ],
+    "approachTags": [
+      "youth-friendly",
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2024-01-12",
+        "expiresAt": "2027-01-14",
+        "evidenceRef": "applications/APP-1025",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 91,
+    "ratingCount": 24,
+    "ratingAvg": 3.8,
+    "contactPhone": "03 9638 4846",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-s-weaver-essendon",
+    "name": "Dr S. Weaver",
+    "practiceName": "Fernway Family Practice",
+    "disciplines": [
+      "sexual-health",
+      "gp"
+    ],
+    "suburb": "Essendon",
+    "postcode": "3040",
+    "state": "VIC",
+    "lat": -37.75166,
+    "lng": 144.90811,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2026-07-11",
+        "expiresAt": "2028-04-16",
+        "evidenceRef": "applications/APP-1026",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1026",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 53,
+    "ratingCount": 13,
+    "ratingAvg": 4.1,
+    "contactPhone": "03 9326 5342",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-l-dubois-moonee-ponds",
+    "name": "Dr L. Dubois",
+    "practiceName": "Kestrel Practice",
+    "disciplines": [
+      "counselling",
+      "endocrinology"
+    ],
+    "suburb": "Moonee Ponds",
+    "postcode": "3039",
+    "state": "VIC",
+    "lat": -37.76446,
+    "lng": 144.91865,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [],
+    "approachTags": [
+      "over-50s"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1027",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "charity-verified",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 22,
+    "ratingCount": 6,
+    "ratingAvg": 3.6,
+    "contactPhone": "03 9295 4039",
+    "hours": "Mon to Fri, 8:30am to 5:30pm"
+  },
+  {
+    "slug": "dr-s-hargreaves-camberwell",
+    "name": "Dr S. Hargreaves",
+    "practiceName": "Lantern Family Practice",
+    "disciplines": [
+      "peer-support",
+      "sexual-health"
+    ],
+    "suburb": "Camberwell",
+    "postcode": "3124",
+    "state": "VIC",
+    "lat": -37.84802,
+    "lng": 145.07543,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [
+      "Greek"
+    ],
+    "approachTags": [
+      "neurodivergent-aware",
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1028",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1028",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 64,
+    "ratingCount": 13,
+    "ratingAvg": 4.9,
+    "contactPhone": "03 9297 6297",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-c-marchetti-glen-waverley",
+    "name": "Dr C. Marchetti",
+    "practiceName": "Harbourview Health",
+    "disciplines": [
+      "peer-support",
+      "counselling"
+    ],
+    "suburb": "Glen Waverley",
+    "postcode": "3150",
+    "state": "VIC",
+    "lat": -37.87504,
+    "lng": 145.17138,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Italian"
+    ],
+    "approachTags": [
+      "first-nations-affirming",
+      "neurodivergent-aware"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1029",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1029",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 4,
+    "ratingCount": 1,
+    "ratingAvg": 4.0,
+    "contactPhone": "03 9124 4831",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-t-ivanov-melbourne",
+    "name": "Dr T. Ivanov",
+    "practiceName": "Stonebridge Community Health",
+    "disciplines": [
+      "sexual-health"
+    ],
+    "suburb": "Melbourne",
+    "postcode": "3000",
+    "state": "VIC",
+    "lat": -37.80924,
+    "lng": 144.96482,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": false,
+    "auslanAvailable": true,
+    "afterHours": true,
+    "languages": [],
+    "approachTags": [
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1030",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 43,
+    "ratingCount": 9,
+    "ratingAvg": 4.8,
+    "contactPhone": "03 9166 1554",
+    "hours": "Mon to Fri, 8:30am to 5:30pm"
+  },
+  {
+    "slug": "dr-p-sultana-docklands",
+    "name": "Dr P. Sultana",
+    "practiceName": "Marlowe Clinic",
+    "disciplines": [
+      "peer-support"
+    ],
+    "suburb": "Docklands",
+    "postcode": "3008",
+    "state": "VIC",
+    "lat": -37.80745,
+    "lng": 144.94077,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "over-50s",
+      "neurodivergent-aware"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1031",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 75,
+    "ratingCount": 15,
+    "ratingAvg": 5.0,
+    "contactPhone": "03 9680 5385",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-j-brennan-brighton",
+    "name": "Dr J. Brennan",
+    "practiceName": "Meridian Medical Centre",
+    "disciplines": [
+      "counselling"
+    ],
+    "suburb": "Brighton",
+    "postcode": "3186",
+    "state": "VIC",
+    "lat": -37.90455,
+    "lng": 145.00586,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [
+      "Greek"
+    ],
+    "approachTags": [
+      "first-nations-affirming"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2025-03-14",
+        "expiresAt": "2029-04-15",
+        "evidenceRef": "applications/APP-1032",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 94,
+    "ratingCount": 20,
+    "ratingAvg": 4.7,
+    "contactPhone": "03 9294 4181",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-r-costa-bentleigh",
+    "name": "Dr R. Costa",
+    "practiceName": "Greenline Community Health",
+    "disciplines": [
+      "peer-support"
+    ],
+    "suburb": "Bentleigh",
+    "postcode": "3204",
+    "state": "VIC",
+    "lat": -37.92252,
+    "lng": 145.0339,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": true,
+    "languages": [],
+    "approachTags": [
+      "culturally-safe",
+      "over-50s"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1033",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 99,
+    "ratingCount": 22,
+    "ratingAvg": 4.5,
+    "contactPhone": "03 9289 6115",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-m-adeyemi-cheltenham",
+    "name": "Dr M. Adeyemi",
+    "practiceName": "Community Community Health",
+    "disciplines": [
+      "psychology"
+    ],
+    "suburb": "Cheltenham",
+    "postcode": "3192",
+    "state": "VIC",
+    "lat": -37.96744,
+    "lng": 145.05353,
+    "telehealth": true,
+    "inPerson": false,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Greek"
+    ],
+    "approachTags": [
+      "culturally-safe",
+      "youth-friendly"
+    ],
+    "accreditations": [],
+    "inclusionBasis": "community-endorsed",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 78,
+    "ratingCount": 17,
+    "ratingAvg": 4.6,
+    "contactPhone": "03 9106 8113",
+    "hours": "Mon to Sat, 8am to 6pm"
+  },
+  {
+    "slug": "dr-k-vargas-traralgon",
+    "name": "Dr K. Vargas",
+    "practiceName": "Open Door Community Health",
+    "disciplines": [
+      "peer-support"
+    ],
+    "suburb": "Traralgon",
+    "postcode": "3844",
+    "state": "VIC",
+    "lat": -38.18844,
+    "lng": 146.53442,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "hiv-experienced",
+        "status": "verified",
+        "verifiedAt": "2025-11-02",
+        "expiresAt": "2027-11-02",
+        "evidenceRef": "applications/APP-1035",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "trans-led",
+        "status": "self-declared",
+        "verifiedAt": null,
+        "expiresAt": null,
+        "evidenceRef": null,
+        "verifiedByUid": null
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 18,
+    "ratingCount": 4,
+    "ratingAvg": 4.5,
+    "contactPhone": "03 9602 4233",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-a-lindgren-warrnambool",
+    "name": "Dr A. Lindgren",
+    "practiceName": "Community Practice",
+    "disciplines": [
+      "gp"
+    ],
+    "suburb": "Warrnambool",
+    "postcode": "3280",
+    "state": "VIC",
+    "lat": -38.38545,
+    "lng": 142.48647,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Auslan"
+    ],
+    "approachTags": [
+      "youth-friendly"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1036",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "charity-verified",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 94,
+    "ratingCount": 20,
+    "ratingAvg": 4.7,
+    "contactPhone": "03 9352 4155",
+    "hours": "Mon to Fri, 9am to 5pm"
+  },
+  {
+    "slug": "dr-b-farrell-mildura",
+    "name": "Dr B. Farrell",
+    "practiceName": "Marlowe Community Health",
+    "disciplines": [
+      "gp",
+      "sexual-health"
+    ],
+    "suburb": "Mildura",
+    "postcode": "3500",
+    "state": "VIC",
+    "lat": -34.19294,
+    "lng": 142.16978,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Vietnamese"
+    ],
+    "approachTags": [
+      "youth-friendly"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2026-09-14",
+        "expiresAt": "2029-07-14",
+        "evidenceRef": "applications/APP-1037",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 55,
+    "ratingCount": 14,
+    "ratingAvg": 3.9,
+    "contactPhone": "03 9467 8054",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-l-nakamura-wodonga",
+    "name": "Dr L. Nakamura",
+    "practiceName": "Stonebridge Health Collective",
+    "disciplines": [
+      "endocrinology",
+      "gp"
+    ],
+    "suburb": "Wodonga",
+    "postcode": "3690",
+    "state": "VIC",
+    "lat": -36.12794,
+    "lng": 146.88983,
+    "telehealth": true,
+    "inPerson": true,
+    "bulkBilling": true,
+    "wheelchairAccess": false,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [],
+    "approachTags": [
+      "first-nations-affirming"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2025-02-15",
+        "expiresAt": "2029-09-11",
+        "evidenceRef": "applications/APP-1038",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1038",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 14,
+    "ratingCount": 4,
+    "ratingAvg": 3.6,
+    "contactPhone": "03 9953 6749",
+    "hours": "Tue to Fri, 10am to 7pm"
+  },
+  {
+    "slug": "dr-a-oyelaran-castlemaine",
+    "name": "Dr A. Oyelaran",
+    "practiceName": "Threshold Health Collective",
+    "disciplines": [
+      "peer-support"
+    ],
+    "suburb": "Castlemaine",
+    "postcode": "3450",
+    "state": "VIC",
+    "lat": -37.05667,
+    "lng": 144.2117,
+    "telehealth": false,
+    "inPerson": true,
+    "bulkBilling": false,
+    "wheelchairAccess": true,
+    "auslanAvailable": false,
+    "afterHours": false,
+    "languages": [
+      "Spanish",
+      "Vietnamese"
+    ],
+    "approachTags": [
+      "neurodivergent-aware",
+      "culturally-safe"
+    ],
+    "accreditations": [
+      {
+        "badgeCode": "rainbow-tick",
+        "status": "verified",
+        "verifiedAt": "2026-04-19",
+        "expiresAt": "2028-09-13",
+        "evidenceRef": "applications/APP-1039",
+        "verifiedByUid": "seed"
+      },
+      {
+        "badgeCode": "informed-consent",
+        "status": "verified",
+        "verifiedAt": "2026-02-14",
+        "expiresAt": "2027-02-14",
+        "evidenceRef": "applications/APP-1039",
+        "verifiedByUid": "seed"
+      }
+    ],
+    "inclusionBasis": "accredited",
+    "listingStatus": "published",
+    "ownerUid": null,
+    "ratingSum": 37,
+    "ratingCount": 8,
+    "ratingAvg": 4.6,
+    "contactPhone": "03 9855 7086",
+    "hours": "Tue to Fri, 10am to 7pm"
+  }
+]
