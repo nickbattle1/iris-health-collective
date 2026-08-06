@@ -20,6 +20,7 @@ export const useAuthStore = defineStore('auth', () => {
   const isAnonymous = computed(() => !!user.value?.isAnonymous)
   const isAdmin = computed(() => role.value === 'admin')
   const isProvider = computed(() => role.value === 'provider')
+  const isVerified = computed(() => !!user.value?.emailVerified)
   const displayName = computed(
     () => profile.value?.displayName ?? user.value?.displayName ?? 'Friend',
   )
@@ -49,6 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
       return await fn()
     } catch (err) {
       error.value = friendlyMessage(err)
+      console.error('[auth]', err.code ?? '', err.message ?? err)
       throw err
     } finally {
       loading.value = false
@@ -61,19 +63,28 @@ export const useAuthStore = defineStore('auth', () => {
   const continueAnonymously = () => run(() => authService.startAnonymousSession())
   const logout = () => run(() => authService.logout())
   const deleteAccount = () => run(() => authService.deleteAccount())
+  const resendVerification = () => run(() => authService.sendVerification())
+  const resetPassword = (email) => run(() => authService.resetPassword(email))
+
+  // errors are store state, so they outlive the screen that caused them.
+  // the router clears this on every navigation.
+  const clearError = () => {
+    error.value = null
+  }
 
   async function updateProfileFields(fields) {
-    await run(async () => {
+    return run(async () => {
       await authService.saveProfile(user.value.uid, fields)
-      profile.value = { ...profile.value, ...fields }
+      // re-read rather than trusting local state, so a rejected write shows up
+      profile.value = await authService.getProfile(user.value.uid)
     })
   }
 
   return {
     user, profile, role, loading, error, ready,
-    isAuthenticated, isAnonymous, isAdmin, isProvider, displayName,
+    isAuthenticated, isAnonymous, isAdmin, isProvider, isVerified, displayName,
     init, register, login, loginGoogle, continueAnonymously, logout,
-    deleteAccount, updateProfileFields,
+    deleteAccount, updateProfileFields, resendVerification, resetPassword, clearError,
   }
 })
 
@@ -89,6 +100,7 @@ function friendlyMessage(err) {
     'auth/popup-closed-by-user': 'The Google sign in window was closed before finishing.',
     'auth/requires-recent-login': 'For security, please sign in again before deleting your account.',
     'auth/network-request-failed': 'We could not reach the server. Check your connection.',
+    'permission-denied': 'We could not save that. Please sign out and back in, then try again.',
   }
   return map[err?.code] ?? 'Something went wrong. Please try again.'
 }

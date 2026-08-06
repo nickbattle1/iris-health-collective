@@ -3,6 +3,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signInAnonymously,
+  sendEmailVerification,
+  sendPasswordResetEmail,
   GoogleAuthProvider,
   EmailAuthProvider,
   linkWithCredential,
@@ -45,7 +47,18 @@ export async function registerWithEmail({ email, password, displayName, remember
   const { user } = await createUserWithEmailAndPassword(auth, email, password)
   await updateProfile(user, { displayName })
   await saveProfile(user.uid, { displayName, pronouns: '', reminderPrefs: 'discreet' })
+
+  /* verification is sent but not enforced. gating the account behind a click in
+     an inbox would push away exactly the people A1 is about: someone on a
+     shared device who does not want a trail. the account page says plainly
+     that the address is unconfirmed instead. */
+  await sendVerification(user)
   return user
+}
+
+export async function sendVerification(user = auth.currentUser) {
+  if (!user || user.emailVerified) return
+  await sendEmailVerification(user)
 }
 
 export async function loginWithEmail({ email, password, remember }) {
@@ -111,4 +124,12 @@ export async function deleteAccount() {
   if (!user) throw new Error('Not signed in')
   await deleteDoc(doc(db, 'users', user.uid))
   await deleteUser(user)
+}
+
+/* firebase sends the reset mail and hosts the reset page, so no password ever
+   passes through us. the caller always reports success, even for an address we
+   have never seen, otherwise the form becomes a way to test whether somebody
+   holds an account here. */
+export async function resetPassword(email) {
+  await sendPasswordResetEmail(auth, email)
 }

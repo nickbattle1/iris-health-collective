@@ -103,6 +103,9 @@ router.beforeEach(async (to) => {
   const auth = useAuthStore()
   await auth.ready
 
+  // an error from the last screen should not follow you onto the next one
+  auth.clearError()
+
   if (to.meta.requiresAuth && !auth.isAuthenticated) {
     return { name: 'login', query: { redirect: to.fullPath } }
   }

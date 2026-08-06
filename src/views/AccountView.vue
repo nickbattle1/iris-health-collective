@@ -1,23 +1,50 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter, RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import BaseField from '@/components/ui/BaseField.vue'
 
 const auth = useAuthStore()
+const router = useRouter()
 
 const form = ref({ displayName: '', pronouns: '' })
 const saved = ref(false)
+const verifySent = ref(false)
 
-onMounted(() => {
-  form.value.displayName = auth.profile?.displayName ?? auth.displayName
-  form.value.pronouns = auth.profile?.pronouns ?? ''
-})
+/* watched rather than read once on mount. signing in navigates here straight
+   away, while the profile read is still in flight, so a one-off read lands
+   before the data does. immediate covers the refresh case where it is already
+   there. */
+watch(
+  () => auth.profile,
+  (profile) => {
+    form.value.displayName = profile?.displayName ?? auth.displayName
+    form.value.pronouns = profile?.pronouns ?? ''
+  },
+  { immediate: true },
+)
 
 async function save() {
-  await auth.updateProfileFields({ ...form.value })
-  saved.value = true
-  window.setTimeout(() => (saved.value = false), 4000)
+  saved.value = false
+  try {
+    await auth.updateProfileFields({ ...form.value })
+    saved.value = true
+    window.setTimeout(() => (saved.value = false), 4000)
+  } catch {
+    // the store holds the message, the alert below renders it
+  }
+}
+
+async function resend() {
+  try {
+    await auth.resendVerification()
+    verifySent.value = true
+  } catch {}
+}
+
+async function signOut() {
+  await auth.logout()
+  router.push('/')
 }
 
 const roleLabel = { member: 'Community member', provider: 'Provider', admin: 'Charity staff' }
@@ -32,10 +59,23 @@ const roleLabel = { member: 'Community member', provider: 'Provider', admin: 'Ch
       <span class="badge text-bg-light border">{{ roleLabel[auth.role] }}</span>
     </p>
 
+    <div v-if="auth.user && !auth.isVerified" class="alert alert-warning" role="status">
+      <p class="fw-bold mb-1">Your email address is not confirmed</p>
+      <p class="mb-2 small">
+        You can use everything without confirming. Confirming means we can help
+        if you ever lose access to this account.
+      </p>
+      <button v-if="!verifySent" type="button" class="btn btn-sm btn-dark" @click="resend">
+        Send the confirmation email again
+      </button>
+      <p v-else class="mb-0 small">Sent. Check your inbox and spam folder.</p>
+    </div>
+
     <section class="mb-5" aria-labelledby="details">
       <h2 id="details" class="h5 mb-3">How we address you</h2>
 
       <p v-if="saved" class="alert alert-success" role="status">Your details are saved.</p>
+      <p v-if="auth.error" class="alert alert-danger" role="alert">{{ auth.error }}</p>
 
       <form novalidate @submit.prevent="save">
         <BaseField
@@ -79,6 +119,6 @@ const roleLabel = { member: 'Community member', provider: 'Provider', admin: 'Ch
 
     <hr class="my-5" />
 
-    <button type="button" class="btn btn-link p-0" @click="auth.logout">Sign out</button>
+    <button type="button" class="btn btn-link p-0" @click="signOut">Sign out</button>
   </div>
 </template>

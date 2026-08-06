@@ -14,6 +14,11 @@ const form = ref({ email: '', password: '', remember: false })
 const errors = ref({})
 const summary = ref(null)
 
+const showReset = ref(false)
+const resetEmail = ref('')
+const resetError = ref('')
+const resetSent = ref(false)
+
 function validate() {
   errors.value = collect({
     email: required(form.value.email, 'email') || isEmail(form.value.email),
@@ -41,6 +46,28 @@ async function google() {
     await auth.loginGoogle(form.value.remember)
     router.push(route.query.redirect ?? '/account')
   } catch {}
+}
+
+function openReset() {
+  showReset.value = true
+  resetEmail.value = form.value.email
+  resetSent.value = false
+  resetError.value = ''
+}
+
+/* always reports the same thing, whether or not the address has an account.
+   telling someone "no account with that email" turns this form into a way of
+   checking who is registered with an LGBTIQ+ health service. */
+async function sendReset() {
+  resetError.value = required(resetEmail.value, 'email') || isEmail(resetEmail.value)
+  if (resetError.value) return
+
+  try {
+    await auth.resetPassword(resetEmail.value)
+  } catch {
+    // deliberately swallowed, see above
+  }
+  resetSent.value = true
 }
 </script>
 
@@ -75,13 +102,14 @@ async function google() {
         :error="errors.password"
       />
 
+      <p class="mb-3">
+        <button type="button" class="btn btn-link p-0" @click="openReset">
+          Forgot your password?
+        </button>
+      </p>
+
       <div class="form-check mb-4">
-        <input
-          id="remember"
-          v-model="form.remember"
-          class="form-check-input"
-          type="checkbox"
-        />
+        <input id="remember" v-model="form.remember" class="form-check-input" type="checkbox" />
         <label class="form-check-label" for="remember">
           Keep me signed in on this device
         </label>
@@ -96,6 +124,34 @@ async function google() {
       </button>
     </form>
 
+    <section v-if="showReset" class="reset-panel" aria-labelledby="reset-heading">
+      <h2 id="reset-heading" class="h6 mb-2">Reset your password</h2>
+
+      <div v-if="resetSent">
+        <p class="mb-0">
+          If an account exists for that address, a reset link is on its way.
+          Check your spam folder if it does not arrive in a few minutes.
+        </p>
+      </div>
+
+      <div v-else>
+        <p class="small mb-3">
+          We will email you a link to choose a new password.
+        </p>
+        <BaseField
+          v-model="resetEmail"
+          label="Email"
+          type="email"
+          autocomplete="email"
+          required
+          :error="resetError"
+        />
+        <button type="button" class="btn-iris-outline" @click="sendReset">
+          Send reset link
+        </button>
+      </div>
+    </section>
+
     <div class="text-center text-muted my-3">or</div>
 
     <button type="button" class="btn-iris-outline w-100 mb-4" @click="google">
@@ -107,3 +163,13 @@ async function google() {
     </p>
   </div>
 </template>
+
+<style scoped>
+.reset-panel {
+  padding: 1.15rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--iris-border);
+  border-radius: var(--iris-radius-md);
+  background: var(--iris-surface-muted);
+}
+</style>

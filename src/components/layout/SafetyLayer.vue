@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
+import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 /* the persistent safety layer from A1. sits above nav on every page so both
@@ -10,6 +10,7 @@ import { useAuthStore } from '@/stores/auth'
    history and the back button won't return to it (Turk & Hutchings, 2023).*/
 
 const route = useRoute()
+const router = useRouter()
 const auth = useAuthStore()
 const navOpen = ref(false)
 const sheet = ref(null)
@@ -33,6 +34,12 @@ const links = computed(() => {
 
 function exitSite() {
   window.location.replace('https://www.google.com/search?q=weather+melbourne')
+}
+
+async function signOut() {
+  closeNav()
+  await auth.logout()
+  router.push('/')
 }
 
 async function openNav() {
@@ -123,7 +130,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         v-if="auth.isAuthenticated"
         type="button"
         class="btn btn-link px-2 mt-3"
-        @click="auth.logout"
+        @click="signOut"
       >
         Sign out
       </button>
