@@ -1,6 +1,7 @@
 <script setup>
-import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 /* the persistent safety layer from A1. sits above nav on every page so both
    controls are reachable without scrolling.
@@ -9,18 +10,26 @@ import { useRoute, RouterLink } from 'vue-router'
    history and the back button won't return to it (Turk & Hutchings, 2023).*/
 
 const route = useRoute()
+const auth = useAuthStore()
 const navOpen = ref(false)
 const sheet = ref(null)
 const menuButton = ref(null)
 
-const links = [
-  { to: '/directory', label: 'Find affirming care' },
-  { to: '/book', label: 'Book a session' },
-  { to: '/resources', label: 'Resources and education' },
-  { to: '/get-involved', label: 'Get involved' },
-  { to: '/about', label: 'About and privacy' },
-  { to: '/account', label: 'My account' },
-]
+const links = computed(() => {
+  const base = [
+    { to: '/directory', label: 'Find affirming care' },
+    { to: '/book', label: 'Book a session' },
+    { to: '/resources', label: 'Resources and education' },
+    { to: '/get-involved', label: 'Get involved' },
+    { to: '/about', label: 'About and privacy' },
+  ]
+
+  if (auth.isAdmin) base.push({ to: '/admin', label: 'Staff dashboard' })
+
+  return auth.isAuthenticated
+    ? [...base, { to: '/account', label: 'My account' }]
+    : [...base, { to: '/login', label: 'Sign in' }]
+})
 
 function exitSite() {
   window.location.replace('https://www.google.com/search?q=weather+melbourne')
@@ -100,11 +109,24 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
         </button>
       </div>
 
+      <p v-if="auth.isAuthenticated" class="text-muted small mb-3">
+        Signed in as {{ auth.displayName }}
+      </p>
+
       <ul class="list-unstyled mb-0">
         <li v-for="link in links" :key="link.to">
           <RouterLink class="nav-panel__link" :to="link.to">{{ link.label }}</RouterLink>
         </li>
       </ul>
+
+      <button
+        v-if="auth.isAuthenticated"
+        type="button"
+        class="btn btn-link px-2 mt-3"
+        @click="auth.logout"
+      >
+        Sign out
+      </button>
     </nav>
   </div>
 </template>

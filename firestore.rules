@@ -3,17 +3,54 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    /* the directory is public on purpose. A1 argued that people should be able
-       to browse without an account, because signing up is a disclosure risk on
-       a shared device. only published listings are readable, and nothing here
-       is writable from a browser. */
-
-    match /providers/{providerId} {
-      allow read: if resource.data.listingStatus == 'published';
-      allow write: if false;
+    function signedIn() {
+      return request.auth != null;
     }
 
-    // everything else stays closed until day 3 adds auth and roles
+    /* the role is a custom claim on the token, set server side. a role kept in
+       a firestore document could be edited by whoever owns that document, so
+       nothing here reads one. no claim means member. */
+    function isAdmin() {
+      return signedIn() && request.auth.token.role == 'admin';
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    /* fields a provider may change on their own listing. accreditations,
+       inclusionBasis, ratings and listingStatus are absent on purpose: a
+       practice cannot award itself a badge or promote its own ranking. */
+    function providerEditableFields() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+        'practiceName', 'contactPhone', 'hours', 'languages',
+        'telehealth', 'inPerson', 'bulkBilling', 'wheelchairAccess',
+        'auslanAvailable', 'afterHours', 'approachTags', 'photoUrl', 'updatedAt'
+      ]);
+    }
+
+    match /providers/{providerId} {
+      allow read: if resource.data.listingStatus == 'published' || isAdmin();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+        || (isOwner(resource.data.ownerUid) && providerEditableFields());
+
+      // reviews arrive on day 5, closed until then
+      match /reviews/{reviewId} {
+        allow read, write: if false;
+      }
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isOwner(uid);
+      allow delete: if isOwner(uid) || isAdmin();
+
+      // a person can edit their own profile but cannot grant themselves a role
+      allow update: if (isOwner(uid) || isAdmin())
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']);
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
