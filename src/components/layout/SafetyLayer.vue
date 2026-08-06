@@ -92,9 +92,15 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           <i class="bi bi-list fs-3" aria-hidden="true"></i>
         </button>
 
-        <!-- the logo is the way home from any page, so it carries a real alt -->
+        <!-- the logo is the way home from any page, so it carries a real alt.
+             picture swaps the wordmark for the eye mark on small screens, which
+             is art direction rather than resolution, so srcset is the wrong
+             tool. both safety controls keep their labels either way. -->
         <RouterLink to="/" class="safety-bar__brand">
-          <img src="/images/logo.png" alt="Iris Health Collective, home" />
+          <picture>
+            <source media="(max-width: 575.98px)" srcset="/images/logo-eye.png" />
+            <img src="/images/logo.png" alt="Iris Health Collective, home" />
+          </picture>
         </RouterLink>
 
         <div class="ms-auto d-flex align-items-center gap-2">
@@ -155,9 +161,34 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
   width: auto;
 }
 
-@media (max-width: 575px) {
+/* on a narrow phone the wordmark and both safety buttons will not sit on one
+   row. the eye mark and tighter padding buy back the space, so crisis help
+   stays one tap from every page as US-7 requires. targets stay 48px tall. */
+@media (max-width: 575.98px) {
+  .safety-bar__inner {
+    gap: 0.4rem;
+  }
+
+  .safety-bar__brand {
+    margin-left: 0;
+  }
+
   .safety-bar__brand img {
-    height: 32px;
+    height: 34px;
+  }
+
+  .safety-bar .btn-iris,
+  .safety-bar .btn-iris-outline {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 359.98px) {
+  .safety-bar .btn-iris,
+  .safety-bar .btn-iris-outline {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.82rem;
   }
 }
 </style>
