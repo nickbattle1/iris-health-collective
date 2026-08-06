@@ -92,6 +92,11 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           <i class="bi bi-list fs-3" aria-hidden="true"></i>
         </button>
 
+        <!-- the logo is the way home from any page, so it carries a real alt -->
+        <RouterLink to="/" class="safety-bar__brand">
+          <img src="/images/logo.png" alt="Iris Health Collective, home" />
+        </RouterLink>
+
         <div class="ms-auto d-flex align-items-center gap-2">
           <RouterLink to="/crisis" class="btn-iris-outline">Crisis help</RouterLink>
           <button type="button" class="btn-iris" @click="exitSite">Quick exit</button>
@@ -137,3 +142,22 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
     </nav>
   </div>
 </template>
+
+<style scoped>
+.safety-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.25rem;
+}
+
+.safety-bar__brand img {
+  height: 42px;
+  width: auto;
+}
+
+@media (max-width: 575px) {
+  .safety-bar__brand img {
+    height: 32px;
+  }
+}
+</style>

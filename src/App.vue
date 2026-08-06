@@ -9,11 +9,6 @@ import RouteAnnouncer from '@/components/layout/RouteAnnouncer.vue'
 <template>
   <SkipLink />
 
-  <p class="demo-notice text-center mb-0">
-    Demonstration site built for university assessment. Provider listings are
-    fictional. Crisis contact numbers are real.
-  </p>
-
   <SafetyLayer />
 
   <main id="main-content" tabindex="-1">

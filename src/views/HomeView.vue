@@ -1,8 +1,13 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import TestimonialCarousel from '@/components/home/TestimonialCarousel.vue'
 
 /* home screen, figure 2 of the design report. covers user story 1 (browse with no
-   account) and Uer story 7 (crisis contact one tap away).*/
+   account) and user story 7 (crisis contact one tap away).
+
+   images live in public/images so the path survives the build. from day 5 the
+   resource cards come from firestore, where the same paths are stored as a
+   field on each document. */
 
 const quickActions = [
   { to: '/directory', label: 'Find affirming care', icon: 'bi-search' },
@@ -15,28 +20,23 @@ const featuredResources = [
   {
     title: 'Finding a GP who gets it',
     summary: 'What to ask, what to expect, and how to change providers if it is not right.',
+    image: '/images/finding-gp.png',
   },
   {
     title: 'Your rights at a health service',
     summary: 'Chosen name, pronouns, privacy, and how to raise a concern.',
+    image: '/images/your-rights.png',
   },
   {
     title: 'For families and allies',
     summary: 'Practical ways to support someone close to you without taking over.',
+    image: '/images/families-allies.png',
   },
 ]
 </script>
 
 <template>
   <div class="container py-4 py-lg-5">
-    <!-- Alt is empty because the name sits right beside it -->
-    <div class="d-flex align-items-center gap-2 mb-4">
-      <img src="/logo.png" alt="" height="40" />
-      <span class="h4 mb-0 fw-bold" style="color: var(--iris-purple-900)">
-        Iris Health Collective
-      </span>
-    </div>
-
     <section class="mb-4" aria-labelledby="hero-heading">
       <h1 id="hero-heading" class="hero-title">
         Health care<br />that sees <span class="accent">you.</span>
@@ -47,16 +47,7 @@ const featuredResources = [
     </section>
 
     <RouterLink to="/crisis" class="crisis-banner mb-5">
-      <span
-        class="d-inline-flex align-items-center justify-content-center flex-shrink-0"
-        style="width: 44px; height: 44px; background: #fff; border-radius: 10px"
-      >
-        <i
-          class="bi bi-life-preserver fs-4"
-          style="color: var(--iris-purple-900)"
-          aria-hidden="true"
-        ></i>
-      </span>
+      <i class="bi bi-bell-fill flex-shrink-0" style="font-size: 1.9rem" aria-hidden="true"></i>
       <span class="flex-grow-1">
         <span class="crisis-banner__title d-block">Need support now?</span>
         <span class="crisis-banner__detail d-block">
@@ -67,7 +58,7 @@ const featuredResources = [
     </RouterLink>
 
     <section class="mb-5" aria-labelledby="quick-actions-heading">
-      <h2 id="quick-actions-heading" class="h4 mb-3">Quick actions</h2>
+      <h2 id="quick-actions-heading" class="section-heading">Quick actions</h2>
       <div class="row g-3">
         <div v-for="action in quickActions" :key="action.to" class="col-6 col-lg-3">
           <RouterLink :to="action.to" class="quick-action">
@@ -80,13 +71,23 @@ const featuredResources = [
       </div>
     </section>
 
+    <TestimonialCarousel />
+
     <section class="mb-5" aria-labelledby="resources-heading">
-      <h2 id="resources-heading" class="h4 mb-3">Resources for you</h2>
+      <h2 id="resources-heading" class="section-heading">Resources for you</h2>
       <div class="row g-3">
         <div v-for="item in featuredResources" :key="item.title" class="col-12 col-md-4">
           <article class="resource-card">
-            <div class="resource-card__media" aria-hidden="true">
-              <i class="bi bi-image" style="font-size: 2.4rem"></i>
+            <div class="resource-card__media">
+              <img
+                v-if="item.image"
+                :src="item.image"
+                alt=""
+                loading="lazy"
+                width="480"
+                height="300"
+              />
+              <i v-else class="bi bi-image" style="font-size: 2.4rem" aria-hidden="true"></i>
             </div>
             <div class="p-3">
               <h3 class="h6 mb-2">{{ item.title }}</h3>
@@ -99,9 +100,13 @@ const featuredResources = [
         </div>
       </div>
     </section>
-
-    <section class="mission-strip" aria-label="Our purpose">
-      We exist to improve the health and wellbeing of LGBTIQ+ Victorians.
-    </section>
   </div>
 </template>
+
+<style scoped>
+.resource-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>

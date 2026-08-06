@@ -48,7 +48,7 @@ main:focus {
   color: #fff;
 }
 
-/* Buttons */
+/* buttons */
 
 .btn-iris,
 .btn-iris-outline,
@@ -102,7 +102,7 @@ main:focus {
   color: var(--iris-purple-900);
 }
 
-/* safety bar sticks so exit is always reachable without scrolling*/
+/* safety bar sticks so exit is always reachable without scrolling */
 
 .safety-bar {
   position: sticky;
@@ -137,7 +137,7 @@ main:focus {
   background: var(--iris-surface-muted);
 }
 
-/*nav panel*/
+/* nav panel */
 
 .nav-panel {
   position: fixed;
@@ -185,7 +185,16 @@ main:focus {
   color: var(--iris-purple-900);
 }
 
-/*home */
+/* home */
+
+/*section headings. bootstrap's .h4 class sets 500, this puts them back to the
+  weight the hero uses*/
+.section-heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
 
 .hero-title {
   font-size: clamp(2.4rem, 7vw, 3.6rem);
@@ -297,7 +306,7 @@ main:focus {
   font-weight: 600;
 }
 
-/* CRISIS page */
+/* crisis page */
 
 .crisis-card {
   background: var(--iris-purple-900);
@@ -346,29 +355,7 @@ main:focus {
   font-size: 1.25rem;
 }
 
-/*footer */
-
-.site-footer {
-  margin-top: 4rem;
-  padding: 2.5rem 0;
-  background: var(--iris-surface-muted);
-  border-top: 1px solid var(--iris-border);
-  font-size: 0.95rem;
-}
-
-.site-footer a {
-  color: var(--iris-purple-900);
-  text-decoration: underline;
-}
-/* demo notice */
-.demo-notice {
-  background: var(--iris-ink);
-  color: #fff;
-  font-size: 0.875rem;
-  padding: 0.5rem 0;
-}
-
-/* respect  reduced motion */
+/* respect reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
   html {
