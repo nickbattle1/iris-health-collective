@@ -1,0 +1,21 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /* the directory is public on purpose. A1 argued that people should be able
+       to browse without an account, because signing up is a disclosure risk on
+       a shared device. only published listings are readable, and nothing here
+       is writable from a browser. */
+
+    match /providers/{providerId} {
+      allow read: if resource.data.listingStatus == 'published';
+      allow write: if false;
+    }
+
+    // everything else stays closed until day 3 adds auth and roles
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
