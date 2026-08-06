@@ -24,6 +24,12 @@ const routes = [
     meta: { title: 'Find affirming care' },
   },
   {
+    path: '/directory/:slug',
+    name: 'provider',
+    component: () => import('@/views/ProviderView.vue'),
+    meta: { title: 'Provider profile' },
+  },
+  {
     path: '/book',
     name: 'book',
     component: () => import('@/views/BookingView.vue'),
