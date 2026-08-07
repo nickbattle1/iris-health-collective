@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue'
 import { useAnnouncer } from '@/composables/useAnnouncer'
 import { useAuthStore } from '@/stores/auth'
+import { useBookingStore } from '@/stores/booking'
 
 import HomeView from '@/views/HomeView.vue'
 
@@ -25,12 +26,35 @@ const routes = [
     component: () => import('@/views/ProviderView.vue'),
     meta: { title: 'Provider profile' },
   },
+
+  // three child routes rather than a counter inside one component. each step
+  // gets a URL, a title for the announcer and a back button that works. the
+  // guard below is what stops anyone deep linking into step 3
   {
     path: '/book',
-    name: 'book',
     component: () => import('@/views/BookingView.vue'),
-    meta: { title: 'Book a session' },
+    children: [
+      {
+        path: '',
+        name: 'book',
+        component: () => import('@/views/booking/ServiceStep.vue'),
+        meta: { title: 'Book a session', step: 1 },
+      },
+      {
+        path: 'details',
+        name: 'book-details',
+        component: () => import('@/views/booking/DetailsStep.vue'),
+        meta: { title: 'Your details, step 2 of 3', step: 2 },
+      },
+      {
+        path: 'confirm',
+        name: 'book-confirm',
+        component: () => import('@/views/booking/ConfirmStep.vue'),
+        meta: { title: 'Booking confirmed', step: 3 },
+      },
+    ],
   },
+
   {
     path: '/resources',
     name: 'resources',
@@ -96,9 +120,9 @@ const router = createRouter({
   },
 })
 
-/* these guards are user experience, not security. they stop someone landing on
-   a screen that would fail to load. the actual authorisation boundary is
-   firestore.rules, which holds even if someone calls the api directly. */
+// these guards are UX, not security. they stop you landing on a screen that
+// would fail to load. the real boundary is firestore.rules, which holds even
+// if someone skips the app and calls the API
 router.beforeEach(async (to) => {
   const auth = useAuthStore()
   await auth.ready
@@ -117,11 +141,24 @@ router.beforeEach(async (to) => {
   if (to.meta.guestOnly && auth.isAuthenticated) {
     return { name: 'account' }
   }
+
+  // a step only exists once the one before it is done. /book/confirm with no
+  // booking sends you back to the start instead of showing an empty
+  // confirmation for an appointment that doesn't exist
+  const booking = useBookingStore()
+  if (to.name === 'book-details' && !booking.hasSelection) return { name: 'book' }
+  if (to.name === 'book-confirm' && !booking.lastBooking) return { name: 'book' }
 })
 
-// set the title, announce it, then move focus to main. without this a keyboard
-//user stays wherever they were and has no idea the page changed.
-router.afterEach((to) => {
+// set the title, announce it, move focus to main. without this a keyboard user
+// stays where they were and has no idea the page changed
+router.afterEach((to, from) => {
+  // leaving the wizard clears it. otherwise a selection from last week is
+  // still sitting there next time you open /book
+  if (from.path.startsWith('/book') && !to.path.startsWith('/book')) {
+    useBookingStore().reset()
+  }
+
   const { announce } = useAnnouncer()
   const pageTitle = to.meta.title ?? 'Iris Health Collective'
 

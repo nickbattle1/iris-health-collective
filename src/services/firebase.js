@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
+import { getFunctions } from 'firebase/functions'
 
-/* the only file that initialises firebase. everything else imports db or auth
-   from here, so there is one place to change if config moves.
-
-   these keys are public by design and ship in the bundle. firestore security
-   rules are the protection, not hiding the key. */
+// only file that initialises firebase. everything else pulls db, auth or
+// functions from here.
+//
+// these keys are public by design and ship in the bundle. the rules are the
+// protection, not hiding the key
 
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -19,5 +20,11 @@ const config = {
 
 const app = initializeApp(config)
 
+// functions live in australia-southeast2 so appointment data stays onshore.
+// the client has to name the same region or the callable resolves to
+// us-central1 and 404s, which cost me an hour
+export const FUNCTIONS_REGION = 'australia-southeast2'
+
 export const db = getFirestore(app)
 export const auth = getAuth(app)
+export const functions = getFunctions(app, FUNCTIONS_REGION)

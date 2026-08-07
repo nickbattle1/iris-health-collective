@@ -1,20 +1,26 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
+import { useBookingStore } from '@/stores/booking'
 import BaseField from '@/components/ui/BaseField.vue'
+import { formatDate, formatTime } from '@/lib/timezone'
 
 const auth = useAuthStore()
+const booking = useBookingStore()
 const router = useRouter()
+const { upcoming, loadingMine } = storeToRefs(booking)
 
 const form = ref({ displayName: '', pronouns: '' })
 const saved = ref(false)
 const verifySent = ref(false)
+const cancellingId = ref('')
+const cancelError = ref('')
 
-/* watched rather than read once on mount. signing in navigates here straight
-   away, while the profile read is still in flight, so a one-off read lands
-   before the data does. immediate covers the refresh case where it is already
-   there. */
+// watched, not read once on mount. signing in lands you here while the profile
+// read is still in flight, so a one off read gets there before the data does.
+// immediate covers the refresh case where it's already loaded
 watch(
   () => auth.profile,
   (profile) => {
@@ -23,6 +29,8 @@ watch(
   },
   { immediate: true },
 )
+
+onMounted(() => booking.loadMyBookings())
 
 async function save() {
   saved.value = false
@@ -39,7 +47,24 @@ async function resend() {
   try {
     await auth.resendVerification()
     verifySent.value = true
-  } catch {}
+  } catch {
+    // the store holds the message
+  }
+}
+
+// cancel goes through a callable, not a firestore write. the client can't edit
+// a booking at all: the transaction that took the slot has to be the one that
+// gives it back
+async function cancel(id) {
+  cancelError.value = ''
+  cancellingId.value = id
+  try {
+    await booking.cancel(id)
+  } catch (err) {
+    cancelError.value = err?.message ?? 'We could not cancel that. Please try again.'
+  } finally {
+    cancellingId.value = ''
+  }
 }
 
 async function signOut() {
@@ -99,8 +124,37 @@ const roleLabel = { member: 'Community member', provider: 'Provider', admin: 'Ch
     </section>
 
     <section class="mb-5" aria-labelledby="bookings">
-      <h2 id="bookings" class="h5 mb-2">Upcoming bookings</h2>
-      <p class="text-muted mb-0">
+      <h2 id="bookings" class="h5 mb-3">Upcoming bookings</h2>
+
+      <p v-if="cancelError" class="alert alert-danger" role="alert">{{ cancelError }}</p>
+
+      <p v-if="loadingMine" class="text-muted mb-0" aria-busy="true">Loading your bookings...</p>
+
+      <template v-else-if="upcoming.length">
+        <article v-for="item in upcoming" :key="item.id" class="booking-row">
+          <div>
+            <p class="fw-bold mb-1">{{ item.serviceName }}</p>
+            <p class="mb-1 small">
+              {{ formatDate(item.startAt) }}, {{ formatTime(item.startAt) }}
+              with {{ item.practitionerName }}
+            </p>
+            <p class="mb-0 text-muted small">Reference {{ item.reference }}</p>
+          </div>
+          <button
+            type="button"
+            class="btn btn-link fw-semibold p-0 text-nowrap"
+            :disabled="cancellingId === item.id"
+            @click="cancel(item.id)"
+          >
+            {{ cancellingId === item.id ? 'Cancelling...' : 'Cancel' }}
+            <span class="visually-hidden">
+              {{ item.serviceName }} on {{ formatDate(item.startAt) }}
+            </span>
+          </button>
+        </article>
+      </template>
+
+      <p v-else class="text-muted mb-0">
         You have no upcoming bookings.
         <RouterLink to="/book">Book a session</RouterLink>
       </p>
@@ -122,3 +176,17 @@ const roleLabel = { member: 'Community member', provider: 'Provider', admin: 'Ch
     <button type="button" class="btn btn-link p-0" @click="signOut">Sign out</button>
   </div>
 </template>
+
+<style scoped>
+.booking-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--iris-border);
+  border-radius: var(--iris-radius-md);
+  background: var(--iris-surface-muted);
+}
+</style>
