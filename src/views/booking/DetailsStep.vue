@@ -178,14 +178,6 @@ async function submit() {
         @blur="form.touch('notes')"
       />
 
-      <p v-if="!auth.isAuthenticated" class="signin-hint">
-        Already have an account?
-        <RouterLink :to="{ name: 'login', query: { redirect: '/book/details' } }">
-          Sign in first
-        </RouterLink>
-        and this booking appears there. You can also book without one.
-      </p>
-
       <div class="not-asked mb-4">
         <p class="fw-bold mb-2">What we deliberately do not ask</p>
         <ul class="mb-0 small">
@@ -226,14 +218,6 @@ async function submit() {
   margin-bottom: 0.6rem;
   font-size: 0.9rem;
   background: var(--iris-purple-50);
-  border-radius: var(--iris-radius-sm);
-}
-
-.signin-hint {
-  padding: 0.7rem 0.9rem;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  background: var(--iris-surface-muted);
   border-radius: var(--iris-radius-sm);
 }
 

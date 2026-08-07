@@ -153,9 +153,14 @@ router.beforeEach(async (to) => {
 // set the title, announce it, move focus to main. without this a keyboard user
 // stays where they were and has no idea the page changed
 router.afterEach((to, from) => {
-  // leaving the wizard clears it. otherwise a selection from last week is
-  // still sitting there next time you open /book
-  if (from.path.startsWith('/book') && !to.path.startsWith('/book')) {
+  /* leaving the wizard clears it, otherwise a selection from last week is
+     still sitting there next time you open /book.
+
+     signing in is not leaving. the whole point of the account prompt on the
+     confirmation screen is that you come back to it, and resetting on the way
+     out was throwing the booking away before you got there. */
+  const goingToAuth = to.path === '/login' || to.path === '/register'
+  if (from.path.startsWith('/book') && !to.path.startsWith('/book') && !goingToAuth) {
     useBookingStore().reset()
   }
 

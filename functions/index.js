@@ -10,6 +10,7 @@ import { getAuth } from 'firebase-admin/auth'
 import {
   bookingRequestSchema,
   cancelRequestSchema,
+  claimRequestSchema,
   firstMessage,
   issuesToErrors,
   roleRequestSchema,
@@ -143,6 +144,44 @@ export const cancelBooking = onCall(async (request) => {
   }
 
   logger.info('booking cancelled', { bookingId: parsed.data.bookingId })
+  return { ok: true }
+})
+
+// claimBooking, callable. moves a booking made anonymously onto an account
+// that already existed, which linkWithCredential cannot do.
+export const claimBooking = onCall(async (request) => {
+  const uid = request.auth?.uid
+  if (!uid) throw new HttpsError('unauthenticated', 'Please sign in first.')
+
+  const parsed = claimRequestSchema.safeParse(request.data)
+  if (!parsed.success) throw new HttpsError('invalid-argument', firstMessage(parsed.error))
+
+  /* the token is the whole security model here. verifyIdToken checks google
+     signed it, so the caller has to have actually held that anonymous session.
+     a booking id on its own would let anyone who guessed a reference walk off
+     with someone else's counselling appointment. */
+  let previous
+  try {
+    previous = await getAuth().verifyIdToken(parsed.data.previousToken)
+  } catch {
+    throw new HttpsError('permission-denied', 'That session has expired. Please sign in and book again.')
+  }
+
+  // only ever moves off an anonymous session, never between two real accounts
+  if (previous.firebase?.sign_in_provider !== 'anonymous') {
+    throw new HttpsError('permission-denied', 'That booking cannot be moved.')
+  }
+
+  const ref = db.collection('bookings').doc(parsed.data.bookingId)
+  const snapshot = await ref.get()
+
+  // same answer either way, so this cannot be used to probe for real ids
+  if (!snapshot.exists || snapshot.get('uid') !== previous.uid) {
+    throw new HttpsError('not-found', 'We could not find that booking.')
+  }
+
+  await ref.update({ uid, claimedAt: FieldValue.serverTimestamp() })
+  logger.info('booking claimed', { bookingId: parsed.data.bookingId })
   return { ok: true }
 })
 

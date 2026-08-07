@@ -25,18 +25,31 @@ export const useAuthStore = defineStore('auth', () => {
     () => profile.value?.displayName ?? user.value?.displayName ?? 'Friend',
   )
 
+  /* applies whatever the SDK just handed back instead of waiting on the
+     listener.
+
+     two separate timing problems made this necessary. linkWithCredential never
+     fires onAuthStateChanged at all, so upgrading an anonymous session left
+     isAuthenticated false and the guard bounced you to login. and signing in
+     fires it a tick after the promise resolves, so the router.push straight
+     after ran against a stale user and looked like nothing happened until you
+     refreshed. */
+  async function applyUser(firebaseUser) {
+    user.value = firebaseUser ?? null
+    if (firebaseUser) {
+      role.value = await authService.readRole(firebaseUser)
+      profile.value = firebaseUser.isAnonymous
+        ? null
+        : await authService.getProfile(firebaseUser.uid)
+    } else {
+      role.value = 'member'
+      profile.value = null
+    }
+  }
+
   function init() {
     authService.watchAuth(async (firebaseUser) => {
-      user.value = firebaseUser
-      if (firebaseUser) {
-        role.value = await authService.readRole(firebaseUser)
-        profile.value = firebaseUser.isAnonymous
-          ? null
-          : await authService.getProfile(firebaseUser.uid)
-      } else {
-        role.value = 'member'
-        profile.value = null
-      }
+      await applyUser(firebaseUser)
       resolveReady()
     })
     return ready
@@ -57,11 +70,32 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const register = (details) => run(() => authService.registerWithEmail(details))
-  const login = (details) => run(() => authService.loginWithEmail(details))
-  const loginGoogle = (remember) => run(() => authService.loginWithGoogle(remember))
-  const continueAnonymously = () => run(() => authService.startAnonymousSession())
-  const logout = () => run(() => authService.logout())
+  /* creating an account while anonymous links the credential to the session
+     you already have, so the uid never changes and anything booked under it
+     stays yours. registering fresh would mint a new uid and orphan the
+     booking, which is what it used to do */
+  const register = (details) =>
+    run(async () =>
+      applyUser(
+        isAnonymous.value
+          ? await authService.upgradeAnonymous(details)
+          : await authService.registerWithEmail(details),
+      ),
+    )
+  const login = (details) => run(async () => applyUser(await authService.loginWithEmail(details)))
+  const loginGoogle = (remember) =>
+    run(async () => applyUser(await authService.loginWithGoogle(remember)))
+  const continueAnonymously = () =>
+    run(async () => applyUser(await authService.startAnonymousSession()))
+  const logout = () =>
+    run(async () => {
+      await authService.logout()
+      await applyUser(null)
+    })
+
+  // proof that this browser held the session that made a booking. has to be
+  // taken before signing in, because signing in replaces the session
+  const getIdToken = () => user.value?.getIdToken?.() ?? Promise.resolve(null)
   const deleteAccount = () => run(() => authService.deleteAccount())
   const resendVerification = () => run(() => authService.sendVerification())
   const resetPassword = (email) => run(() => authService.resetPassword(email))
@@ -83,7 +117,7 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     user, profile, role, loading, error, ready,
     isAuthenticated, isAnonymous, isAdmin, isProvider, isVerified, displayName,
-    init, register, login, loginGoogle, continueAnonymously, logout,
+    init, register, login, loginGoogle, continueAnonymously, logout, getIdToken,
     deleteAccount, updateProfileFields, resendVerification, resetPassword, clearError,
   }
 })

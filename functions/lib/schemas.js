@@ -83,6 +83,14 @@ export const cancelRequestSchema = z.object({
   bookingId: z.string().trim().min(1),
 })
 
+// moving an anonymous booking onto an account you already had. the token is an
+// id token from the anonymous session, which the function verifies, so only the
+// browser that made the booking can move it
+export const claimRequestSchema = z.object({
+  bookingId: z.string().trim().min(1),
+  previousToken: z.string().trim().min(1),
+})
+
 export const roleRequestSchema = z.object({
   email: z.string().trim().regex(EMAIL, 'Enter a valid email address'),
   role: z.enum(['member', 'provider', 'admin']),

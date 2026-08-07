@@ -21,6 +21,7 @@ export const useBookingStore = defineStore('booking', () => {
 
   const myBookings = ref([])
   const loadingMine = ref(false)
+  const pendingClaim = ref(null)
 
   const service = computed(() => services.value.find((s) => s.id === serviceId.value) ?? null)
   const hasSelection = computed(() => !!service.value && !!startAt.value)
@@ -109,6 +110,25 @@ export const useBookingStore = defineStore('booking', () => {
     })
   }
 
+  /* linking works for a brand new account and keeps the uid, but firebase will
+     not link a credential that already belongs to someone. so for an account
+     you already had, take a token off the anonymous session before signing in
+     and hand it to the function afterwards as proof. */
+  async function beginClaim() {
+    if (!lastBooking.value?.id) return
+    const auth = useAuthStore()
+    const previousToken = await auth.getIdToken()
+    pendingClaim.value = previousToken ? { bookingId: lastBooking.value.id, previousToken } : null
+  }
+
+  async function finishClaim() {
+    if (!pendingClaim.value) return
+    const claim = pendingClaim.value
+    pendingClaim.value = null
+    await bookingService.claimBooking(claim)
+    await loadMyBookings()
+  }
+
   async function loadMyBookings() {
     const auth = useAuthStore()
     if (!auth.user) return
@@ -133,6 +153,7 @@ export const useBookingStore = defineStore('booking', () => {
   function reset() {
     startAt.value = ''
     lastBooking.value = null
+    pendingClaim.value = null
   }
 
   return {
@@ -153,6 +174,9 @@ export const useBookingStore = defineStore('booking', () => {
     selectService,
     selectSlot,
     submit,
+    pendingClaim,
+    beginClaim,
+    finishClaim,
     watchLast,
     loadMyBookings,
     cancel,

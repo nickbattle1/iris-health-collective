@@ -132,12 +132,32 @@ const statusLabel = {
         <p class="mb-0 text-muted">{{ provider.hours }}</p>
       </section>
 
-      <RouterLink to="/book" class="btn-iris">Book a session</RouterLink>
+      <div class="handoff">
+        <p class="fw-bold mb-1">Booking with this practice</p>
+        <p class="small mb-3">
+          {{ provider.practiceName }} is an independent practice we have reviewed,
+          not part of Iris Health Collective. Appointments are made with them
+          directly, on the number above.
+        </p>
+        <p class="small mb-3">
+          If making that first call is the hard part, book a free peer navigation
+          session. A peer worker will help you prepare for it, and can stay on the
+          line while you make it.
+        </p>
+        <RouterLink to="/book" class="btn-iris">Book peer navigation</RouterLink>
+      </div>
     </article>
   </div>
 </template>
 
 <style scoped>
+.handoff {
+  padding: 1.15rem;
+  border: 1px solid var(--iris-purple-100);
+  border-radius: var(--iris-radius-md);
+  background: var(--iris-purple-50);
+}
+
 .claim {
   padding: 1rem;
   margin-bottom: 0.75rem;

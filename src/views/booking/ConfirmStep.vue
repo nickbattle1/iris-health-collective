@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useBookingStore } from '@/stores/booking'
 import { useAuthStore } from '@/stores/auth'
@@ -15,11 +16,23 @@ import { formatDate, formatTime } from '@/lib/timezone'
 
 const store = useBookingStore()
 const auth = useAuthStore()
+const router = useRouter()
 const { lastBooking } = storeToRefs(store)
 
 const cancelling = ref(false)
 const cancelError = ref('')
+const claimError = ref('')
+const claimed = ref(false)
 let stop = () => {}
+
+/* take a token off the anonymous session before leaving, then come straight
+   back here. registering links the credential so the uid never changes and
+   there is nothing to move. signing into an account you already had cannot
+   link, so the token gets handed to claimBooking on the way back. */
+async function goToAuth(name) {
+  await store.beginClaim()
+  router.push({ name, query: { redirect: '/book/confirm' } })
+}
 
 const booking = computed(() => lastBooking.value)
 const isCancelled = computed(() => booking.value?.status === 'cancelled')
@@ -44,7 +57,20 @@ async function cancel() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  /* the claim runs before the watcher, not after. until it lands the booking
+     still carries the anonymous uid, so a listener opened now would be denied
+     by the ownership rule and torn down a second later */
+  if (auth.isAuthenticated && store.pendingClaim) {
+    try {
+      await store.finishClaim()
+      claimed.value = true
+    } catch (err) {
+      claimError.value =
+        err?.message ?? 'We could not move that booking. Your reference still works.'
+    }
+  }
+
   stop = store.watchLast()
 })
 
@@ -112,13 +138,24 @@ onBeforeUnmount(() => stop())
     <div v-if="!auth.isAuthenticated" class="alert alert-light border">
       <p class="fw-bold mb-1">Want to manage this later?</p>
       <p class="small mb-2">
-        You booked without an account, which is fine. Creating one now keeps this
-        booking on the same session, so it stays yours and you can reschedule from
-        any device. Signing into an account you already had will not move it, so
-        write down your reference if you go that way.
+        You booked without an account, which is fine. Either option below keeps
+        this booking and brings you straight back here, so you can reschedule
+        from any device. Nothing you have entered is lost.
       </p>
-      <RouterLink to="/register" class="btn-iris-outline">Create an account</RouterLink>
+      <div class="d-flex flex-wrap gap-2">
+        <button type="button" class="btn-iris-outline" @click="goToAuth('register')">
+          Create an account
+        </button>
+        <button type="button" class="btn-iris-outline" @click="goToAuth('login')">
+          I already have one
+        </button>
+      </div>
     </div>
+
+    <p v-if="claimError" class="alert alert-danger mt-3" role="alert">{{ claimError }}</p>
+    <p v-if="claimed" class="alert alert-success mt-3" role="status">
+      This booking is now saved to your account.
+    </p>
 
     <div class="d-flex flex-wrap gap-2 mt-4">
       <RouterLink to="/" class="btn-iris">Back to home</RouterLink>

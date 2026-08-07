@@ -1,6 +1,6 @@
 <script setup>
 import { ref, nextTick } from 'vue'
-import { useRouter, RouterLink } from 'vue-router'
+import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { required, email as isEmail, minLength, matches, collect } from '@/lib/validators'
 import BaseField from '@/components/ui/BaseField.vue'
@@ -12,6 +12,7 @@ import ErrorSummary from '@/components/ui/ErrorSummary.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
+const route = useRoute()
 
 const form = ref({
   displayName: '',
@@ -43,7 +44,7 @@ async function submit() {
   }
   try {
     await auth.register(form.value)
-    router.push('/account')
+    router.push(route.query.redirect ?? '/account')
   } catch {}
 }
 </script>
