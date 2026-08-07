@@ -7,9 +7,9 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    /* the role is a custom claim on the token, set server side. a role kept in
-       a firestore document could be edited by whoever owns that document, so
-       nothing here reads one. no claim means member. */
+    // role is a custom claim on the token, set server side. a role in a
+    // firestore doc could be edited by whoever owns that doc, so nothing in
+    // here reads one. no claim means member
     function isAdmin() {
       return signedIn() && request.auth.token.role == 'admin';
     }
@@ -18,9 +18,9 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == uid;
     }
 
-    /* fields a provider may change on their own listing. accreditations,
-       inclusionBasis, ratings and listingStatus are absent on purpose: a
-       practice cannot award itself a badge or promote its own ranking. */
+    // what a provider is allowed to change on their own listing.
+    // accreditations, inclusionBasis, ratings and listingStatus are missing on
+    // purpose, a practice can't award itself a badge or move its own ranking
     function providerEditableFields() {
       return request.resource.data.diff(resource.data).affectedKeys().hasOnly([
         'practiceName', 'contactPhone', 'hours', 'languages',
@@ -35,7 +35,7 @@ service cloud.firestore {
       allow update: if isAdmin()
         || (isOwner(resource.data.ownerUid) && providerEditableFields());
 
-      // reviews arrive on day 5, closed until then
+      // reviews land day 5, shut until then
       match /reviews/{reviewId} {
         allow read, write: if false;
       }
@@ -46,9 +46,37 @@ service cloud.firestore {
       allow create: if isOwner(uid);
       allow delete: if isOwner(uid) || isAdmin();
 
-      // a person can edit their own profile but cannot grant themselves a role
+      // you can edit your own profile, you can't hand yourself a role
       allow update: if (isOwner(uid) || isAdmin())
         && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']);
+    }
+
+    // what the charity offers. anyone can read so the wizard works without an
+    // account. nobody can write, these are seeded and then maintained by staff
+    // through the admin SDK
+    match /services/{serviceId} {
+      allow read: if resource.data.active == true || isAdmin();
+      allow write: if false;
+    }
+
+    // one number per slot, how many confirmed bookings it holds. no names, no
+    // uids, nothing that identifies anyone, which is what makes it safe to
+    // read publicly. the booking transaction is the only writer
+    match /availability/{serviceId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // readable by the person who made it and by staff. writable by neither.
+    //
+    // every write goes through createBooking or cancelBooking instead.
+    // stopping a double booking means reading the clashing bookings and
+    // writing the new one atomically, and a client can't be trusted with
+    // either. denying create here isn't belt and braces, it's the rule that
+    // makes the transaction mean anything
+    match /bookings/{bookingId} {
+      allow read: if isOwner(resource.data.uid) || isAdmin();
+      allow create, update, delete: if false;
     }
 
     match /{document=**} {
