@@ -22,7 +22,8 @@
     "approachTags": [
       "neurodivergent-aware",
       "culturally-safe",
-      "first-nations-affirming"
+      "first-nations-affirming",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -64,7 +65,9 @@
     "afterHours": false,
     "languages": [],
     "approachTags": [
-      "neurodivergent-aware"
+      "neurodivergent-aware",
+      "gender-affirming",
+      "trauma-informed"
     ],
     "accreditations": [
       {
@@ -160,7 +163,8 @@
     ],
     "approachTags": [
       "culturally-safe",
-      "youth-friendly"
+      "youth-friendly",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -248,7 +252,8 @@
       "Vietnamese"
     ],
     "approachTags": [
-      "first-nations-affirming"
+      "first-nations-affirming",
+      "trauma-informed"
     ],
     "accreditations": [
       {
@@ -301,7 +306,9 @@
     "approachTags": [
       "youth-friendly",
       "neurodivergent-aware",
-      "culturally-safe"
+      "culturally-safe",
+      "gender-affirming",
+      "trauma-informed"
     ],
     "accreditations": [
       {
@@ -353,7 +360,8 @@
       "Auslan"
     ],
     "approachTags": [
-      "first-nations-affirming"
+      "first-nations-affirming",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -486,7 +494,9 @@
     "approachTags": [
       "neurodivergent-aware",
       "culturally-safe",
-      "over-50s"
+      "over-50s",
+      "gender-affirming",
+      "trauma-informed"
     ],
     "accreditations": [
       {
@@ -528,7 +538,8 @@
     "languages": [],
     "approachTags": [
       "culturally-safe",
-      "youth-friendly"
+      "youth-friendly",
+      "trauma-informed"
     ],
     "accreditations": [],
     "inclusionBasis": "charity-verified",
@@ -561,7 +572,8 @@
     "languages": [],
     "approachTags": [
       "over-50s",
-      "first-nations-affirming"
+      "first-nations-affirming",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -605,7 +617,8 @@
     ],
     "approachTags": [
       "first-nations-affirming",
-      "over-50s"
+      "over-50s",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -652,7 +665,9 @@
     "approachTags": [
       "culturally-safe",
       "youth-friendly",
-      "neurodivergent-aware"
+      "neurodivergent-aware",
+      "gender-affirming",
+      "trauma-informed"
     ],
     "accreditations": [],
     "inclusionBasis": "community-endorsed",
@@ -687,7 +702,8 @@
     ],
     "approachTags": [
       "youth-friendly",
-      "neurodivergent-aware"
+      "neurodivergent-aware",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -741,7 +757,8 @@
     ],
     "approachTags": [
       "culturally-safe",
-      "youth-friendly"
+      "youth-friendly",
+      "trauma-informed"
     ],
     "accreditations": [
       {
@@ -784,7 +801,8 @@
       "Spanish"
     ],
     "approachTags": [
-      "first-nations-affirming"
+      "first-nations-affirming",
+      "gender-affirming"
     ],
     "accreditations": [],
     "inclusionBasis": "charity-verified",
@@ -862,7 +880,8 @@
       "Italian"
     ],
     "approachTags": [
-      "culturally-safe"
+      "culturally-safe",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -1000,7 +1019,8 @@
     "afterHours": false,
     "languages": [],
     "approachTags": [
-      "first-nations-affirming"
+      "first-nations-affirming",
+      "gender-affirming"
     ],
     "accreditations": [],
     "inclusionBasis": "community-endorsed",
@@ -1114,7 +1134,8 @@
     ],
     "approachTags": [
       "youth-friendly",
-      "culturally-safe"
+      "culturally-safe",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -1206,7 +1227,9 @@
     "afterHours": true,
     "languages": [],
     "approachTags": [
-      "over-50s"
+      "over-50s",
+      "gender-affirming",
+      "trauma-informed"
     ],
     "accreditations": [
       {
@@ -1251,7 +1274,8 @@
     ],
     "approachTags": [
       "neurodivergent-aware",
-      "culturally-safe"
+      "culturally-safe",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -1312,7 +1336,9 @@
     ],
     "approachTags": [
       "first-nations-affirming",
-      "neurodivergent-aware"
+      "neurodivergent-aware",
+      "gender-affirming",
+      "trauma-informed"
     ],
     "accreditations": [
       {
@@ -1369,7 +1395,8 @@
     "afterHours": true,
     "languages": [],
     "approachTags": [
-      "culturally-safe"
+      "culturally-safe",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -1470,7 +1497,8 @@
       "Greek"
     ],
     "approachTags": [
-      "first-nations-affirming"
+      "first-nations-affirming",
+      "trauma-informed"
     ],
     "accreditations": [
       {
@@ -1556,7 +1584,8 @@
     ],
     "approachTags": [
       "culturally-safe",
-      "youth-friendly"
+      "youth-friendly",
+      "trauma-informed"
     ],
     "accreditations": [],
     "inclusionBasis": "community-endorsed",
@@ -1639,7 +1668,8 @@
       "Auslan"
     ],
     "approachTags": [
-      "youth-friendly"
+      "youth-friendly",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -1725,7 +1755,8 @@
     "afterHours": false,
     "languages": [],
     "approachTags": [
-      "first-nations-affirming"
+      "first-nations-affirming",
+      "gender-affirming"
     ],
     "accreditations": [
       {
@@ -1778,7 +1809,8 @@
     ],
     "approachTags": [
       "neurodivergent-aware",
-      "culturally-safe"
+      "culturally-safe",
+      "gender-affirming"
     ],
     "accreditations": [
       {

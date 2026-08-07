@@ -209,7 +209,6 @@ async function submit() {
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--iris-purple-900);
-  text-decoration: underline;
   cursor: pointer;
 }
 

@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { fetchPublishedProviders } from '@/services/providerService'
 import { distanceKm, MELBOURNE_CBD } from '@/lib/distance'
+import { APPROACH_TAGS, DISCIPLINES } from '@/constants/tags'
 
 /* holds the directory: the loaded providers, the active filters, and the
    filtered result. the store never imports firebase directly, it calls the
@@ -14,6 +15,8 @@ export const useDirectoryStore = defineStore('directory', () => {
   const loaded = ref(false)
 
   const search = ref('')
+  const disciplines = ref([])
+  const languages = ref([])
   const badges = ref([])   // rainbow-tick, informed-consent, ...
   const access = ref([])   // telehealth, bulkBilling, ...
   const tags = ref([])     // first-nations-affirming, ...
@@ -43,14 +46,46 @@ export const useDirectoryStore = defineStore('directory', () => {
     )
   }
 
-  function matchesSearch(provider) {
-    const term = search.value.trim().toLowerCase()
-    if (!term) return true
-    return [provider.name, provider.practiceName, provider.suburb, provider.postcode]
+  /* hyphens out, so "sexual health" finds sexual-health and "first nations"
+     finds first-nations-affirming. someone typing into a search box is not
+     going to guess our slugs */
+  const normalise = (value) => String(value ?? '').toLowerCase().replace(/-/g, ' ')
+
+  /* both the code and its label go in, because the data says counselling and
+     the screen says Counselling, and either one should find the provider.
+     leaving disciplines out of here was why searching the word printed in the
+     placeholder returned nothing. */
+  function searchable(provider) {
+    return [
+      provider.name,
+      provider.practiceName,
+      provider.suburb,
+      provider.postcode,
+      ...(provider.disciplines ?? []).flatMap((code) => [code, DISCIPLINES[code]]),
+      ...(provider.approachTags ?? []).flatMap((code) => [code, APPROACH_TAGS[code]]),
+      ...(provider.languages ?? []),
+    ]
+      .filter(Boolean)
+      .map(normalise)
       .join(' ')
-      .toLowerCase()
-      .includes(term)
   }
+
+  function matchesSearch(provider) {
+    const term = normalise(search.value.trim())
+    if (!term) return true
+    return searchable(provider).includes(term)
+  }
+
+  /* built from what the directory actually holds rather than a constant, so a
+     language nobody speaks never gets a chip. auslan is left out because it is
+     already an access filter and the same thing in two groups is confusing. */
+  const languageOptions = computed(() => {
+    const found = new Set()
+    for (const p of providers.value) {
+      for (const lang of p.languages ?? []) if (lang !== 'Auslan') found.add(lang)
+    }
+    return Object.fromEntries([...found].sort().map((lang) => [lang, lang]))
+  })
 
   const results = computed(() => {
     const list = providers.value.filter(
@@ -58,7 +93,13 @@ export const useDirectoryStore = defineStore('directory', () => {
         matchesSearch(p) &&
         badges.value.every((code) => hasLiveBadge(p, code)) &&
         access.value.every((field) => p[field] === true) &&
-        tags.value.every((tag) => (p.approachTags ?? []).includes(tag)),
+        tags.value.every((tag) => (p.approachTags ?? []).includes(tag)) &&
+        // any of the chosen services, not all. nobody wants a GP who is also
+        // an endocrinologist and a peer worker
+        (!disciplines.value.length ||
+          disciplines.value.some((code) => (p.disciplines ?? []).includes(code))) &&
+        (!languages.value.length ||
+          languages.value.some((lang) => (p.languages ?? []).includes(lang))),
     )
 
     return list
@@ -72,7 +113,13 @@ export const useDirectoryStore = defineStore('directory', () => {
   const resultCount = computed(() => results.value.length)
 
   const filterCount = computed(
-    () => badges.value.length + access.value.length + tags.value.length + (search.value ? 1 : 0),
+    () =>
+      badges.value.length +
+      access.value.length +
+      tags.value.length +
+      disciplines.value.length +
+      languages.value.length +
+      (search.value ? 1 : 0),
   )
 
   function toggle(list, value) {
@@ -84,9 +131,13 @@ export const useDirectoryStore = defineStore('directory', () => {
   const toggleBadge = (code) => toggle(badges, code)
   const toggleAccess = (field) => toggle(access, field)
   const toggleTag = (tag) => toggle(tags, tag)
+  const toggleDiscipline = (code) => toggle(disciplines, code)
+  const toggleLanguage = (lang) => toggle(languages, lang)
 
   function clearFilters() {
     search.value = ''
+    disciplines.value = []
+    languages.value = []
     badges.value = []
     access.value = []
     tags.value = []
@@ -94,8 +145,8 @@ export const useDirectoryStore = defineStore('directory', () => {
 
   return {
     providers, loading, error, loaded,
-    search, badges, access, tags, origin,
+    search, badges, access, tags, disciplines, languages, languageOptions, origin,
     results, resultCount, filterCount,
-    load, toggleBadge, toggleAccess, toggleTag, clearFilters,
+    load, toggleBadge, toggleAccess, toggleTag, toggleDiscipline, toggleLanguage, clearFilters,
   }
 })

@@ -2,6 +2,8 @@
    the chips, so the ui reads straight off this. */
 
 export const APPROACH_TAGS = {
+  'gender-affirming': 'Gender affirming care',
+  'trauma-informed': 'Trauma informed',
   'first-nations-affirming': 'First Nations affirming',
   'youth-friendly': 'Youth friendly',
   'over-50s': 'Experienced with over 50s',
