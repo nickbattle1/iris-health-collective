@@ -110,6 +110,24 @@ const routes = [
     meta: { title: 'Privacy and data', requiresAuth: true },
   },
   {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('@/views/admin/DashboardView.vue'),
+    meta: { title: 'Staff dashboard', requiresAuth: true, roles: ['admin'] },
+  },
+  {
+    path: '/admin/reviews',
+    name: 'admin-reviews',
+    component: () => import('@/views/admin/ModerationView.vue'),
+    meta: { title: 'Review queue', requiresAuth: true, roles: ['admin'] },
+  },
+  {
+    path: '/admin/bookings',
+    name: 'admin-bookings',
+    component: () => import('@/views/admin/BookingsView.vue'),
+    meta: { title: 'Bookings', requiresAuth: true, roles: ['admin'] },
+  },
+  {
     path: '/403',
     name: 'forbidden',
     component: () => import('@/views/ForbiddenView.vue'),
@@ -188,3 +206,4 @@ router.afterEach((to, from) => {
 })
 
 export default router
+
