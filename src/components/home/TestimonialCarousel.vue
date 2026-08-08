@@ -13,7 +13,7 @@ const testimonials = [
   {
     name: 'Priya',
     age: 28,
-    image: '/images/priya.png',
+    image: '/images/priya.jpeg',
     rating: 5,
     quote:
       'I found a doctor who respected my name, my identity and my background. Booking online meant I could ask for the care I needed without having to explain myself over the phone.',
@@ -21,7 +21,7 @@ const testimonials = [
   {
     name: 'Darius',
     age: 17,
-    image: '/images/darius.png',
+    image: '/images/darius.jpeg',
     rating: 5,
     quote:
       'I could explore everything privately, without creating an account or worrying about notifications. For the first time, I felt safe enough to look for support.',
@@ -29,7 +29,7 @@ const testimonials = [
   {
     name: 'Graham',
     age: 58,
-    image: '/images/graham.png',
+    image: '/images/graham.jpeg',
     rating: 4.5,
     quote:
       'The website was clear, simple and easy to use. I booked my appointment without any confusion, and the discreet reminder helped me keep my health private.',
@@ -160,6 +160,7 @@ onBeforeUnmount(() => window.clearInterval(timer))
 }
 
 .why-us__subtitle {
+  font-size: 1.15rem;
   color: rgba(255, 255, 255, 0.88);
   margin-bottom: 1.5rem;
 }
@@ -190,6 +191,7 @@ onBeforeUnmount(() => window.clearInterval(timer))
   height: 210px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center top;
   margin-bottom: 1.25rem;
 }
 
@@ -201,7 +203,7 @@ onBeforeUnmount(() => window.clearInterval(timer))
 }
 
 .why-us__quote {
-  font-size: 1.1rem;
+  font-size: 1.27rem;
   line-height: 1.6;
   margin-bottom: 1rem;
 }
@@ -210,6 +212,7 @@ onBeforeUnmount(() => window.clearInterval(timer))
 .why-us__quote::after { content: '\201D'; }
 
 .why-us__author {
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--iris-pink);
 }
@@ -289,7 +292,7 @@ onBeforeUnmount(() => window.clearInterval(timer))
 
   .why-us__stage { min-height: 500px; }
   .why-us__avatar { width: 165px; height: 165px; }
-  .why-us__quote { font-size: 1rem; }
+  .why-us__quote { font-size: 1.15rem; }
   .why-us__arrow { width: 42px; height: 42px; }
 }
 

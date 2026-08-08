@@ -38,6 +38,14 @@ const featuredResources = [
 <template>
   <div class="container py-4 py-lg-5">
     <section class="mb-4" aria-labelledby="hero-heading">
+      <img
+        src="/images/home.jpg"
+        alt=""
+        class="hero-image"
+        width="1600"
+        height="900"
+        fetchpriority="high"
+      />
       <h1 id="hero-heading" class="hero-title">
         Health care<br />that sees <span class="accent">you.</span>
       </h1>
@@ -51,7 +59,9 @@ const featuredResources = [
       <span class="flex-grow-1">
         <span class="crisis-banner__title d-block">Need support now?</span>
         <span class="crisis-banner__detail d-block">
-          QLife: 1800 184 527 &nbsp;|&nbsp; Emergency: 000
+          <span class="nowrap">QLife: 1800 184 527</span>
+          <span aria-hidden="true">&nbsp;|&nbsp;</span>
+          <span class="nowrap">Emergency: 000</span>
         </span>
       </span>
       <i class="bi bi-arrow-right fs-4" aria-hidden="true"></i>
@@ -104,6 +114,21 @@ const featuredResources = [
 </template>
 
 <style scoped>
+/* a phone number split across two lines is not a phone number. the break is
+   allowed between the two services, never inside one */
+.nowrap {
+  white-space: nowrap;
+}
+
+/* full width above the headline, whole image, no crop at any size */
+.hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--iris-radius-md);
+  margin-bottom: 1.5rem;
+}
+
 .resource-card__media img {
   width: 100%;
   height: 100%;

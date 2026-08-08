@@ -58,7 +58,17 @@ onMounted(() => store.load())
 
 <template>
   <div class="container py-4 py-lg-5">
-    <h1 class="mb-4">Find affirming care</h1>
+    <h1 class="mb-2">Find affirming care</h1>
+    <p class="hero-lead mb-3">
+      Independent GPs and allied health providers across Victoria, checked by us
+      so you do not have to work out who gets it.
+    </p>
+
+    <p class="scope-note mb-4">
+      These practices are not part of Iris Health Collective. Contact them
+      directly to make an appointment. To book counselling, peer navigation or a
+      group session with us, use <RouterLink to="/book">Book a session</RouterLink>.
+    </p>
 
     <div class="search-row">
       <label for="provider-search" class="visually-hidden">
@@ -171,6 +181,16 @@ onMounted(() => store.load())
 </template>
 
 <style scoped>
+/* same treatment as the note on the booking page. the two halves of the site
+   do different things and the difference is not obvious from the nav */
+.scope-note {
+  padding: 0.75rem 1rem;
+  font-size: 0.92rem;
+  background: var(--iris-surface-muted);
+  border-left: 4px solid var(--iris-purple-500);
+  border-radius: var(--iris-radius-sm);
+}
+
 .search-row {
   display: flex;
   gap: 0.6rem;

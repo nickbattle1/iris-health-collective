@@ -71,7 +71,19 @@ const routes = [
     path: '/about',
     name: 'about',
     component: () => import('@/views/AboutView.vue'),
-    meta: { title: 'About and privacy' },
+    meta: { title: 'About us' },
+  },
+  {
+    path: '/about/privacy',
+    name: 'about-privacy',
+    component: () => import('@/views/about/PrivacyView.vue'),
+    meta: { title: 'Privacy and safety' },
+  },
+  {
+    path: '/about/contact',
+    name: 'about-contact',
+    component: () => import('@/views/about/ContactView.vue'),
+    meta: { title: 'Contact us' },
   },
   {
     path: '/login',

@@ -45,7 +45,10 @@ const year = new Date().getFullYear()
       </section>
 
       <nav aria-label="Footer" class="site-footer__nav">
-        <RouterLink to="/about">About and privacy</RouterLink>
+        <RouterLink to="/about">About us</RouterLink>
+        <RouterLink to="/about/privacy">Privacy and safety</RouterLink>
+        <RouterLink to="/about/contact#accessibility">Accessibility</RouterLink>
+        <RouterLink to="/about/contact">Contact us</RouterLink>
       </nav>
 
       <p class="site-footer__legal">
