@@ -77,7 +77,8 @@ async function submit() {
         id="chosenName"
         v-model="values.chosenName"
         label="Chosen name"
-        hint="What should we call you? This is the only name we use, in reminders and at reception."
+        hint="This is the only name we use, in reminders and at reception."
+        placeholder="What should we call you?"
         autocomplete="nickname"
         maxlength="60"
         required
