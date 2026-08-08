@@ -79,6 +79,16 @@ service cloud.firestore {
       allow create, update, delete: if false;
     }
 
+    // contact form submissions. staff read them, nobody writes from a browser.
+    //
+    // submitEnquiry is the only writer, and it takes no auth, so this is the
+    // rule doing the work. an open create here would let anyone flood the
+    // collection or read back what someone else reported about a practice
+    match /enquiries/{enquiryId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

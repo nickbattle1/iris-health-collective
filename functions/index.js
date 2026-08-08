@@ -11,8 +11,10 @@ import {
   bookingRequestSchema,
   cancelRequestSchema,
   claimRequestSchema,
+  enquirySchema,
   firstMessage,
   issuesToErrors,
+  minimiseEnquiry,
   roleRequestSchema,
 } from './lib/schemas.js'
 import { isLegalSlot } from './lib/slots.js'
@@ -230,6 +232,36 @@ export const onBookingCreated = onDocumentCreated(
     }
   },
 )
+
+/* submitEnquiry, callable. the contact form.
+   
+   no auth check, unlike the booking functions. someone reporting a practice
+   that treated them badly should not have to start a session with us to do it,
+   and the page promises they can write without saying who they are. the schema
+   is the whole gate, so it is parsed here rather than trusted from the form. */
+export const submitEnquiry = onCall(async (request) => {
+  const parsed = enquirySchema.safeParse(request.data)
+  if (!parsed.success) {
+    throw new HttpsError('invalid-argument', firstMessage(parsed.error), {
+      fields: issuesToErrors(parsed.error),
+    })
+  }
+
+  // an email typed and then unticked never reaches firestore
+  const enquiry = minimiseEnquiry(parsed.data)
+
+  const doc = await db.collection('enquiries').add({
+    ...enquiry,
+    status: 'new',
+    createdAt: FieldValue.serverTimestamp(),
+  })
+
+  // topic only. the message is why someone wrote to us anonymously, and logs
+  // are readable by anyone with console access
+  logger.info('enquiry received', { enquiryId: doc.id, topic: enquiry.topic })
+
+  return { ok: true, id: doc.id, wantsReply: parsed.data.wantsReply }
+})
 
 // setUserRole, callable, admin only. C.2
 export const setUserRole = onCall(async (request) => {

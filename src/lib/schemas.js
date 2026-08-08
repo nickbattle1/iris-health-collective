@@ -91,6 +91,65 @@ export const claimRequestSchema = z.object({
   previousToken: z.string().trim().min(1),
 })
 
+/* the contact form. the page promises twice that you can write to us without
+   saying who you are, and the complaints section says you can complain
+   anonymously, so email is only required once you have asked for a reply. same
+   cross field rule as the booking form, for the same reason. */
+
+export const ENQUIRY_TOPICS = [
+  { value: 'general', label: 'General enquiry' },
+  { value: 'bookings', label: 'Bookings' },
+  { value: 'events', label: 'Events' },
+  { value: 'donation', label: 'Making a donation' },
+  { value: 'feedback', label: 'Giving feedback' },
+  { value: 'complaint', label: 'Making a complaint' },
+]
+
+export const ENQUIRY_TOPIC_VALUES = ENQUIRY_TOPICS.map((topic) => topic.value)
+
+export const ENQUIRY_MESSAGE_MAX = 1000
+
+export const enquirySchema = z
+  .object({
+    // a refine rather than z.enum, so the wording is ours and the list stays
+    // the one the dropdown renders
+    topic: z
+      .string()
+      .trim()
+      .refine((value) => ENQUIRY_TOPIC_VALUES.includes(value), 'Choose what your message is about')
+      .default('general'),
+
+    message: z
+      .string()
+      .trim()
+      .min(10, 'Tell us a little more, at least 10 characters')
+      .max(ENQUIRY_MESSAGE_MAX, `Please keep your message to ${ENQUIRY_MESSAGE_MAX} characters or fewer`),
+
+    name: z.string().trim().max(60, 'Please keep the name to 60 characters or fewer').default(''),
+
+    wantsReply: z.boolean().default(false),
+    email: z.string().trim().max(120, 'That email address is too long').default(''),
+  })
+  .superRefine((values, ctx) => {
+    if (values.wantsReply && !EMAIL.test(values.email)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['email'],
+        message: 'Enter an email like you@example.com, or untick the reply request',
+      })
+    }
+  })
+
+// nothing identifying is kept unless it was given to be replied to
+export function minimiseEnquiry(enquiry) {
+  return {
+    topic: enquiry.topic,
+    message: enquiry.message,
+    name: enquiry.name || null,
+    email: enquiry.wantsReply ? enquiry.email : null,
+  }
+}
+
 export const roleRequestSchema = z.object({
   email: z.string().trim().regex(EMAIL, 'Enter a valid email address'),
   role: z.enum(['member', 'provider', 'admin']),

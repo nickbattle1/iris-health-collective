@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { bookingDetailsSchema, issuesToErrors, minimiseDetails } from './schemas'
+import {
+  bookingDetailsSchema,
+  enquirySchema,
+  issuesToErrors,
+  minimiseDetails,
+  minimiseEnquiry,
+} from './schemas'
 
 /* B.1 lives or dies on these. the same schema runs in createBooking, so a rule
    proven here is a rule the server enforces. */
@@ -94,5 +100,46 @@ describe('data minimisation', () => {
   it('never stores a gender field, because the form never asks for one', () => {
     const stored = minimiseDetails(bookingDetailsSchema.parse(base))
     expect(Object.keys(stored)).not.toContain('gender')
+  })
+})
+
+describe('contact enquiry', () => {
+  const enquiry = {
+    topic: 'general',
+    message: 'I would like to know whether you run evening sessions.',
+    name: '',
+    wantsReply: false,
+    email: '',
+  }
+
+  const enquiryErrors = (input) => {
+    const result = enquirySchema.safeParse(input)
+    return result.success ? {} : issuesToErrors(result.error)
+  }
+
+  it('takes a message with no name and no email, so you can write anonymously', () => {
+    expect(enquiryErrors(enquiry)).toEqual({})
+  })
+
+  it('rejects a topic that is not on the dropdown', () => {
+    expect(enquiryErrors({ ...enquiry, topic: 'refunds' }).topic).toBeDefined()
+  })
+
+  it('wants a message of some substance', () => {
+    expect(enquiryErrors({ ...enquiry, message: 'hi' }).message).toMatch(/at least 10/)
+    expect(enquiryErrors({ ...enquiry, message: 'a'.repeat(1001) }).message).toMatch(/1000/)
+  })
+
+  it('only asks for an email once a reply has been requested', () => {
+    expect(enquiryErrors({ ...enquiry, wantsReply: false, email: '' }).email).toBeUndefined()
+    expect(enquiryErrors({ ...enquiry, wantsReply: true, email: '' }).email).toBeDefined()
+    expect(
+      enquiryErrors({ ...enquiry, wantsReply: true, email: 'sam@example.com' }).email,
+    ).toBeUndefined()
+  })
+
+  it('drops an email typed and then unticked', () => {
+    const parsed = enquirySchema.parse({ ...enquiry, email: 'typed@example.com' })
+    expect(minimiseEnquiry(parsed).email).toBeNull()
   })
 })

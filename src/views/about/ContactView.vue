@@ -1,5 +1,14 @@
 <script setup>
+import { nextTick, ref, watch } from 'vue'
 import AboutNav from '@/components/about/AboutNav.vue'
+import BaseField from '@/components/ui/BaseField.vue'
+import BaseSelect from '@/components/ui/BaseSelect.vue'
+import BaseTextarea from '@/components/ui/BaseTextarea.vue'
+import BaseCheckbox from '@/components/ui/BaseCheckbox.vue'
+import ErrorSummary from '@/components/ui/ErrorSummary.vue'
+import { useZodForm } from '@/composables/useZodForm'
+import { enquirySchema, ENQUIRY_MESSAGE_MAX, ENQUIRY_TOPICS } from '@/lib/schemas'
+import { submitEnquiry } from '@/services/enquiryService'
 
 /* contact, feedback and complaints.
 
@@ -13,6 +22,44 @@ const complaintSteps = [
   'We contact you to check we have understood it correctly',
   'We respond with an outcome within 20 business days',
 ]
+
+const form = useZodForm(enquirySchema, {
+  topic: 'general',
+  message: '',
+  name: '',
+  wantsReply: false,
+  email: '',
+})
+
+const { values, errors, summary, submitting } = form
+const sent = ref(null)
+
+// the two sections above link down here. setting the topic on the way saves
+// someone reading the dropdown for the thing they have already told us
+function jumpToForm(topic) {
+  values.topic = topic
+  sent.value = null
+}
+
+// asking for a reply and then changing your mind shouldn't leave an error
+// sitting under a field that is no longer required
+watch(
+  () => values.wantsReply,
+  () => form.clearServerError('email'),
+)
+
+async function send() {
+  await form.handleSubmit(async (enquiry) => {
+    await submitEnquiry(enquiry)
+    sent.value = { wantsReply: enquiry.wantsReply }
+    form.reset()
+
+    // the confirmation renders above a form that is now empty again, so send
+    // them back up to it rather than leaving them at the send button
+    await nextTick()
+    document.getElementById('enquiry-form')?.focus()
+  })
+}
 
 const escalation = [
   {
@@ -91,6 +138,7 @@ const escalation = [
       <p class="mb-0">
         You can send feedback anonymously by leaving the contact fields blank.
         That means we cannot follow up or tell you what came of it.
+        <a href="#enquiry-form" @click="jumpToForm('feedback')">Send feedback using the form below</a>.
       </p>
     </section>
 
@@ -100,6 +148,7 @@ const escalation = [
         You can complain about a service you received from us, a staff member or
         volunteer, a provider in our directory, or the way we have handled your
         information.
+        <a href="#enquiry-form" @click="jumpToForm('complaint')">Make a complaint using the form below</a>.
       </p>
 
       <ol class="mb-3">
@@ -128,7 +177,7 @@ const escalation = [
       </article>
     </section>
 
-    <section aria-labelledby="accessibility">
+    <section class="mb-5" aria-labelledby="accessibility">
       <h2 id="accessibility" class="section-heading">Accessibility</h2>
       <p>
         If any part of this site is difficult to use, tell us and we will fix it.
@@ -139,6 +188,82 @@ const escalation = [
         <strong>National Relay Service</strong> users can call
         <a href="tel:133677">133 677</a> and ask for our number.
       </p>
+    </section>
+
+    <!-- tabindex so the two links above land a keyboard user on the form
+         itself, not just somewhere near it on screen -->
+    <section id="enquiry-form" tabindex="-1" aria-labelledby="enquiry-form-heading">
+      <h2 id="enquiry-form-heading" class="section-heading">Send us a message</h2>
+
+      <p v-if="sent" class="sent" role="status">
+        <strong>Thank you, your message has been sent.</strong>
+        <span v-if="sent.wantsReply" class="d-block">
+          We aim to reply within two business days.
+        </span>
+        <span v-else class="d-block">
+          You did not ask for a reply, so we will read it but will not write back.
+        </span>
+      </p>
+
+      <p>
+        Everything except the message is optional. Leave your name and email
+        blank and we will have no way of knowing who sent it.
+      </p>
+
+      <ErrorSummary :errors="summary" />
+
+      <form novalidate @submit.prevent="send">
+        <BaseSelect
+          id="topic"
+          v-model="values.topic"
+          label="What is your message about?"
+          :options="ENQUIRY_TOPICS"
+        />
+
+        <BaseTextarea
+          id="message"
+          v-model="values.message"
+          label="Your message"
+          :maxlength="ENQUIRY_MESSAGE_MAX"
+          required
+          :error="errors.message"
+          @blur="form.touch('message')"
+        />
+
+        <BaseField
+          id="name"
+          v-model="values.name"
+          label="Chosen name"
+          placeholder="What should we call you?"
+          maxlength="60"
+          :error="errors.name"
+          @blur="form.touch('name')"
+        />
+
+        <BaseCheckbox
+          id="wantsReply"
+          v-model="values.wantsReply"
+          label="Please reply to me"
+          description="We only need an email address if you want to hear back."
+        />
+
+        <BaseField
+          v-if="values.wantsReply"
+          id="email"
+          v-model="values.email"
+          label="Email address"
+          type="email"
+          autocomplete="email"
+          inputmode="email"
+          required
+          :error="errors.email"
+          @blur="form.touch('email')"
+        />
+
+        <button type="submit" class="btn-iris" :disabled="submitting">
+          {{ submitting ? 'Sending...' : 'Send message' }}
+        </button>
+      </form>
     </section>
   </div>
 </template>
@@ -178,6 +303,27 @@ const escalation = [
   margin-bottom: 0.75rem;
   border: 1px solid var(--iris-border);
   border-radius: var(--iris-radius-md);
+}
+
+.sent {
+  padding: 1rem 1.15rem;
+  margin-bottom: 1.25rem;
+  border-left: 4px solid var(--iris-success);
+  border-radius: var(--iris-radius-sm);
+  background: #eaf5f0;
+}
+
+/* the safety bar is sticky and 68px tall, so an anchor jump parks the heading
+   underneath it. this stops the scroll short by the height of the bar plus a
+   gap, which lands you above "Send us a message" rather than past it */
+#enquiry-form {
+  scroll-margin-top: 5.5rem;
+}
+
+#enquiry-form:focus-visible {
+  outline: 3px solid var(--iris-purple-900);
+  outline-offset: 8px;
+  border-radius: var(--iris-radius-sm);
 }
 
 .callout {

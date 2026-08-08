@@ -160,6 +160,12 @@ const reasonText = {
   color: var(--iris-ink-muted);
 }
 
+/* same reason as the contact form. focusing this scrolls it into view, and
+   without the margin the sticky safety bar sits over the legend */
+#choose-time {
+  scroll-margin-top: 5.5rem;
+}
+
 #choose-time:focus-visible {
   outline: 3px solid var(--iris-purple-900);
   outline-offset: 6px;
