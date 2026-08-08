@@ -40,9 +40,11 @@
     "ownerUid": null,
     "ratingSum": 4,
     "ratingCount": 1,
-    "ratingAvg": 3.7,
+    "ratingAvg": 4.0,
     "contactPhone": "03 9326 1763",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 1,
+    "baselineRatingSum": 4
   },
   {
     "slug": "dr-j-ferreira-fitzroy",
@@ -94,7 +96,9 @@
     "ratingCount": 19,
     "ratingAvg": 3.9,
     "contactPhone": "03 9407 9604",
-    "hours": "Mon to Fri, 8:30am to 5:30pm"
+    "hours": "Mon to Fri, 8:30am to 5:30pm",
+    "baselineRatingCount": 19,
+    "baselineRatingSum": 74
   },
   {
     "slug": "dr-b-okonkwo-collingwood",
@@ -137,7 +141,9 @@
     "ratingCount": 15,
     "ratingAvg": 4.2,
     "contactPhone": "03 9585 2064",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 15,
+    "baselineRatingSum": 63
   },
   {
     "slug": "dr-c-nguyen-st-kilda",
@@ -183,7 +189,9 @@
     "ratingCount": 23,
     "ratingAvg": 3.9,
     "contactPhone": "03 9254 2359",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 23,
+    "baselineRatingSum": 90
   },
   {
     "slug": "dr-a-kaur-prahran",
@@ -228,7 +236,9 @@
     "ratingCount": 11,
     "ratingAvg": 4.5,
     "contactPhone": "03 9593 7560",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 11,
+    "baselineRatingSum": 50
   },
   {
     "slug": "dr-m-mitchell-footscray",
@@ -280,7 +290,9 @@
     "ratingCount": 19,
     "ratingAvg": 4.1,
     "contactPhone": "03 9867 6613",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 19,
+    "baselineRatingSum": 78
   },
   {
     "slug": "dr-t-alvarez-northcote",
@@ -335,7 +347,9 @@
     "ratingCount": 9,
     "ratingAvg": 5.0,
     "contactPhone": "03 9857 4714",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 9,
+    "baselineRatingSum": 45
   },
   {
     "slug": "dr-p-osei-preston",
@@ -380,7 +394,9 @@
     "ratingCount": 11,
     "ratingAvg": 4.9,
     "contactPhone": "03 9497 4265",
-    "hours": "Mon to Fri, 8:30am to 5:30pm"
+    "hours": "Mon to Fri, 8:30am to 5:30pm",
+    "baselineRatingCount": 11,
+    "baselineRatingSum": 54
   },
   {
     "slug": "dr-b-bianchi-coburg",
@@ -416,7 +432,9 @@
     "ratingCount": 9,
     "ratingAvg": 4.0,
     "contactPhone": "03 9639 3281",
-    "hours": "Mon to Fri, 8:30am to 5:30pm"
+    "hours": "Mon to Fri, 8:30am to 5:30pm",
+    "baselineRatingCount": 9,
+    "baselineRatingSum": 36
   },
   {
     "slug": "dr-e-haddad-richmond",
@@ -467,7 +485,9 @@
     "ratingCount": 14,
     "ratingAvg": 4.5,
     "contactPhone": "03 9244 8757",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 14,
+    "baselineRatingSum": 63
   },
   {
     "slug": "dr-p-petrov-carlton",
@@ -513,9 +533,11 @@
     "ownerUid": null,
     "ratingSum": 5,
     "ratingCount": 1,
-    "ratingAvg": 4.7,
+    "ratingAvg": 5.0,
     "contactPhone": "03 9353 9572",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 1,
+    "baselineRatingSum": 5
   },
   {
     "slug": "dr-b-yilmaz-south-yarra",
@@ -549,7 +571,9 @@
     "ratingCount": 21,
     "ratingAvg": 4.0,
     "contactPhone": "03 9783 4665",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 21,
+    "baselineRatingSum": 84
   },
   {
     "slug": "dr-c-kowalski-hawthorn",
@@ -592,7 +616,9 @@
     "ratingCount": 14,
     "ratingAvg": 4.6,
     "contactPhone": "03 9897 3974",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 14,
+    "baselineRatingSum": 64
   },
   {
     "slug": "dr-h-rahman-box-hill",
@@ -637,7 +663,9 @@
     "ratingCount": 6,
     "ratingAvg": 4.7,
     "contactPhone": "03 9666 7844",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 6,
+    "baselineRatingSum": 28
   },
   {
     "slug": "dr-n-sokolova-ringwood",
@@ -677,7 +705,9 @@
     "ratingCount": 9,
     "ratingAvg": 4.3,
     "contactPhone": "03 9208 8080",
-    "hours": "Mon to Fri, 8:30am to 5:30pm"
+    "hours": "Mon to Fri, 8:30am to 5:30pm",
+    "baselineRatingCount": 9,
+    "baselineRatingSum": 39
   },
   {
     "slug": "dr-p-mbeki-dandenong",
@@ -730,7 +760,9 @@
     "ratingCount": 20,
     "ratingAvg": 4.6,
     "contactPhone": "03 9375 8304",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 20,
+    "baselineRatingSum": 92
   },
   {
     "slug": "dr-j-tanaka-frankston",
@@ -777,7 +809,9 @@
     "ratingCount": 16,
     "ratingAvg": 4.7,
     "contactPhone": "03 9390 3371",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 16,
+    "baselineRatingSum": 75
   },
   {
     "slug": "dr-e-silva-geelong",
@@ -812,7 +846,9 @@
     "ratingCount": 21,
     "ratingAvg": 4.4,
     "contactPhone": "03 9741 9707",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 21,
+    "baselineRatingSum": 92
   },
   {
     "slug": "dr-t-novak-ballarat",
@@ -855,7 +891,9 @@
     "ratingCount": 15,
     "ratingAvg": 4.0,
     "contactPhone": "03 9747 4248",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 15,
+    "baselineRatingSum": 60
   },
   {
     "slug": "dr-n-duarte-bendigo",
@@ -908,7 +946,9 @@
     "ratingCount": 8,
     "ratingAvg": 5.0,
     "contactPhone": "03 9117 5744",
-    "hours": "Mon to Fri, 8:30am to 5:30pm"
+    "hours": "Mon to Fri, 8:30am to 5:30pm",
+    "baselineRatingCount": 8,
+    "baselineRatingSum": 40
   },
   {
     "slug": "dr-l-ahmed-shepparton",
@@ -952,7 +992,9 @@
     "ratingCount": 8,
     "ratingAvg": 4.8,
     "contactPhone": "03 9423 2980",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 8,
+    "baselineRatingSum": 38
   },
   {
     "slug": "dr-s-lindqvist-werribee",
@@ -996,7 +1038,9 @@
     "ratingCount": 13,
     "ratingAvg": 4.7,
     "contactPhone": "03 9931 7554",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 13,
+    "baselineRatingSum": 61
   },
   {
     "slug": "dr-c-moreau-sunshine",
@@ -1030,7 +1074,9 @@
     "ratingCount": 18,
     "ratingAvg": 4.3,
     "contactPhone": "03 9312 9201",
-    "hours": "Mon to Fri, 8:30am to 5:30pm"
+    "hours": "Mon to Fri, 8:30am to 5:30pm",
+    "baselineRatingCount": 18,
+    "baselineRatingSum": 77
   },
   {
     "slug": "dr-p-kelly-reservoir",
@@ -1074,7 +1120,9 @@
     "ratingCount": 10,
     "ratingAvg": 3.9,
     "contactPhone": "03 9228 9247",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 10,
+    "baselineRatingSum": 39
   },
   {
     "slug": "dr-l-rossi-thornbury",
@@ -1106,9 +1154,11 @@
     "ownerUid": null,
     "ratingSum": 4,
     "ratingCount": 1,
-    "ratingAvg": 4.2,
+    "ratingAvg": 4.0,
     "contactPhone": "03 9329 3529",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 1,
+    "baselineRatingSum": 4
   },
   {
     "slug": "dr-p-park-williamstown",
@@ -1154,7 +1204,9 @@
     "ratingCount": 24,
     "ratingAvg": 3.8,
     "contactPhone": "03 9638 4846",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 24,
+    "baselineRatingSum": 91
   },
   {
     "slug": "dr-s-weaver-essendon",
@@ -1204,7 +1256,9 @@
     "ratingCount": 13,
     "ratingAvg": 4.1,
     "contactPhone": "03 9326 5342",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 13,
+    "baselineRatingSum": 53
   },
   {
     "slug": "dr-l-dubois-moonee-ponds",
@@ -1246,9 +1300,11 @@
     "ownerUid": null,
     "ratingSum": 22,
     "ratingCount": 6,
-    "ratingAvg": 3.6,
+    "ratingAvg": 3.7,
     "contactPhone": "03 9295 4039",
-    "hours": "Mon to Fri, 8:30am to 5:30pm"
+    "hours": "Mon to Fri, 8:30am to 5:30pm",
+    "baselineRatingCount": 6,
+    "baselineRatingSum": 22
   },
   {
     "slug": "dr-s-hargreaves-camberwell",
@@ -1310,7 +1366,9 @@
     "ratingCount": 13,
     "ratingAvg": 4.9,
     "contactPhone": "03 9297 6297",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 13,
+    "baselineRatingSum": 64
   },
   {
     "slug": "dr-c-marchetti-glen-waverley",
@@ -1373,7 +1431,9 @@
     "ratingCount": 1,
     "ratingAvg": 4.0,
     "contactPhone": "03 9124 4831",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 1,
+    "baselineRatingSum": 4
   },
   {
     "slug": "dr-t-ivanov-melbourne",
@@ -1423,7 +1483,9 @@
     "ratingCount": 9,
     "ratingAvg": 4.8,
     "contactPhone": "03 9166 1554",
-    "hours": "Mon to Fri, 8:30am to 5:30pm"
+    "hours": "Mon to Fri, 8:30am to 5:30pm",
+    "baselineRatingCount": 9,
+    "baselineRatingSum": 43
   },
   {
     "slug": "dr-p-sultana-docklands",
@@ -1473,7 +1535,9 @@
     "ratingCount": 15,
     "ratingAvg": 5.0,
     "contactPhone": "03 9680 5385",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 15,
+    "baselineRatingSum": 75
   },
   {
     "slug": "dr-j-brennan-brighton",
@@ -1517,7 +1581,9 @@
     "ratingCount": 20,
     "ratingAvg": 4.7,
     "contactPhone": "03 9294 4181",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 20,
+    "baselineRatingSum": 94
   },
   {
     "slug": "dr-r-costa-bentleigh",
@@ -1559,7 +1625,9 @@
     "ratingCount": 22,
     "ratingAvg": 4.5,
     "contactPhone": "03 9289 6115",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 22,
+    "baselineRatingSum": 99
   },
   {
     "slug": "dr-m-adeyemi-cheltenham",
@@ -1595,7 +1663,9 @@
     "ratingCount": 17,
     "ratingAvg": 4.6,
     "contactPhone": "03 9106 8113",
-    "hours": "Mon to Sat, 8am to 6pm"
+    "hours": "Mon to Sat, 8am to 6pm",
+    "baselineRatingCount": 17,
+    "baselineRatingSum": 78
   },
   {
     "slug": "dr-k-vargas-traralgon",
@@ -1644,7 +1714,9 @@
     "ratingCount": 4,
     "ratingAvg": 4.5,
     "contactPhone": "03 9602 4233",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 4,
+    "baselineRatingSum": 18
   },
   {
     "slug": "dr-a-lindgren-warrnambool",
@@ -1688,7 +1760,9 @@
     "ratingCount": 20,
     "ratingAvg": 4.7,
     "contactPhone": "03 9352 4155",
-    "hours": "Mon to Fri, 9am to 5pm"
+    "hours": "Mon to Fri, 9am to 5pm",
+    "baselineRatingCount": 20,
+    "baselineRatingSum": 94
   },
   {
     "slug": "dr-b-farrell-mildura",
@@ -1732,7 +1806,9 @@
     "ratingCount": 14,
     "ratingAvg": 3.9,
     "contactPhone": "03 9467 8054",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 14,
+    "baselineRatingSum": 55
   },
   {
     "slug": "dr-l-nakamura-wodonga",
@@ -1781,9 +1857,11 @@
     "ownerUid": null,
     "ratingSum": 14,
     "ratingCount": 4,
-    "ratingAvg": 3.6,
+    "ratingAvg": 3.5,
     "contactPhone": "03 9953 6749",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 4,
+    "baselineRatingSum": 14
   },
   {
     "slug": "dr-a-oyelaran-castlemaine",
@@ -1837,6 +1915,8 @@
     "ratingCount": 8,
     "ratingAvg": 4.6,
     "contactPhone": "03 9855 7086",
-    "hours": "Tue to Fri, 10am to 7pm"
+    "hours": "Tue to Fri, 10am to 7pm",
+    "baselineRatingCount": 8,
+    "baselineRatingSum": 37
   }
 ]
