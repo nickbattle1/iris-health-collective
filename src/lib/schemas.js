@@ -150,6 +150,48 @@ export function minimiseEnquiry(enquiry) {
   }
 }
 
+/* reviews. C.3.
+
+   the rating is the range check, the comment is the length check, and the
+   display name is optional because someone reviewing a sexual health clinic
+   may not want their name against it. */
+
+export const REVIEW_COMMENT_MAX = 600
+
+export const reviewSchema = z.object({
+  // coerce because a radio input hands back a string
+  rating: z.coerce
+    .number()
+    .int('Choose a rating')
+    .min(1, 'Choose a rating from 1 to 5')
+    .max(5, 'Choose a rating from 1 to 5'),
+
+  // optional. a rating on its own is a review, and plenty of the listings
+  // already carry a count with nothing written behind it
+  comment: z
+    .string()
+    .trim()
+    .max(REVIEW_COMMENT_MAX, `Please keep this to ${REVIEW_COMMENT_MAX} characters or fewer`)
+    .default(''),
+
+  displayName: z
+    .string()
+    .trim()
+    .max(40, 'Please keep the name to 40 characters or fewer')
+    .default(''),
+})
+
+export const reviewRequestSchema = z.object({
+  providerId: z.string().trim().min(1),
+  review: reviewSchema,
+})
+
+export const moderationRequestSchema = z.object({
+  providerId: z.string().trim().min(1),
+  reviewId: z.string().trim().min(1),
+  decision: z.enum(['approved', 'rejected']),
+})
+
 export const roleRequestSchema = z.object({
   email: z.string().trim().regex(EMAIL, 'Enter a valid email address'),
   role: z.enum(['member', 'provider', 'admin']),
@@ -181,3 +223,4 @@ export function minimiseDetails(details) {
     discreetReminder: details.discreetReminder,
   }
 }
+

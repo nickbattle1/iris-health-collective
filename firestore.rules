@@ -35,9 +35,19 @@ service cloud.firestore {
       allow update: if isAdmin()
         || (isOwner(resource.data.ownerUid) && providerEditableFields());
 
-      // reviews land day 5, shut until then
+      /* approved reviews are public, your own is visible to you whatever its
+         status, and staff see everything.
+
+         no client writes at all. submitReview creates it as pending and
+         moderateReview decides it, so a practice cannot write its own rating
+         and nobody can approve their own review. the doc id is the author's
+         uid, which is what makes one review per person per practice free */
       match /reviews/{reviewId} {
-        allow read, write: if false;
+        // isOwner first on purpose. checking whether you have already reviewed
+        // reads a document that may not exist, and resource.data on a missing
+        // document fails the rule outright
+        allow read: if isOwner(reviewId) || isAdmin() || resource.data.status == 'approved';
+        allow create, update, delete: if false;
       }
     }
 
@@ -89,8 +99,18 @@ service cloud.firestore {
       allow create, update, delete: if false;
     }
 
+    /* the moderation queue asks for every pending review across all 40
+       providers at once, which is a collection group query. those are matched
+       by path pattern rather than by the nested rule above, so without this
+       block the queue reads nothing. staff only, because a query for pending
+       reviews spans documents nobody else should see */
+    match /{path=**}/reviews/{reviewId} {
+      allow read: if resource.data.status == 'approved' || isAdmin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
   }
 }
+

@@ -1,6 +1,6 @@
 import { setGlobalOptions } from 'firebase-functions/v2'
 import { HttpsError, onCall } from 'firebase-functions/v2/https'
-import { onDocumentCreated } from 'firebase-functions/v2/firestore'
+import { onDocumentCreated, onDocumentWritten } from 'firebase-functions/v2/firestore'
 import { defineSecret, defineString } from 'firebase-functions/params'
 import * as logger from 'firebase-functions/logger'
 import { initializeApp } from 'firebase-admin/app'
@@ -15,12 +15,15 @@ import {
   firstMessage,
   issuesToErrors,
   minimiseEnquiry,
+  moderationRequestSchema,
+  reviewRequestSchema,
   roleRequestSchema,
 } from './lib/schemas.js'
 import { isLegalSlot } from './lib/slots.js'
 import { createBookingTransaction, cancelBookingTransaction } from './lib/booking.js'
 import { buildConfirmationPdf } from './lib/pdf.js'
 import { sendConfirmation } from './lib/email.js'
+import { recalculateProvider } from './lib/reviews.js'
 
 // functions v2. everything exports from here.
 //
@@ -263,6 +266,111 @@ export const submitEnquiry = onCall(async (request) => {
   return { ok: true, id: doc.id, wantsReply: parsed.data.wantsReply }
 })
 
+// submitReview, callable. C.3, the submission half.
+export const submitReview = onCall(async (request) => {
+  const uid = request.auth?.uid
+  if (!uid) throw new HttpsError('unauthenticated', 'Please sign in to leave a review.')
+
+  /* an anonymous session is right for booking and browsing, wrong for this.
+     a throwaway session per review is free, and moderating that is a losing
+     game, so reviews need an account somebody had to create */
+  if (request.auth.token.firebase?.sign_in_provider === 'anonymous') {
+    throw new HttpsError('permission-denied', 'Please create an account to leave a review.')
+  }
+
+  /* staff moderate reviews and providers are the ones being reviewed. either
+     one rating a listing is a conflict of interest, and staff could then
+     approve their own. members only */
+  const role = request.auth.token.role
+  if (role === 'admin' || role === 'provider') {
+    throw new HttpsError(
+      'permission-denied',
+      'Staff and provider accounts cannot leave reviews.',
+    )
+  }
+
+  const parsed = reviewRequestSchema.safeParse(request.data)
+  if (!parsed.success) {
+    throw new HttpsError('invalid-argument', firstMessage(parsed.error), {
+      fields: issuesToErrors(parsed.error),
+    })
+  }
+
+  const { providerId, review } = parsed.data
+  const providerRef = db.collection('providers').doc(providerId)
+  const provider = await providerRef.get()
+
+  if (!provider.exists || provider.get('listingStatus') !== 'published') {
+    throw new HttpsError('not-found', 'We could not find that practice.')
+  }
+
+  /* the uid is the document id, so one person gets one review per practice
+     with no query, no race and nothing to deduplicate later. a second attempt
+     is refused rather than quietly replacing the first, because an approved
+     review silently reverting to pending is not something anyone asked for */
+  const reviewRef = providerRef.collection('reviews').doc(uid)
+  if ((await reviewRef.get()).exists) {
+    throw new HttpsError(
+      'already-exists',
+      'You have already reviewed this practice. Contact us if you need it changed.',
+    )
+  }
+
+  await reviewRef.set({
+    uid,
+    providerId,
+    rating: review.rating,
+    comment: review.comment || null,
+    displayName: review.displayName || null,
+    // every review waits for a person to read it. this is a health directory
+    status: 'pending',
+    createdAt: FieldValue.serverTimestamp(),
+  })
+
+  logger.info('review submitted', { providerId })
+  return { ok: true, status: 'pending' }
+})
+
+// moderateReview, callable, admin only. the other half of C.3
+export const moderateReview = onCall(async (request) => {
+  if (request.auth?.token?.role !== 'admin') {
+    throw new HttpsError('permission-denied', 'Only charity staff can moderate reviews.')
+  }
+
+  const parsed = moderationRequestSchema.safeParse(request.data)
+  if (!parsed.success) throw new HttpsError('invalid-argument', firstMessage(parsed.error))
+
+  const { providerId, reviewId, decision } = parsed.data
+  const ref = db.collection('providers').doc(providerId).collection('reviews').doc(reviewId)
+
+  if (!(await ref.get()).exists) throw new HttpsError('not-found', 'That review no longer exists.')
+
+  await ref.update({
+    status: decision,
+    moderatedBy: request.auth.uid,
+    moderatedAt: FieldValue.serverTimestamp(),
+  })
+
+  // the aggregate follows from onReviewWrite rather than being set here, so
+  // there is one place that decides what a rating is
+  logger.info('review moderated', { providerId, reviewId, decision })
+  return { ok: true }
+})
+
+/* onReviewWrite, firestore trigger. recomputes the provider aggregate whenever
+   a review is written, moderated or deleted.
+
+   it listens on the reviews subcollection and writes to the parent provider
+   document, so unlike onBookingCreated it is a different collection and cannot
+   retrigger itself. */
+export const onReviewWrite = onDocumentWritten(
+  'providers/{providerId}/reviews/{reviewId}',
+  async (event) => {
+    const result = await recalculateProvider(db, event.params.providerId)
+    logger.info('provider rating recalculated', { providerId: event.params.providerId, ...result })
+  },
+)
+
 // setUserRole, callable, admin only. C.2
 export const setUserRole = onCall(async (request) => {
   // caller's own claim checked first, off the verified token and not anything
@@ -300,3 +408,4 @@ export const setUserRole = onCall(async (request) => {
   logger.info('role changed', { uid: user.uid, role })
   return { ok: true, uid: user.uid, role }
 })
+
