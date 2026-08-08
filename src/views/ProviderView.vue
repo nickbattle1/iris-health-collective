@@ -2,6 +2,9 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { fetchProviderBySlug } from '@/services/providerService'
+import { fetchApprovedReviews } from '@/services/reviewService'
+import ReviewList from '@/components/directory/ReviewList.vue'
+import ReviewForm from '@/components/directory/ReviewForm.vue'
 import { BADGES, INCLUSION_BASIS } from '@/constants/badges'
 import { APPROACH_TAGS, ACCESS_FIELDS, DISCIPLINES } from '@/constants/tags'
 
@@ -13,6 +16,8 @@ const route = useRoute()
 const provider = ref(null)
 const loading = ref(true)
 const notFound = ref(false)
+const reviews = ref([])
+const reviewsFailed = ref(false)
 
 onMounted(async () => {
   try {
@@ -24,6 +29,20 @@ onMounted(async () => {
     console.error(err)
   } finally {
     loading.value = false
+  }
+
+  /* reviews get their own try on purpose. they live in a subcollection with its
+     own index, and that index can be building, missing or refused while the
+     provider document itself is perfectly fine. sharing the catch above meant a
+     review query failing rendered "provider not found" over a provider that
+     was sitting right there. */
+  if (!provider.value) return
+
+  try {
+    reviews.value = await fetchApprovedReviews(provider.value.id)
+  } catch (err) {
+    reviewsFailed.value = true
+    console.error('[reviews]', err)
   }
 })
 
@@ -132,6 +151,34 @@ const statusLabel = {
         <p class="mb-0 text-muted">{{ provider.hours }}</p>
       </section>
 
+      <section class="mb-4" aria-labelledby="reviews">
+        <h2 id="reviews" class="h5 mb-3">What people say</h2>
+
+        <p v-if="reviewsFailed" class="text-muted">
+          We could not load reviews just now. Everything else on this page is
+          up to date.
+        </p>
+
+        <ReviewList
+          v-else
+          :reviews="reviews"
+          :rating-avg="provider.ratingAvg ?? 0"
+          :rating-count="provider.ratingCount ?? 0"
+        />
+
+        <details class="review-toggle mt-3">
+          <summary>Leave a review</summary>
+          <div class="mt-3">
+            <ReviewForm :provider-id="provider.id" :provider-name="provider.practiceName" />
+          </div>
+        </details>
+
+        <p class="text-muted small mt-3 mb-0">
+          Staff read every review before it appears, and only approved reviews
+          count toward the rating above.
+        </p>
+      </section>
+
       <div class="handoff">
         <p class="fw-bold mb-1">Booking with this practice</p>
         <p class="small mb-3">
@@ -151,6 +198,17 @@ const statusLabel = {
 </template>
 
 <style scoped>
+.review-toggle > summary {
+  display: inline-block;
+  min-height: var(--iris-target);
+  padding: 0.6rem 1.15rem;
+  border: 2px solid var(--iris-purple-900);
+  border-radius: var(--iris-radius-pill);
+  color: var(--iris-purple-900);
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .handoff {
   padding: 1.15rem;
   border: 1px solid var(--iris-purple-100);
@@ -172,3 +230,4 @@ const statusLabel = {
   background: var(--iris-surface-muted);
 }
 </style>
+
