@@ -40,7 +40,8 @@ const describedBy = computed(
   <div class="mb-3">
     <label :for="fieldId" class="form-label fw-semibold">
       {{ label }}
-      <span v-if="!required" class="fw-normal text-muted">(optional)</span>
+      <span v-if="required" class="required-mark" aria-hidden="true">*</span>
+      <span v-else class="fw-normal text-muted">(optional)</span>
     </label>
 
     <p v-if="hint" :id="hintId" class="form-text mt-0 mb-2">{{ hint }}</p>

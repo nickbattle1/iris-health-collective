@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useBookingStore } from '@/stores/booking'
@@ -13,6 +13,11 @@ const { services, service, serviceId, startAt, availability, loading, error } = 
 
 const chosen = computed(() => (startAt.value ? new Date(startAt.value) : null))
 
+/* continue stays clickable with nothing picked. a disabled button cannot be
+   focused or pressed, so it can never tell you what it is waiting for, and the
+   only feedback was a line of grey text you had already scrolled past */
+const attempted = ref(false)
+
 function onServiceChange(id) {
   store.selectService(id)
 }
@@ -21,8 +26,28 @@ function onSlotChange(iso) {
   store.selectSlot(iso)
 }
 
-function next() {
-  if (store.hasSelection) router.push({ name: 'book-details' })
+// the moment they pick one the complaint is stale
+watch(
+  () => store.hasSelection,
+  (ok) => {
+    if (ok) attempted.value = false
+  },
+)
+
+async function next() {
+  if (store.hasSelection) {
+    router.push({ name: 'book-details' })
+    return
+  }
+
+  // pull the alert and put it back, so a second press announces again instead
+  // of the silence that made this feel broken in the first place
+  attempted.value = false
+  await nextTick()
+  attempted.value = true
+  await nextTick()
+
+  document.getElementById('choose-time')?.focus()
 }
 
 onMounted(() => store.loadServices())
@@ -52,13 +77,19 @@ onMounted(() => store.loadServices())
       />
 
       <div class="sticky-actions">
-        <p class="mb-2 fw-semibold" role="status" aria-live="polite">
+        <!-- a separate element rather than a role swap on the line below. an
+             alert is only announced when it appears, so it has to be new -->
+        <p v-if="attempted" class="slot-required mb-2" role="alert">
+          <i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i>
+          Please select a time to continue
+        </p>
+        <p v-else class="mb-2 fw-semibold" role="status" aria-live="polite">
           <template v-if="chosen">
             Selected: {{ formatDate(chosen) }} at {{ formatTime(chosen) }}
           </template>
           <template v-else>Choose a time to continue</template>
         </p>
-        <button type="button" class="btn-iris w-100" :disabled="!store.hasSelection" @click="next">
+        <button type="button" class="btn-iris w-100" @click="next">
           Continue to your details
         </button>
       </div>
@@ -72,6 +103,11 @@ onMounted(() => store.loadServices())
 </template>
 
 <style scoped>
+.slot-required {
+  color: var(--iris-danger);
+  font-weight: 700;
+}
+
 .sticky-actions {
   position: sticky;
   bottom: 0;

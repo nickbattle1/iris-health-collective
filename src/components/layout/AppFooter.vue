@@ -44,12 +44,22 @@ const year = new Date().getFullYear()
         </p>
       </section>
 
-      <nav aria-label="Footer" class="site-footer__nav">
-        <RouterLink to="/about">About us</RouterLink>
-        <RouterLink to="/about/privacy">Privacy and safety</RouterLink>
-        <RouterLink to="/about/contact#accessibility">Accessibility</RouterLink>
-        <RouterLink to="/about/contact">Contact us</RouterLink>
-      </nav>
+      <div class="site-footer__cols">
+        <section aria-labelledby="footer-contact">
+          <h2 id="footer-contact" class="site-footer__heading">
+            <RouterLink to="/about/contact">Contact us</RouterLink>
+          </h2>
+          <address class="site-footer__contact">
+            <a href="mailto:hello@irishealth.org.au">hello@irishealth.org.au</a>
+            <a href="tel:+61394150999">(03) 9415 0999</a>
+            <span>Ground floor, 214 Brunswick Street, Fitzroy VIC 3065</span>
+          </address>
+        </section>
+
+        <nav aria-label="Footer" class="site-footer__nav">
+          <RouterLink to="/about">About and privacy</RouterLink>
+        </nav>
+      </div>
 
       <p class="site-footer__legal">
         &copy; {{ year }} Iris Health Collective. A fictional charity created for
@@ -64,8 +74,8 @@ const year = new Date().getFullYear()
 
 <style scoped>
 .site-footer {
-  margin-top: 4rem;
-  padding-top: 3rem;
+  margin-top: 1.5rem;
+  padding-top: 2rem;
   background: var(--iris-pink);
   color: #000;
   border-top: 1px solid var(--iris-border);
@@ -110,10 +120,40 @@ const year = new Date().getFullYear()
   line-height: 1.6;
 }
 
-.site-footer__nav a {
+.site-footer__cols {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+.site-footer__contact {
+  font-style: normal;
+  font-size: 0.95rem;
+  margin: 0.5rem 0 0;
+}
+
+.site-footer__contact a,
+.site-footer__contact span {
+  display: block;
+}
+
+.site-footer__cols a {
   color: #000;
   font-weight: 700;
   text-decoration: underline;
+}
+
+.site-footer__heading {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* the line itself is the tap target on a phone, not just the glyph height */
+.site-footer__contact a {
+  padding: 0.4rem 0;
+  font-weight: 400;
 }
 
 .site-footer__legal {

@@ -74,7 +74,7 @@ const criteria = [
 
 <template>
   <div class="container py-4 py-lg-5">
-    <img src="/images/about.jpg" alt="" class="page-image" fetchpriority="high" />
+    <img src="/images/about.jpeg" alt="" class="page-image" fetchpriority="high" />
 
     <h1 class="mb-2">About us</h1>
     <p class="hero-lead mb-4">

@@ -89,7 +89,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
           aria-label="Open navigation menu"
           @click="openNav"
         >
-          <i class="bi bi-list fs-3" aria-hidden="true"></i>
+          <i class="bi bi-list menu-icon" aria-hidden="true"></i>
         </button>
 
         <!-- the logo is the way home from any page, so it carries a real alt.
@@ -150,6 +150,19 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </template>
 
 <style scoped>
+/* a fixed size, not bootstrap's fs-3. that utility is fluid and works out
+   smaller on a phone than on a desktop, which is backwards for the one control
+   that opens the whole site.
+
+   bi-list also draws hairline bars whatever the size, so it reads faint next
+   to the two solid buttons on the same row. an icon font has no weight axis,
+   and text-stroke is the only way to thicken the glyph in place */
+.menu-icon {
+  font-size: 2rem;
+  line-height: 1;
+  -webkit-text-stroke: 0.75px currentColor;
+}
+
 .safety-bar__brand {
   display: inline-flex;
   align-items: center;

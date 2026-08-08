@@ -20,7 +20,7 @@ export const DEFAULT_AVAILABILITY = {
 
 export const availabilityOf = (service) => ({
   ...DEFAULT_AVAILABILITY,
-  ...(service?.availability ?? {}),
+  ...service?.availability,
 })
 
 const DAY_MS = 24 * 60 * 60 * 1000

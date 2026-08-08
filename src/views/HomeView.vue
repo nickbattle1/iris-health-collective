@@ -20,17 +20,17 @@ const featuredResources = [
   {
     title: 'Finding a GP who gets it',
     summary: 'What to ask, what to expect, and how to change providers if it is not right.',
-    image: '/images/finding-gp.png',
+    image: '/images/finding-gp.jpeg',
   },
   {
     title: 'Your rights at a health service',
     summary: 'Chosen name, pronouns, privacy, and how to raise a concern.',
-    image: '/images/your-rights.png',
+    image: '/images/your-rights.jpeg',
   },
   {
     title: 'For families and allies',
     summary: 'Practical ways to support someone close to you without taking over.',
-    image: '/images/families-allies.png',
+    image: '/images/families-allies.jpeg',
   },
 ]
 </script>
@@ -39,7 +39,7 @@ const featuredResources = [
   <div class="container py-4 py-lg-5">
     <section class="mb-4" aria-labelledby="hero-heading">
       <img
-        src="/images/home.jpg"
+        src="/images/home.jpeg"
         alt=""
         class="hero-image"
         width="1600"

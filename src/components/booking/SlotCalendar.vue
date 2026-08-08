@@ -91,7 +91,7 @@ const reasonText = {
 <template>
   <div>
     <fieldset class="border-0 p-0 mb-4">
-      <legend class="h6 mb-2">Choose a date</legend>
+      <legend class="section-heading">Choose a date</legend>
       <div class="d-flex flex-wrap gap-2">
         <div v-for="day in days" :key="day" class="day-chip-wrap">
           <input
@@ -117,10 +117,12 @@ const reasonText = {
       </button>
     </fieldset>
 
-    <fieldset class="border-0 p-0">
-      <legend class="h6 mb-2">Choose a time</legend>
+    <!-- tabindex so a failed continue can send focus here rather than leaving a
+         keyboard user at the bottom of the page with an error they cannot see -->
+    <fieldset id="choose-time" class="border-0 p-0" tabindex="-1">
+      <legend class="section-heading">Choose a time</legend>
 
-      <p class="fw-semibold mb-3" role="status" aria-live="polite">{{ availabilityMessage }}</p>
+      <p class="availability mb-3" role="status" aria-live="polite">{{ availabilityMessage }}</p>
 
       <div class="slot-grid">
         <button
@@ -151,6 +153,19 @@ const reasonText = {
 </template>
 
 <style scoped>
+/* a count, not an instruction. it sat heavier than the legend above it and
+   pulled the eye away from the thing you are meant to read first */
+.availability {
+  font-size: 0.95rem;
+  color: var(--iris-ink-muted);
+}
+
+#choose-time:focus-visible {
+  outline: 3px solid var(--iris-purple-900);
+  outline-offset: 6px;
+  border-radius: var(--iris-radius-sm);
+}
+
 .day-chip-wrap {
   display: inline-flex;
 }

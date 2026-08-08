@@ -102,6 +102,28 @@ main:focus {
   color: var(--iris-purple-900);
 }
 
+/* forms */
+
+/* the fields are all form-control-lg, which bootstrap sets at 1.25rem. a tenth
+   off that reads better and the placeholder inherits it, so the hint and what
+   you type over it are the same size.
+
+   1.125rem is also the floor worth keeping. safari zooms the page in when you
+   focus an input under 16px, and the zoom does not come back out */
+.form-control-lg,
+.form-select-lg {
+  font-size: 1.125rem;
+  min-height: var(--iris-target);
+}
+
+/* the asterisk is decoration. the input carries the required attribute, which
+   is what a screen reader announces, so reading the star out as well would
+   just say "star" in the middle of the label */
+.required-mark {
+  color: var(--iris-danger);
+  font-weight: 700;
+}
+
 /* safety bar sticks so exit is always reachable without scrolling */
 
 .safety-bar {
