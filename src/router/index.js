@@ -62,6 +62,12 @@ const routes = [
     meta: { title: 'Resources and education' },
   },
   {
+    path: '/resources/:slug',
+    name: 'resource',
+    component: () => import('@/views/resources/ResourceDetailView.vue'),
+    meta: { title: 'Resource' },
+  },
+  {
     path: '/get-involved',
     name: 'get-involved',
     component: () => import('@/views/GetInvolvedView.vue'),
@@ -120,6 +126,12 @@ const routes = [
     name: 'admin-reviews',
     component: () => import('@/views/admin/ModerationView.vue'),
     meta: { title: 'Review queue', requiresAuth: true, roles: ['admin'] },
+  },
+  {
+    path: '/admin/enquiries',
+    name: 'admin-enquiries',
+    component: () => import('@/views/admin/EnquiriesView.vue'),
+    meta: { title: 'Enquiries', requiresAuth: true, roles: ['admin'] },
   },
   {
     path: '/admin/bookings',
@@ -203,6 +215,25 @@ router.afterEach((to, from) => {
     announce(`${pageTitle} page loaded`)
     document.getElementById('main-content')?.focus()
   })
+})
+
+/* every build renames the chunk files. anyone still holding the previous
+   service worker gets an index.html pointing at names that no longer exist, and
+   the route dies with "failed to fetch dynamically imported module".
+
+   reloading pulls the new index.html with the new names. the sessionStorage
+   flag stops it looping if the chunk is genuinely missing rather than stale. */
+router.onError((error, to) => {
+  const stale = /dynamically imported module|Importing a module script failed/i.test(
+    error?.message ?? '',
+  )
+  if (!stale) return
+
+  const key = 'iris.chunk-reload'
+  if (sessionStorage.getItem(key) === to.fullPath) return
+
+  sessionStorage.setItem(key, to.fullPath)
+  window.location.assign(to.fullPath)
 })
 
 export default router

@@ -1,6 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { onMounted, ref } from 'vue'
 import TestimonialCarousel from '@/components/home/TestimonialCarousel.vue'
+import { fetchFeaturedResources } from '@/services/resourceService'
 
 /* home screen, figure 2 of the design report. covers user story 1 (browse with no
    account) and user story 7 (crisis contact one tap away).
@@ -16,23 +18,16 @@ const quickActions = [
   { to: '/get-involved', label: 'Get involved', icon: 'bi-heart' },
 ]
 
-const featuredResources = [
-  {
-    title: 'Finding a GP who gets it',
-    summary: 'What to ask, what to expect, and how to change providers if it is not right.',
-    image: '/images/finding-gp.jpeg',
-  },
-  {
-    title: 'Your rights at a health service',
-    summary: 'Chosen name, pronouns, privacy, and how to raise a concern.',
-    image: '/images/your-rights.jpeg',
-  },
-  {
-    title: 'For families and allies',
-    summary: 'Practical ways to support someone close to you without taking over.',
-    image: '/images/families-allies.jpeg',
-  },
-]
+const featuredResources = ref([])
+
+onMounted(async () => {
+  try {
+    featuredResources.value = await fetchFeaturedResources()
+  } catch (err) {
+    // the home page is still a home page without three cards on it
+    console.error('[home] featured resources', err)
+  }
+})
 </script>
 
 <template>
@@ -86,7 +81,7 @@ const featuredResources = [
     <section class="mb-5" aria-labelledby="resources-heading">
       <h2 id="resources-heading" class="section-heading">Resources for you</h2>
       <div class="row g-3">
-        <div v-for="item in featuredResources" :key="item.title" class="col-12 col-md-4">
+        <div v-for="item in featuredResources" :key="item.slug" class="col-12 col-md-4">
           <article class="resource-card">
             <div class="resource-card__media">
               <img
@@ -102,7 +97,7 @@ const featuredResources = [
             <div class="p-3">
               <h3 class="h6 mb-2">{{ item.title }}</h3>
               <p class="mb-3 small text-muted">{{ item.summary }}</p>
-              <RouterLink to="/resources" class="fw-semibold">
+              <RouterLink :to="`/resources/${item.slug}`" class="fw-semibold">
                 Read more<span class="visually-hidden"> about {{ item.title }}</span>
               </RouterLink>
             </div>
@@ -135,3 +130,4 @@ const featuredResources = [
   object-fit: cover;
 }
 </style>
+
