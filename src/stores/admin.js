@@ -12,6 +12,7 @@ export const useAdminStore = defineStore('admin', () => {
   const bookings = ref([])
   const providers = ref([])
   const pending = ref([])
+  const enquiries = ref([])
   const loading = ref(false)
   const error = ref('')
 
@@ -22,14 +23,16 @@ export const useAdminStore = defineStore('admin', () => {
     loading.value = true
     error.value = ''
     try {
-      const [b, p, r] = await Promise.all([
+      const [b, p, r, e] = await Promise.all([
         adminService.fetchAllBookings(),
         fetchPublishedProviders(),
         reviewService.fetchReviewsByStatus('pending'),
+        adminService.fetchEnquiries(),
       ])
       bookings.value = b
       providers.value = p
       pending.value = r
+      enquiries.value = e
       loaded.value = true
     } catch (err) {
       error.value = 'We could not load the dashboard data. Check you are signed in as staff.'
@@ -84,7 +87,7 @@ export const useAdminStore = defineStore('admin', () => {
   })
 
   return {
-    bookings, providers, pending, loading, error,
+    bookings, providers, pending, enquiries, loading, error,
     confirmedBookings, bookingsByWeek, bookingsByService, providersByBasis,
     load, moderate,
   }

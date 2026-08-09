@@ -2,6 +2,7 @@
 const links = [
   { to: '/admin', label: 'Dashboard' },
   { to: '/admin/reviews', label: 'Review queue' },
+  { to: '/admin/enquiries', label: 'Enquiries' },
   { to: '/admin/bookings', label: 'Bookings' },
 ]
 </script>

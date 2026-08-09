@@ -40,3 +40,4 @@ __screenshots__/
 
 .env.local
 seed/serviceAccountKey.json
+dev-dist
