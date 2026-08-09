@@ -101,6 +101,8 @@ export const ENQUIRY_TOPICS = [
   { value: 'bookings', label: 'Bookings' },
   { value: 'events', label: 'Events' },
   { value: 'donation', label: 'Making a donation' },
+  { value: 'volunteer', label: 'Volunteering' },
+  { value: 'listing', label: 'Listing my practice' },
   { value: 'feedback', label: 'Giving feedback' },
   { value: 'complaint', label: 'Making a complaint' },
 ]
@@ -190,6 +192,29 @@ export const moderationRequestSchema = z.object({
   providerId: z.string().trim().min(1),
   reviewId: z.string().trim().min(1),
   decision: z.enum(['approved', 'rejected']),
+})
+
+/* donations. the form submits an expression of interest through submitEnquiry,
+   because card payments are not enabled on this build and collecting card
+   details to throw them away would be worse than not asking.
+
+   no postal address. QLife asks for one because they post receipts. we cannot
+   process anything, so a home address would be data held for nothing on a site
+   whose whole premise is not doing that. */
+
+export const DONATION_AMOUNTS = [25, 50, 100, 250, 1000, 2500]
+
+export const donationSchema = z.object({
+  amount: z.coerce
+    .number()
+    .min(5, 'Donations start at $5')
+    .max(50000, 'For gifts over $50,000 please contact us directly'),
+
+  frequency: z.enum(['once', 'monthly']),
+
+  name: z.string().trim().max(60, 'Please keep the name to 60 characters or fewer').default(''),
+
+  email: z.string().trim().regex(EMAIL, 'Enter an email like you@example.com'),
 })
 
 export const roleRequestSchema = z.object({
