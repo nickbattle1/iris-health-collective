@@ -19,6 +19,10 @@ const props = defineProps({
   originLabel: { type: String, default: '' },
   radiusKm: { type: Number, default: 0 },
   height: { type: String, default: '520px' },
+  // a single practice map has no "you are here", the pink dot was landing on
+  // top of the purple one and made the practice look like the viewer
+  showOrigin: { type: Boolean, default: true },
+  caption: { type: String, default: 'The list below the map carries the same results in text.' },
 })
 
 const emit = defineEmits(['select'])
@@ -94,11 +98,15 @@ function draw() {
   }
 
   if (originMarker) originMarker.remove()
-  originMarker = L.marker([props.origin.lat, props.origin.lng], {
-    icon: youIcon,
-    alt: props.originLabel || 'Your search location',
-    interactive: false,
-  }).addTo(map)
+  originMarker = null
+
+  if (props.showOrigin) {
+    originMarker = L.marker([props.origin.lat, props.origin.lng], {
+      icon: youIcon,
+      alt: props.originLabel || 'Your search location',
+      interactive: false,
+    }).addTo(map)
+  }
 
   /* with a radius set, frame the circle rather than the pins, so the view stays
      put as filters come and go. without one, fit whatever is on screen */
@@ -107,7 +115,13 @@ function draw() {
     return
   }
 
-  points.push([props.origin.lat, props.origin.lng])
+  // one pin has no bounds to fit, so frame it by hand at street level
+  if (points.length === 1) {
+    map.setView(points[0], 15)
+    return
+  }
+
+  if (props.showOrigin) points.push([props.origin.lat, props.origin.lng])
   if (points.length > 1) map.fitBounds(points, { padding: [40, 40], maxZoom: 14 })
 }
 
@@ -174,9 +188,9 @@ onBeforeUnmount(() => {
         Click the map to zoom with the scroll wheel
       </p>
     </div>
-    <p class="text-muted small mt-2 mb-0">
+    <p v-if="caption" class="text-muted small mt-2 mb-0">
       {{ providers.length }} {{ providers.length === 1 ? 'provider' : 'providers' }} shown.
-      The list below the map carries the same results in text.
+      {{ caption }}
     </p>
   </div>
 </template>

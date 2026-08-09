@@ -36,21 +36,36 @@ export const useAuthStore = defineStore('auth', () => {
      refreshed. */
   async function applyUser(firebaseUser) {
     user.value = firebaseUser ?? null
-    if (firebaseUser) {
+
+    if (!firebaseUser) {
+      role.value = 'member'
+      profile.value = null
+      return
+    }
+
+    /* the profile read is a firestore read and every route guard waits on this
+       function finishing. offline it throws, and without this catch the promise
+       below never settles, so every navigation hangs forever including the one
+       to the crisis page. the session is still valid, we just cannot enrich it. */
+    try {
       role.value = await authService.readRole(firebaseUser)
       profile.value = firebaseUser.isAnonymous
         ? null
         : await authService.getProfile(firebaseUser.uid)
-    } else {
-      role.value = 'member'
-      profile.value = null
+    } catch (err) {
+      console.error('[auth] could not load the profile', err)
     }
   }
 
   function init() {
     authService.watchAuth(async (firebaseUser) => {
-      await applyUser(firebaseUser)
-      resolveReady()
+      // finally, not after. resolving the guard has to happen whatever the
+      // read above did
+      try {
+        await applyUser(firebaseUser)
+      } finally {
+        resolveReady()
+      }
     })
     return ready
   }
@@ -138,3 +153,4 @@ function friendlyMessage(err) {
   }
   return map[err?.code] ?? 'Something went wrong. Please try again.'
 }
+

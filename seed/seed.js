@@ -21,18 +21,36 @@ initializeApp({ credential: cert(key) })
 const db = getFirestore()
 
 // firestore caps a batch at 500. we're well under but chunk anyway
+/* ratingCount, ratingSum and ratingAvg belong to onReviewWrite, not to this
+   file. seeding them is only right on a document that does not exist yet.
+   overwriting them on a reseed threw away every approved review, which is why
+   a provider could show "from 1 review" with two reviews printed under it. */
+const DERIVED = ['ratingCount', 'ratingSum', 'ratingAvg']
+
 async function upsert(collection, rows, idField) {
   for (let i = 0; i < rows.length; i += 400) {
+    const chunk = rows.slice(i, i + 400)
+
+    // one read per document so we know whether it is a create or an update
+    const existing = await Promise.all(
+      chunk.map((row) => db.collection(collection).doc(row[idField]).get()),
+    )
+
     const batch = db.batch()
-    for (const row of rows.slice(i, i + 400)) {
+    chunk.forEach((row, index) => {
       const { [idField]: id, ...rest } = row
-      const data = idField === 'slug' ? row : rest
+      const data = idField === 'slug' ? { ...row } : { ...rest }
+
+      if (existing[index].exists) {
+        for (const field of DERIVED) delete data[field]
+      }
+
       batch.set(
         db.collection(collection).doc(id),
         { ...data, updatedAt: FieldValue.serverTimestamp() },
         { merge: true },
       )
-    }
+    })
     await batch.commit()
   }
   console.log(`  ${collection}: ${rows.length} documents written`)
@@ -50,3 +68,4 @@ run().catch((err) => {
   console.error('seed failed:', err.message)
   process.exit(1)
 })
+

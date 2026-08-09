@@ -158,9 +158,16 @@ const statusLabel = {
         <ProviderMap
           :providers="[provider]"
           :origin="{ lat: provider.lat, lng: provider.lng }"
-          origin-label="This practice"
+          :show-origin="false"
+          caption=""
           height="280px"
         />
+
+        <p class="text-muted small mt-2 mb-0">
+          Pin shows {{ provider.suburb }}, not the street door. Practices give
+          their exact address when you contact them, which keeps a listing from
+          pointing at somebody's home consulting room.
+        </p>
 
         <a
           class="btn-iris-outline mt-3"

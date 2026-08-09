@@ -15,6 +15,7 @@ const props = defineProps({
 
 const stars = (rating) => [1, 2, 3, 4, 5].map((n) => n <= Math.round(rating))
 const hasRating = computed(() => props.ratingCount > 0)
+
 </script>
 
 <template>

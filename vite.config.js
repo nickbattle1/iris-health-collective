@@ -22,9 +22,10 @@ export default defineConfig({
        is one more thing between somebody and the phone number they came for. */
     VitePWA({
       registerType: 'autoUpdate',
-      // the service worker normally only exists in a build. this turns it on
-      // for npm run dev too, so offline is testable without building first
-      devOptions: { enabled: true, type: 'module' },
+      /* deliberately off for dev. vite serves each module on demand there, so
+         there is nothing built to precache, and offline then looks broken when
+         it is only untested. build and preview to try it properly. */
+      devOptions: { enabled: false },
       includeAssets: ['favicon.ico', 'images/logo-eye.png'],
       manifest: {
         name: 'Iris Health Collective',
