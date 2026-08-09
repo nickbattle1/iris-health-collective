@@ -116,7 +116,7 @@ export async function buildConfirmationPdf(booking) {
 
   draw('If you need support before then', { font: bold, size: 11, leading: 16 })
   draw(
-    'QLife, 1800 184 527, 3pm to midnight every day. In an emergency, call 000. You do not need to give your name to get help.',
+    'QLife, 1800 184 527, 3pm – 9pm every day. In an emergency, call 000. You do not need to give your name to get help.',
   )
 
   // the service is made up, the crisis numbers above it aren't. this line

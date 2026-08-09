@@ -15,6 +15,12 @@ const routes = [
     meta: { title: 'Need support now' },
   },
   {
+    path: '/crisis/support-services',
+    name: 'support-services',
+    component: () => import('@/views/crisis/SupportServicesView.vue'),
+    meta: { title: 'More support options' },
+  },
+  {
     path: '/directory',
     name: 'directory',
     component: () => import('@/views/DirectoryView.vue'),

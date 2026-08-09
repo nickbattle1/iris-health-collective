@@ -10,13 +10,13 @@ const options = [
     href: 'tel:1800184527',
     icon: 'bi-telephone-fill',
     label: 'Call 1800 184 527',
-    meta: 'QLife, 3pm to midnight, every day',
+    meta: 'QLife, 3pm – 9pm, every day',
   },
   {
     href: 'https://qlife.org.au/resources/chat',
     icon: 'bi-chat-dots-fill',
     label: 'Open QLife webchat',
-    meta: 'QLife, 3pm to midnight, every day',
+    meta: 'QLife, 3pm – 9pm, every day',
     external: true,
   },
 ]
@@ -66,7 +66,7 @@ const options = [
         </span>
       </a>
 
-      <RouterLink to="/resources" class="btn-iris-light w-100">
+      <RouterLink to="/crisis/support-services" class="btn-iris-light w-100">
         More support options
       </RouterLink>
     </section>

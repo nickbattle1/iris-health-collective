@@ -9,7 +9,8 @@ import { computed, useId } from 'vue'
 
 const props = defineProps({
   label: { type: String, required: true },
-  modelValue: { type: [String, Boolean], default: '' },
+  // Number belongs here for type="number" fields like the donation amount
+  modelValue: { type: [String, Number, Boolean], default: '' },
   id: { type: String, default: '' },
   type: { type: String, default: 'text' },
   hint: { type: String, default: '' },

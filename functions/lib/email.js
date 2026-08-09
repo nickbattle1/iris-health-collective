@@ -53,7 +53,7 @@ export async function sendConfirmation({ apiKey, from, overrideTo, booking, pdfB
     <a href="https://iris-health-collective.web.app/account" style="color:#522e63">iris-health-collective.web.app</a>.
     There is no cancellation fee and no explanation required.</p>
   <p style="margin:0 0 16px;color:#566a75;font-size:13px">
-    Need support before then? QLife, 1800 184 527, 3pm to midnight every day. In an emergency, call 000.
+    Need support before then? QLife, 1800 184 527, 3pm – 9pm every day. In an emergency, call 000.
   </p>
   ${overrideTo && intended !== overrideTo ? `<p style="font-size:12px;color:#8e1b36">Demonstration mode: this was addressed to ${escapeHtml(intended)}.</p>` : ''}
   <hr style="border:none;border-top:1px solid #d4dde2;margin:20px 0" />
@@ -74,7 +74,7 @@ export async function sendConfirmation({ apiKey, from, overrideTo, booking, pdfB
     '',
     'To change or cancel, sign in at https://iris-health-collective.web.app/account',
     '',
-    'QLife, 1800 184 527, 3pm to midnight every day. In an emergency, call 000.',
+    'QLife, 1800 184 527, 3pm – 9pm every day. In an emergency, call 000.',
     '',
     'Iris Health Collective is a fictional service built for a university assessment.',
     'The crisis contacts above are real and current.',
