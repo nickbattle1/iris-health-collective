@@ -41,3 +41,7 @@ __screenshots__/
 .env.local
 seed/serviceAccountKey.json
 dev-dist
+
+# Firebase deploy cache. hashes of what was last uploaded, rewritten on every
+# deploy, and only meaningful on the machine that did the deploying
+.firebase/
