@@ -86,9 +86,16 @@ const criteria = [
     <section class="mb-5" aria-labelledby="story">
       <h2 id="story" class="section-heading">Our story</h2>
       <p>
-        Iris Health Collective started in 2016 around a kitchen table in Brunswick.
-        A counsellor, two peer workers and a GP were tired of watching people travel
-        across Melbourne to reach care that would not misgender them.
+        Iris Health Collective started in 2016 around a kitchen table in Brunswick,
+        on the lands of the Wurundjeri Woi-wurrung people of the Kulin Nation. A
+        counsellor, two peer workers and a GP were tired of watching people travel
+        across Naarm (Melbourne) to reach care that would not misgender them.
+      </p>
+      <p>
+        We work on Wurundjeri country. It was never ceded, and we pay our respects
+        to Wurundjeri Elders past and present, and to the Aboriginal and Torres
+        Strait Islander people who hold both First Nations and LGBTIQ+ identities
+        in our community.
       </p>
       <p>
         We began as a phone list of trusted practitioners, passed between friends.

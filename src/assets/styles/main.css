@@ -302,7 +302,9 @@ main:focus {
   color: var(--iris-purple-900);
 }
 
+/* relative so the title's stretched link can cover the whole tile */
 .resource-card {
+  position: relative;
   height: 100%;
   background: var(--iris-surface);
   border: 1px solid var(--iris-border);

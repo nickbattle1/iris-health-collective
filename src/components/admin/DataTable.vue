@@ -1,10 +1,16 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useDataTable } from '@/composables/useDataTable'
 import { downloadCsv, toCsv } from '@/lib/csv'
+import { DATE_RANGES, withinRange } from '@/lib/dateRange'
 
 /* the table both admin screens use. sortable headers, a search box per column,
-   paging, and a CSV of whatever survived the filters.
+   a reporting period, paging, and a CSV of whatever survived the filters.
+
+   the period sits above the column filters rather than inside them, because
+   "this month" is a question about the whole table and typing a month name
+   into a date column would only ever match however that column happens to be
+   formatted.
 
    accessibility, since a table is easy to get wrong: aria-sort on the header
    cell tells a screen reader which column is sorted and which way, the sort
@@ -19,27 +25,44 @@ const props = defineProps({
   loading: { type: Boolean, default: false },
   emptyText: { type: String, default: 'Nothing to show.' },
   pageSize: { type: Number, default: 10 },
+  // the Date field the period applies to. without one there is nothing
+  // sensible to measure a period against, so the control stays hidden
+  dateKey: { type: String, default: '' },
+  dateLabel: { type: String, default: 'date' },
 })
 
-const rowsRef = computed(() => props.rows)
+const range = ref('all')
+
+const rowsRef = computed(() => {
+  if (!props.dateKey || range.value === 'all') return props.rows
+  const now = new Date()
+  return props.rows.filter((row) => withinRange(row[props.dateKey], range.value, now))
+})
+
 const table = useDataTable(rowsRef, props.columns, { pageSize: props.pageSize })
 
 const {
-  filters, sortKey, sortDir, page, paged, sorted, pageCount, activeFilters, exportRows,
-  toggleSort, clearFilters,
+  filters, options, display, sortKey, sortDir, page, paged, sorted, pageCount,
+  activeFilters, exportRows, toggleSort, clearFilters,
 } = table
 
-const cell = (row, column) => {
-  const raw = column.value ? column.value(row) : row[column.key]
-  return column.format ? column.format(raw, row) : raw
-}
+// showing page 4 of a year, then narrowing to this week, leaves an empty table
+watch(range, () => {
+  page.value = 1
+})
 
 const ariaSort = (key) =>
   sortKey.value !== key ? 'none' : sortDir.value === 'asc' ? 'ascending' : 'descending'
 
+// the period goes in the filename, so a folder of exports still says which
+// month each one covers once they are off the screen that made them
 function exportCsv() {
   const stamp = new Date().toISOString().slice(0, 10)
-  downloadCsv(`${props.exportName}-${stamp}.csv`, toCsv(exportRows.value, props.columns))
+  const period = range.value === 'all' ? '' : `-this-${range.value}`
+  downloadCsv(
+    `${props.exportName}${period}-${stamp}.csv`,
+    toCsv(exportRows.value, props.columns),
+  )
 }
 </script>
 
@@ -50,11 +73,14 @@ function exportCsv() {
         <span v-if="loading">Loading</span>
         <span v-else>
           {{ sorted.length }} {{ sorted.length === 1 ? 'row' : 'rows' }}
+          <span v-if="dateKey && range !== 'all'" class="text-muted fw-normal">
+            {{ DATE_RANGES[range].toLowerCase() }}
+          </span>
           <span v-if="activeFilters" class="text-muted fw-normal">after filtering</span>
         </span>
       </p>
 
-      <div class="d-flex flex-wrap gap-2">
+      <div class="d-flex flex-wrap align-items-center gap-2">
         <button
           v-if="activeFilters"
           type="button"
@@ -63,6 +89,22 @@ function exportCsv() {
         >
           Clear column filters
         </button>
+
+        <div v-if="dateKey" class="range-row">
+          <label class="fw-semibold small mb-0" :for="`range-${exportName}`">
+            Showing<span class="visually-hidden"> rows by {{ dateLabel }}</span>
+          </label>
+          <select
+            :id="`range-${exportName}`"
+            v-model="range"
+            class="form-select form-select-sm range-select"
+          >
+            <option v-for="(label, value) in DATE_RANGES" :key="value" :value="value">
+              {{ label }}
+            </option>
+          </select>
+        </div>
+
         <button
           type="button"
           class="btn-iris-outline btn-sm"
@@ -111,12 +153,28 @@ function exportCsv() {
               <label class="visually-hidden" :for="`filter-${exportName}-${column.key}`">
                 Filter by {{ column.label }}
               </label>
+
+              <select
+                v-if="options[column.key]"
+                :id="`filter-${exportName}-${column.key}`"
+                v-model="filters[column.key]"
+                class="form-select form-select-sm"
+              >
+                <option value="">All</option>
+                <option v-for="choice in options[column.key]" :key="choice" :value="choice">
+                  {{ choice }}
+                </option>
+              </select>
+
+              <!-- a comment or a reference is different on every row, so there
+                   is no list to offer and typing is the only thing that helps -->
               <input
+                v-else
                 :id="`filter-${exportName}-${column.key}`"
                 v-model="filters[column.key]"
                 type="search"
                 class="form-control form-control-sm"
-                placeholder="Filter"
+                placeholder="Type to filter"
               />
             </td>
             <td v-if="$slots.actions"></td>
@@ -137,7 +195,7 @@ function exportCsv() {
           </tr>
 
           <tr v-for="(row, index) in paged" v-else :key="row.id ?? index">
-            <td v-for="column in columns" :key="column.key">{{ cell(row, column) }}</td>
+            <td v-for="column in columns" :key="column.key">{{ display(row, column) }}</td>
             <td v-if="$slots.actions"><slot name="actions" :row="row"></slot></td>
           </tr>
         </tbody>
@@ -187,14 +245,16 @@ function exportCsv() {
   cursor: pointer;
 }
 
-/* the placeholder is just "Filter", the column it belongs to is obvious from
-   the header above it, and the hidden label spells it out for a screen reader.
-   the min width stops six inputs squeezing each other into nothing, the table
-   scrolls sideways instead */
+/* the control carries no visible label. the column it belongs to is the one
+   above it and the hidden label spells that out for a screen reader.
+
+   the min width stops six controls squeezing each other into nothing, the
+   table scrolls sideways instead. wider than it was, because a dropdown has to
+   show enough of the chosen value to be worth choosing */
 .filter-row td {
   background: var(--iris-surface-muted);
   padding: 0.4rem 0.5rem;
-  min-width: 7.5rem;
+  min-width: 9.5rem;
 }
 
 .table-pager {
@@ -209,5 +269,19 @@ function exportCsv() {
   min-height: 40px;
   padding: 0.35rem 0.9rem;
   font-size: 0.9rem;
+}
+
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.range-select {
+  width: auto;
+  min-height: 40px;
+  font-weight: 700;
+  color: var(--iris-purple-900);
 }
 </style>

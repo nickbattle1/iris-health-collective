@@ -5,6 +5,8 @@ import {
   issuesToErrors,
   minimiseDetails,
   minimiseEnquiry,
+  resolveLocation,
+  resolveModality,
 } from './schemas'
 
 /* B.1 lives or dies on these. the same schema runs in createBooking, so a rule
@@ -141,5 +143,48 @@ describe('contact enquiry', () => {
   it('drops an email typed and then unticked', () => {
     const parsed = enquirySchema.parse({ ...enquiry, email: 'typed@example.com' })
     expect(minimiseEnquiry(parsed).email).toBeNull()
+  })
+})
+
+/* createBooking runs resolveModality on whatever the browser sent, so these
+   are the rules the server enforces rather than a courtesy in the form. */
+
+describe('how a session is attended', () => {
+  const both = {
+    modality: 'both',
+    location: 'Room 2, Fitzroy, or a telehealth link',
+    locations: { 'in-person': 'Room 2, Fitzroy', telehealth: 'A link, sent with your confirmation' },
+  }
+
+  const telehealthOnly = { modality: 'telehealth', location: 'A link' }
+
+  it('answers for itself when the service is only offered one way', () => {
+    expect(resolveModality(telehealthOnly, '')).toBe('telehealth')
+  })
+
+  it('ignores a request for a way the service is not offered', () => {
+    expect(resolveModality(telehealthOnly, 'in-person')).toBe('telehealth')
+  })
+
+  it('needs an answer when the service is offered both ways', () => {
+    expect(resolveModality(both, '')).toBeNull()
+    expect(resolveModality(both, 'both')).toBeNull()
+    expect(resolveModality(both, 'in-person')).toBe('in-person')
+  })
+
+  it('never leaves a booking saying both, which is the offer not the appointment', () => {
+    for (const requested of ['', 'both', 'telehealth', 'in-person', 'carrier pigeon']) {
+      expect(resolveModality(both, requested)).not.toBe('both')
+    }
+  })
+
+  it('gives the address that matches the choice', () => {
+    expect(resolveLocation(both, 'in-person')).toBe('Room 2, Fitzroy')
+    expect(resolveLocation(both, 'telehealth')).toMatch(/link/)
+  })
+
+  it('falls back to the single location for a service without a per modality one', () => {
+    expect(resolveLocation(telehealthOnly, 'telehealth')).toBe('A link')
+    expect(resolveLocation({}, 'telehealth')).toMatch(/confirm the location/)
   })
 })

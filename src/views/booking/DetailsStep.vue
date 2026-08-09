@@ -22,7 +22,7 @@ import BookingSummary from '@/components/booking/BookingSummary.vue'
 const store = useBookingStore()
 const auth = useAuthStore()
 const router = useRouter()
-const { service, startAt } = storeToRefs(store)
+const { service, startAt, modality } = storeToRefs(store)
 
 const whyPronouns = ref(false)
 
@@ -68,7 +68,12 @@ async function submit() {
 
 <template>
   <div>
-    <BookingSummary v-if="service && startAt" :service="service" :start-at="startAt" />
+    <BookingSummary
+      v-if="service && startAt"
+      :service="service"
+      :start-at="startAt"
+      :modality="modality"
+    />
 
     <ErrorSummary id="error-summary" :errors="summary" />
 

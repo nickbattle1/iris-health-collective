@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-import { useDirectoryStore } from '@/stores/directory'
+import { useDirectoryStore, SORT_OPTIONS } from '@/stores/directory'
 import { APPROACH_TAGS, ACCESS_FIELDS, DISCIPLINES } from '@/constants/tags'
 import { BADGES } from '@/constants/badges'
 import FilterChips from '@/components/directory/FilterChips.vue'
@@ -24,7 +24,7 @@ import ProviderCard from '@/components/directory/ProviderCard.vue'
 const store = useDirectoryStore()
 const {
   search, badges, access, tags, disciplines, languages, languageOptions,
-  results, resultCount, filterCount, loading, error,
+  results, resultCount, filterCount, loading, error, sort,
 } = storeToRefs(store)
 
 const filtersOpen = ref(false)
@@ -165,12 +165,21 @@ onMounted(() => store.load())
       />
     </div>
 
-    <div class="d-flex align-items-center justify-content-between border-top pt-3 mb-3">
+    <div class="results-bar border-top pt-3 mb-3">
       <p class="mb-0 fw-semibold" role="status" aria-live="polite">
         <span v-if="loading">Loading providers</span>
         <span v-else>Showing {{ resultCount }} {{ resultCount === 1 ? 'result' : 'results' }}</span>
       </p>
-      <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center flex-wrap gap-3">
+        <div class="sort-row">
+          <label class="fw-semibold small mb-0" for="sort-by">Sort by</label>
+          <select id="sort-by" v-model="sort" class="form-select form-select-sm sort-select">
+            <option v-for="(label, value) in SORT_OPTIONS" :key="value" :value="value">
+              {{ label }}
+            </option>
+          </select>
+        </div>
+
         <div class="view-toggle" role="group" aria-label="Show results as">
           <button
             type="button"
@@ -231,7 +240,8 @@ onMounted(() => store.load())
 
     <p class="text-muted small border rounded p-3 mt-4">
       Listings meet the charity's inclusion criteria and are reviewed each year.
-      Distances are measured from the Melbourne CBD.
+      Distances are measured from the Naarm (Melbourne) CBD, on Wurundjeri
+      Woi-wurrung country, unless you share a precise location.
     </p>
   </div>
 </template>
@@ -245,6 +255,30 @@ onMounted(() => store.load())
   background: var(--iris-surface-muted);
   border-left: 4px solid var(--iris-purple-500);
   border-radius: var(--iris-radius-sm);
+}
+
+/* the count, the sort and the view toggle share a row on a desktop and stack
+   on a phone rather than squeezing a select down to nothing */
+.results-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.sort-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.sort-select {
+  width: auto;
+  min-height: 40px;
+  font-weight: 700;
+  color: var(--iris-purple-900);
 }
 
 .view-toggle {

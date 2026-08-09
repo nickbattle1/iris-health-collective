@@ -75,12 +75,22 @@ onMounted(async () => {
         Browsing and booking work without one. Reviews do not, because a signed
         in account is what stops the same person rating a practice ten times.
       </p>
-      <RouterLink
-        :to="{ name: 'login', query: { redirect: route.fullPath } }"
-        class="btn-iris-outline"
-      >
-        Sign in to leave a review
-      </RouterLink>
+      <div class="d-flex flex-wrap gap-2">
+        <RouterLink
+          :to="{ name: 'login', query: { redirect: route.fullPath } }"
+          class="btn-iris-outline"
+        >
+          Sign in to leave a review
+        </RouterLink>
+        <!-- both routes carry the redirect, so somebody who has to make an
+             account first still lands back on the listing they were reviewing -->
+        <RouterLink
+          :to="{ name: 'register', query: { redirect: route.fullPath } }"
+          class="btn-iris-outline"
+        >
+          Create an account
+        </RouterLink>
+      </div>
     </div>
 
     <div v-else-if="isStaffOrProvider" class="alert alert-light border mb-0">

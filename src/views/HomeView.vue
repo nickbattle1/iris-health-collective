@@ -79,9 +79,18 @@ onMounted(async () => {
     <TestimonialCarousel />
 
     <section class="mb-5" aria-labelledby="resources-heading">
-      <h2 id="resources-heading" class="section-heading">Resources for you</h2>
+      <div class="section-head">
+        <h2 id="resources-heading" class="section-heading mb-0">Resources for you</h2>
+        <RouterLink to="/resources" class="section-head__more">
+          See more<span class="visually-hidden"> resources</span>
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </RouterLink>
+      </div>
       <div class="row g-3">
         <div v-for="item in featuredResources" :key="item.slug" class="col-12 col-md-4">
+          <!-- one link per card, stretched over the whole tile. a second link
+               on the image would give a screen reader the same destination
+               twice with nothing useful to tell them apart. -->
           <article class="resource-card">
             <div class="resource-card__media">
               <img
@@ -95,11 +104,13 @@ onMounted(async () => {
               <i v-else class="bi bi-image" style="font-size: 2.4rem" aria-hidden="true"></i>
             </div>
             <div class="p-3">
-              <h3 class="h6 mb-2">{{ item.title }}</h3>
+              <h3 class="h6 mb-2">
+                <RouterLink :to="`/resources/${item.slug}`" class="stretched-link resource-card__link">
+                  {{ item.title }}
+                </RouterLink>
+              </h3>
               <p class="mb-3 small text-muted">{{ item.summary }}</p>
-              <RouterLink :to="`/resources/${item.slug}`" class="fw-semibold">
-                Read more<span class="visually-hidden"> about {{ item.title }}</span>
-              </RouterLink>
+              <span class="fw-semibold resource-card__more" aria-hidden="true">Read more</span>
             </div>
           </article>
         </div>
@@ -128,6 +139,56 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-head__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  color: var(--iris-purple-900);
+  text-decoration: none;
+}
+
+.section-head__more:hover,
+.section-head__more:focus-visible {
+  text-decoration: underline;
+}
+
+.resource-card__link {
+  color: var(--iris-purple-900);
+  text-decoration: none;
+}
+
+/* the whole tile is the target, so the focus ring belongs on the tile rather
+   than on the few words of the title that happen to carry the link */
+.resource-card:has(.resource-card__link:focus-visible) {
+  outline: 3px solid var(--iris-purple-900);
+  outline-offset: 2px;
+}
+
+.resource-card:hover .resource-card__link,
+.resource-card__link:focus-visible {
+  text-decoration: underline;
+}
+
+/* a cue, not a control. the card is already one link and this sits under the
+   overlay, so it is hidden from assistive tech and never receives the click */
+.resource-card__more {
+  color: var(--iris-purple-900);
+}
+
+.resource-card:hover {
+  border-color: var(--iris-purple-500);
 }
 </style>
 

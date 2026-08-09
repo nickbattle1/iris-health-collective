@@ -21,7 +21,7 @@ const actionError = ref('')
 const columns = [
   { key: 'providerId', label: 'Practice' },
   { key: 'rating', label: 'Rating' },
-  { key: 'comment', label: 'Comment', format: (v) => v || 'Rating only' },
+  { key: 'comment', label: 'Comment', filter: 'text', format: (v) => v || 'Rating only' },
   { key: 'displayName', label: 'Name given', format: (v) => v || 'Not given' },
   {
     key: 'createdAt',
@@ -62,7 +62,9 @@ onMounted(() => store.load())
       :rows="pending"
       :columns="columns"
       :loading="loading"
-      caption="Reviews awaiting moderation, filterable by column"
+      date-key="createdAt"
+      date-label="date submitted"
+      caption="Reviews awaiting moderation, filterable by column and reporting period"
       export-name="pending-reviews"
       empty-text="Nothing waiting. New reviews appear here as they are submitted."
     >
@@ -70,7 +72,7 @@ onMounted(() => store.load())
         <div class="d-flex gap-2">
           <button
             type="button"
-            class="btn btn-sm btn-dark"
+            class="btn btn-sm btn-approve"
             :disabled="working === row.id"
             @click="decide(row, 'approved')"
           >
@@ -89,3 +91,28 @@ onMounted(() => store.load())
     </DataTable>
   </div>
 </template>
+
+<style scoped>
+/* brand purple rather than bootstrap's black. it keeps the bootstrap button
+   shape so it still pairs with the outline reject beside it, which btn-iris
+   would not, being a pill twice the size. */
+.btn-approve {
+  background: var(--iris-purple-900);
+  border-color: var(--iris-purple-900);
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-approve:hover,
+.btn-approve:focus {
+  background: var(--iris-purple-700);
+  border-color: var(--iris-purple-700);
+  color: #fff;
+}
+
+.btn-approve:disabled {
+  background: var(--iris-purple-900);
+  border-color: var(--iris-purple-900);
+  color: #fff;
+}
+</style>

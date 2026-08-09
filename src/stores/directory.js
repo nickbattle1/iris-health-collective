@@ -8,6 +8,24 @@ import { APPROACH_TAGS, DISCIPLINES } from '@/constants/tags'
    filtered result. the store never imports firebase directly, it calls the
    service, so this file stays about state rather than about firestore. */
 
+export const SORT_OPTIONS = {
+  recommended: 'Recommended',
+  distance: 'Nearest first',
+  rating: 'Highest rating',
+  reviews: 'Most reviews',
+}
+
+/* every sorter falls through to a second key, because a directory this size
+   has plenty of ties and an arbitrary order shuffling under people as they
+   filter is worse than a slightly opinionated one. a provider with no reviews
+   yet sorts as zero rather than dropping out. */
+const SORTERS = {
+  recommended: (a, b) => (b.ratingAvg ?? 0) - (a.ratingAvg ?? 0) || a.distance - b.distance,
+  distance: (a, b) => a.distance - b.distance,
+  rating: (a, b) => (b.ratingAvg ?? 0) - (a.ratingAvg ?? 0) || (b.ratingCount ?? 0) - (a.ratingCount ?? 0),
+  reviews: (a, b) => (b.ratingCount ?? 0) - (a.ratingCount ?? 0) || (b.ratingAvg ?? 0) - (a.ratingAvg ?? 0),
+}
+
 export const useDirectoryStore = defineStore('directory', () => {
   const providers = ref([])
   const loading = ref(false)
@@ -22,7 +40,10 @@ export const useDirectoryStore = defineStore('directory', () => {
   const tags = ref([])     // first-nations-affirming, ...
 
   const origin = ref(MELBOURNE_CBD)
-  const originLabel = ref('Melbourne, Victoria')
+  /* Naarm first, the colonial name in brackets. the directory is centred on
+     Wurundjeri land and the label is the one place on this page that names
+     where "here" is. */
+  const originLabel = ref('Naarm (Melbourne), Victoria')
   const usingPrecise = ref(false)
   const locating = ref(false)
   const locationError = ref('')
@@ -32,6 +53,12 @@ export const useDirectoryStore = defineStore('directory', () => {
      location switches it to 25km, because that is the point at which a radius
      starts being useful rather than a trap */
   const radiusKm = ref(0) // 0 means no limit
+
+  /* recommended is the old fixed order, kept as the default so the page opens
+     the way it always has. the other three are the questions people actually
+     ask of a directory: who is closest, who is rated best, who has enough
+     reviews to trust the rating. */
+  const sort = ref('recommended')
 
   async function load(force = false) {
     if (loaded.value && !force) return
@@ -118,7 +145,7 @@ export const useDirectoryStore = defineStore('directory', () => {
         distance: distanceKm(origin.value.lat, origin.value.lng, p.lat, p.lng),
       }))
       .filter((p) => !radiusKm.value || p.distance <= radiusKm.value)
-      .sort((a, b) => b.ratingAvg - a.ratingAvg || a.distance - b.distance)
+      .sort(SORTERS[sort.value] ?? SORTERS.recommended)
   })
 
   const resultCount = computed(() => results.value.length)
@@ -163,15 +190,17 @@ export const useDirectoryStore = defineStore('directory', () => {
         origin.value = { lat: position.coords.latitude, lng: position.coords.longitude }
         originLabel.value = 'Your current location'
         usingPrecise.value = true
-        // a radius only makes sense once we know where somebody actually is
+        // a radius only makes sense once we know where somebody actually is,
+        // and somebody who just shared a location is asking what is nearby
         if (!radiusKm.value) radiusKm.value = 25
+        if (sort.value === 'recommended') sort.value = 'distance'
         locating.value = false
       },
       (err) => {
         locating.value = false
         locationError.value =
           err.code === err.PERMISSION_DENIED
-            ? 'Location sharing is off. Distances stay measured from the Melbourne CBD.'
+            ? 'Location sharing is off. Distances stay measured from the Naarm (Melbourne) CBD.'
             : 'We could not work out where you are. Distances stay measured from the CBD.'
       },
       { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
@@ -180,10 +209,11 @@ export const useDirectoryStore = defineStore('directory', () => {
 
   function resetLocation() {
     origin.value = MELBOURNE_CBD
-    originLabel.value = 'Melbourne, Victoria'
+    originLabel.value = 'Naarm (Melbourne), Victoria'
     usingPrecise.value = false
     radiusKm.value = 0
     locationError.value = ''
+    if (sort.value === 'distance') sort.value = 'recommended'
   }
 
   function clearFilters() {
@@ -198,7 +228,7 @@ export const useDirectoryStore = defineStore('directory', () => {
   return {
     providers, loading, error, loaded,
     search, badges, access, tags, disciplines, languages, languageOptions,
-    origin, originLabel, usingPrecise, locating, locationError, radiusKm,
+    origin, originLabel, usingPrecise, locating, locationError, radiusKm, sort,
     results, resultCount, filterCount,
     load, toggleBadge, toggleAccess, toggleTag, toggleDiscipline, toggleLanguage,
     useMyLocation, resetLocation, clearFilters,

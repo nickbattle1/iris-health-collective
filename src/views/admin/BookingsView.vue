@@ -17,7 +17,7 @@ const store = useAdminStore()
 const { bookings, loading, error } = storeToRefs(store)
 
 const columns = [
-  { key: 'reference', label: 'Reference' },
+  { key: 'reference', label: 'Reference', filter: 'text' },
   { key: 'serviceName', label: 'Service' },
   { key: 'practitionerName', label: 'Practitioner' },
   {
@@ -49,7 +49,9 @@ onMounted(() => store.load())
       :columns="columns"
       :loading="loading"
       :page-size="15"
-      caption="All bookings, filterable by column"
+      date-key="startAt"
+      date-label="session date"
+      caption="All bookings, filterable by column and reporting period"
       export-name="bookings"
       empty-text="No bookings yet."
     />

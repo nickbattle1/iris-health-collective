@@ -9,6 +9,10 @@
     "durationMinutes": 50,
     "capacity": 1,
     "location": "Room 2, ground floor, Fitzroy, or a telehealth link",
+    "locations": {
+      "in-person": "Room 2, ground floor, Fitzroy. Step free access.",
+      "telehealth": "Telehealth link, sent with your confirmation"
+    },
     "active": true,
     "availability": {
       "days": [1, 2, 3, 4, 5],
@@ -69,6 +73,10 @@
     "durationMinutes": 60,
     "capacity": 10,
     "location": "Community room, ground floor, Fitzroy, or a telehealth link",
+    "locations": {
+      "in-person": "Community room, ground floor, Fitzroy. Step free access.",
+      "telehealth": "Telehealth link, sent with your confirmation"
+    },
     "active": true,
     "availability": {
       "days": [2],

@@ -16,6 +16,7 @@ import {
   issuesToErrors,
   minimiseEnquiry,
   moderationRequestSchema,
+  resolveModality,
   reviewRequestSchema,
   roleRequestSchema,
 } from './lib/schemas.js'
@@ -76,6 +77,19 @@ export const createBooking = onCall(async (request) => {
   const service = { id: serviceSnap.id, ...serviceSnap.data() }
   const start = new Date(startAt)
 
+  /* which way they are attending. a service offered one way answers this
+     itself, so only the both ways ones can fail here, and only by asking for
+     something that service does not offer. the stored booking never says
+     "both": that was the offer, not the appointment. */
+  const modality = resolveModality(service, parsed.data.modality)
+  if (!modality) {
+    throw new HttpsError(
+      'invalid-argument',
+      'Choose whether to attend by telehealth or in person.',
+      { fields: { modality: 'Choose telehealth or in person' } },
+    )
+  }
+
   // has to be a time the calendar could have drawn. without this you can hand
   // roll a request and book 3am on a sunday
   if (!isLegalSlot(service, start)) {
@@ -86,7 +100,14 @@ export const createBooking = onCall(async (request) => {
     )
   }
 
-  const result = await createBookingTransaction(db, { uid, serviceId, service, start, details })
+  const result = await createBookingTransaction(db, {
+    uid,
+    serviceId,
+    service,
+    start,
+    modality,
+    details,
+  })
 
   if (result.conflict === 'slot') {
     throw new HttpsError(

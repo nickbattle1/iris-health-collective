@@ -46,7 +46,7 @@ const RADIUS_OPTIONS = [
       </div>
 
       <button v-if="usingPrecise" type="button" class="location-bar__action" @click="$emit('reset')">
-        Back to Melbourne
+        Back to Naarm (Melbourne)
       </button>
       <button
         v-else
@@ -66,9 +66,10 @@ const RADIUS_OPTIONS = [
 <style scoped>
 .location-bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.5rem 1rem;
   max-width: 42rem;
   margin-bottom: 1rem;
 }

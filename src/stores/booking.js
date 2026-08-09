@@ -2,6 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import * as bookingService from '@/services/bookingService'
 import { useAuthStore } from '@/stores/auth'
+import { modalityChoices } from '@/lib/schemas'
 
 // wizard state for the three steps. lives here rather than in the view so the
 // back button behaves and so the router guards can ask whether a step is
@@ -14,6 +15,7 @@ export const useBookingStore = defineStore('booking', () => {
 
   const serviceId = ref('')
   const startAt = ref('') // ISO string
+  const modality = ref('') // 'telehealth' or 'in-person'
   const availability = ref({}) // { slotKey: bookings taken }
 
   const submitting = ref(false)
@@ -24,7 +26,13 @@ export const useBookingStore = defineStore('booking', () => {
   const pendingClaim = ref(null)
 
   const service = computed(() => services.value.find((s) => s.id === serviceId.value) ?? null)
-  const hasSelection = computed(() => !!service.value && !!startAt.value)
+
+  // only the services offered both ways put the question on screen
+  const modalityOptions = computed(() => modalityChoices(service.value))
+  const needsModality = computed(() => modalityOptions.value.length > 1)
+  const hasModality = computed(() => modalityOptions.value.includes(modality.value))
+
+  const hasSelection = computed(() => !!service.value && !!startAt.value && hasModality.value)
 
   const upcoming = computed(() =>
     myBookings.value.filter((b) => b.status === 'confirmed' && b.startAt > new Date()),
@@ -48,6 +56,10 @@ export const useBookingStore = defineStore('booking', () => {
   async function selectService(id) {
     serviceId.value = id
     startAt.value = ''
+    // a service offered one way answers the question itself. one offered both
+    // ways clears it, so a choice never carries over from a different service
+    const choices = modalityChoices(services.value.find((s) => s.id === id))
+    modality.value = choices.length === 1 ? choices[0] : ''
     try {
       availability.value = await bookingService.fetchAvailability(id)
     } catch (err) {
@@ -60,6 +72,10 @@ export const useBookingStore = defineStore('booking', () => {
 
   function selectSlot(iso) {
     startAt.value = iso
+  }
+
+  function selectModality(value) {
+    modality.value = value
   }
 
   // session only starts when someone is about to book, never on page load, so
@@ -77,6 +93,7 @@ export const useBookingStore = defineStore('booking', () => {
       const result = await bookingService.createBooking({
         serviceId: serviceId.value,
         startAt: startAt.value,
+        modality: modality.value,
         details,
       })
 
@@ -162,6 +179,10 @@ export const useBookingStore = defineStore('booking', () => {
     error,
     serviceId,
     startAt,
+    modality,
+    modalityOptions,
+    needsModality,
+    hasModality,
     availability,
     submitting,
     lastBooking,
@@ -173,6 +194,7 @@ export const useBookingStore = defineStore('booking', () => {
     loadServices,
     selectService,
     selectSlot,
+    selectModality,
     submit,
     pendingClaim,
     beginClaim,

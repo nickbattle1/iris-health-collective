@@ -1,7 +1,7 @@
 import { FieldValue, Timestamp } from 'firebase-admin/firestore'
 import { endOfSlot, overlaps } from './slots.js'
 import { slotKey } from './timezone.js'
-import { minimiseDetails } from './schemas.js'
+import { minimiseDetails, resolveLocation } from './schemas.js'
 
 // the conflict transaction. the one bit of this app that can't live on the
 // client at any price.
@@ -30,7 +30,10 @@ function clashQuery(db, field, value, start, end) {
 const overlapping = (docs, start, end) =>
   docs.filter((doc) => overlaps(start, end, doc.get('startAt').toDate(), doc.get('endAt').toDate()))
 
-export async function createBookingTransaction(db, { uid, serviceId, service, start, details }) {
+export async function createBookingTransaction(
+  db,
+  { uid, serviceId, service, start, modality, details },
+) {
   const end = endOfSlot(service, start)
   const capacity = service.capacity ?? 1
   const key = slotKey(start)
@@ -54,8 +57,10 @@ export async function createBookingTransaction(db, { uid, serviceId, service, st
       serviceId,
       serviceName: service.name,
       practitionerName: service.practitionerName,
-      modality: service.modality,
-      location: service.location ?? 'We will confirm the location with you',
+      modality,
+      // "Fitzroy, or a telehealth link" is no use to somebody who has already
+      // said which one, so the address follows the choice where there is one
+      location: resolveLocation(service, modality),
       durationMinutes: service.durationMinutes,
       startAt: Timestamp.fromDate(start),
       endAt: Timestamp.fromDate(end),

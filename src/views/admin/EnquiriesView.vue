@@ -25,9 +25,9 @@ const topicLabel = Object.fromEntries(ENQUIRY_TOPICS.map((t) => [t.value, t.labe
 
 const columns = [
   { key: 'topic', label: 'About', format: (value) => topicLabel[value] ?? value },
-  { key: 'message', label: 'Message' },
+  { key: 'message', label: 'Message', filter: 'text' },
   { key: 'name', label: 'From', format: (value) => value || 'Not given' },
-  { key: 'email', label: 'Reply to', format: (value) => value || 'Anonymous' },
+  { key: 'email', label: 'Reply to', filter: 'text', format: (value) => value || 'Anonymous' },
   {
     key: 'createdAt',
     label: 'Received',
@@ -55,7 +55,9 @@ onMounted(() => store.load())
       :columns="columns"
       :loading="loading"
       :page-size="15"
-      caption="Enquiries received, filterable by column"
+      date-key="createdAt"
+      date-label="date received"
+      caption="Enquiries received, filterable by column and reporting period"
       export-name="enquiries"
       empty-text="Nothing has come in yet."
     />

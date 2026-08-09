@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import { useBookingStore } from '@/stores/booking'
 import { useAuthStore } from '@/stores/auth'
 import { formatDate, formatTime } from '@/lib/timezone'
+import { MODALITIES } from '@/lib/schemas'
 
 // step 3. answers the A1 feedback about confirmation being a nav item rather
 // than a workflow step: it has a URL but the router only lets you in holding a
@@ -100,6 +101,10 @@ onBeforeUnmount(() => stop())
           {{ formatDate(booking.startAt) }}, {{ formatTime(booking.startAt) }}
           to {{ formatTime(booking.endAt) }}
         </dd>
+      </div>
+      <div>
+        <dt>How</dt>
+        <dd>{{ MODALITIES[booking.modality] ?? booking.modality }}</dd>
       </div>
       <div>
         <dt>Where</dt>

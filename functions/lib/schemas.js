@@ -70,12 +70,54 @@ export const bookingDetailsSchema = z
     }
   })
 
+/* how a session is attended. a service carries "both" when it is offered
+   either way, which describes the offer rather than the booking, so a booking
+   must never be left holding it: the person turning up needs to know whether
+   to travel, and the practitioner needs to know whether to open a room or a
+   link. */
+
+export const MODALITIES = {
+  telehealth: 'Telehealth',
+  'in-person': 'In person',
+}
+
+export const MODALITY_HINTS = {
+  telehealth: 'A private video link, sent with your confirmation.',
+  'in-person': 'Come to us. Step free access, and the address is on your confirmation.',
+}
+
+export function modalityChoices(service) {
+  if (service?.modality === 'both') return Object.keys(MODALITIES)
+  return service?.modality ? [service.modality] : []
+}
+
+// a service offered one way needs no question asked, so that answer is filled
+// in for them. null means the choice is still outstanding
+export function resolveModality(service, requested) {
+  const choices = modalityChoices(service)
+  if (choices.length === 1) return choices[0]
+  return choices.includes(requested) ? requested : null
+}
+
+// telling somebody who chose telehealth to come to Fitzroy is the whole reason
+// this exists, so the per modality address wins where a service has one
+export function resolveLocation(service, modality) {
+  return (
+    service?.locations?.[modality] ??
+    service?.location ??
+    'We will confirm the location with you'
+  )
+}
+
 export const bookingRequestSchema = z.object({
   serviceId: z.string().trim().min(1, 'Choose a service'),
   startAt: z
     .string()
     .trim()
     .refine((value) => !Number.isNaN(Date.parse(value)), 'Choose an appointment time'),
+  // whether the request is a legal one depends on the service, which this
+  // schema cannot see, so the check itself happens in the function
+  modality: z.string().trim().default(''),
   details: bookingDetailsSchema,
 })
 

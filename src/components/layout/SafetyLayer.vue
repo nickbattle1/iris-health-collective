@@ -120,8 +120,10 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
     ></button>
 
     <nav id="primary-navigation" ref="sheet" class="nav-panel__sheet" aria-label="Primary">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="fw-bold">Menu</span>
+      <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+        <RouterLink to="/" class="nav-panel__brand">
+          <img src="/images/logo.png" alt="Iris Health Collective, home" />
+        </RouterLink>
         <button type="button" class="icon-button" aria-label="Close menu" @click="closeNav">
           <i class="bi bi-x-lg fs-5" aria-hidden="true"></i>
         </button>
@@ -167,6 +169,20 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
   display: inline-flex;
   align-items: center;
   margin-left: 0.25rem;
+}
+
+/* the wordmark rather than the word "Menu". the bar only has room for the eye
+   mark on a phone, so the panel is the one place the full name can appear */
+.nav-panel__brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.nav-panel__brand img {
+  height: 38px;
+  width: auto;
+  max-width: 100%;
 }
 
 .safety-bar__brand img {

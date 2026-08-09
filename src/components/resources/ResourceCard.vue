@@ -2,8 +2,12 @@
 import { useSavedResources } from '@/composables/useSavedResources'
 import { RESOURCE_CATEGORIES } from '@/stores/resources'
 
-/* one guide in the list. the save button writes to localStorage and nothing
-   else, so what somebody reads never reaches an account or a server. */
+/* one guide in the list. the whole card opens the guide, via a stretched link
+   on the title rather than a second link on the thumbnail, so there is still
+   one link with one accessible name.
+
+   the save button writes to localStorage and nothing else, so what somebody
+   reads never reaches an account or a server. */
 
 defineProps({
   resource: { type: Object, required: true },
@@ -27,7 +31,9 @@ const { isSaved, toggle } = useSavedResources()
 
     <div class="resource__body">
       <h3 class="h6 mb-1 resource__title">
-        <RouterLink :to="`/resources/${resource.slug}`">{{ resource.title }}</RouterLink>
+        <RouterLink :to="`/resources/${resource.slug}`" class="stretched-link">
+          {{ resource.title }}
+        </RouterLink>
       </h3>
       <p class="resource__tag">{{ RESOURCE_CATEGORIES[resource.category] ?? resource.category }}</p>
       <p class="mb-2 small text-muted">{{ resource.summary }}</p>
@@ -50,6 +56,7 @@ const { isSaved, toggle } = useSavedResources()
 
 <style scoped>
 .resource {
+  position: relative;
   display: flex;
   gap: 1rem;
   align-items: flex-start;
@@ -58,6 +65,17 @@ const { isSaved, toggle } = useSavedResources()
   margin-bottom: 0.75rem;
   border: 1px solid var(--iris-border);
   border-radius: var(--iris-radius-md);
+}
+
+.resource:hover {
+  border-color: var(--iris-purple-500);
+  background: var(--iris-purple-50);
+}
+
+/* the target is the card now, so the ring goes round the card */
+.resource:has(.resource__title a:focus-visible) {
+  outline: 3px solid var(--iris-purple-900);
+  outline-offset: 2px;
 }
 
 /* the body has to claim the leftover width. without this it sizes to its own
@@ -95,7 +113,7 @@ const { isSaved, toggle } = useSavedResources()
   text-decoration: none;
 }
 
-.resource__title a:hover,
+.resource:hover .resource__title a,
 .resource__title a:focus-visible {
   text-decoration: underline;
 }
@@ -109,7 +127,10 @@ const { isSaved, toggle } = useSavedResources()
   color: var(--iris-ink-muted);
 }
 
+/* above the stretched link, or saving a guide would open it instead */
 .resource__save {
+  position: relative;
+  z-index: 2;
   flex: 0 0 auto;
   width: var(--iris-target);
   height: var(--iris-target);
