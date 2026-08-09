@@ -16,6 +16,8 @@ const here = dirname(fileURLToPath(import.meta.url))
 const key = JSON.parse(readFileSync(join(here, 'serviceAccountKey.json'), 'utf8'))
 const providers = JSON.parse(readFileSync(join(here, 'providers.json'), 'utf8'))
 const services = JSON.parse(readFileSync(join(here, 'services.json'), 'utf8'))
+const resources = JSON.parse(readFileSync(join(here, 'resources.json'), 'utf8'))
+const events = JSON.parse(readFileSync(join(here, 'events.json'), 'utf8'))
 
 initializeApp({ credential: cert(key) })
 const db = getFirestore()
@@ -23,8 +25,8 @@ const db = getFirestore()
 // firestore caps a batch at 500. we're well under but chunk anyway
 /* ratingCount, ratingSum and ratingAvg belong to onReviewWrite, not to this
    file. seeding them is only right on a document that does not exist yet.
-   overwriting them on a reseed threw away every approved review, which is why
-   a provider could show "from 1 review" with two reviews printed under it. */
+   overwriting them on a reseed throws away every approved review, which is why
+   a provider ends up showing "from 1 review" with two reviews printed under it. */
 const DERIVED = ['ratingCount', 'ratingSum', 'ratingAvg']
 
 async function upsert(collection, rows, idField) {
@@ -60,6 +62,8 @@ async function run() {
   console.log('importing seed data...')
   await upsert('providers', providers, 'slug')
   await upsert('services', services, 'id')
+  await upsert('resources', resources, 'slug')
+  await upsert('events', events, 'slug')
   console.log('done')
   process.exit(0)
 }

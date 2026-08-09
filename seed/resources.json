@@ -1,0 +1,198 @@
+[
+  {
+    "slug": "finding-a-gp-who-gets-it",
+    "title": "Finding a GP who gets it",
+    "category": "health-guides",
+    "featured": 1,
+    "summary": "What to ask, what to expect, and how to change providers if it is not right.",
+    "image": "/images/finding-gp.jpeg",
+    "readMinutes": 6,
+    "body": [
+      {
+        "heading": "Before you book",
+        "text": "Look for a practice that says what it does rather than that it is friendly. An accreditation, a named approach to gender affirming care, or a practitioner who lists the work they do tells you more than a rainbow sticker on the door."
+      },
+      {
+        "heading": "What you can ask on the phone",
+        "text": "Reception can tell you whether the practice takes a chosen name, whether it bulk bills, whether there is step free access and whether a longer appointment is available. None of that requires you to explain why you are asking."
+      },
+      {
+        "heading": "At the appointment",
+        "text": "You decide what is relevant. A GP needs to know what you are there for and what medication you take. Your history is yours to share at the pace you choose."
+      },
+      {
+        "heading": "If it is not right",
+        "text": "Changing providers is normal and you do not owe anyone an explanation. Ask for your records to be sent on, which the practice must do, usually for a small fee."
+      }
+    ]
+  },
+  {
+    "slug": "your-rights-at-a-health-service",
+    "title": "Your rights at a health service",
+    "category": "health-guides",
+    "featured": 2,
+    "summary": "Chosen name, pronouns, privacy, and how to raise a concern.",
+    "image": "/images/your-rights.jpeg",
+    "readMinutes": 5,
+    "body": [
+      {
+        "heading": "Your name",
+        "text": "A service can record a chosen name alongside your legal one, and use the chosen name in every day contact. Medicare billing needs the legal name, and that is the only part of the system that does."
+      },
+      {
+        "heading": "Your privacy",
+        "text": "Health information can only be shared for your care, or where the law requires it. You can ask who has seen your record."
+      },
+      {
+        "heading": "Raising a concern",
+        "text": "Start with the practice. If that goes nowhere, the Health Complaints Commissioner takes complaints about any Victorian health service on 1300 582 113."
+      }
+    ]
+  },
+  {
+    "slug": "for-families-and-allies",
+    "title": "For families and allies",
+    "category": "families-allies",
+    "featured": 3,
+    "summary": "Practical ways to support someone close to you without taking over.",
+    "image": "/images/families-allies.jpeg",
+    "readMinutes": 7,
+    "body": [
+      {
+        "heading": "Follow their lead",
+        "text": "Use the name and pronouns they give you, including when they are not in the room. Getting it wrong and correcting yourself without ceremony is fine. A long apology makes it about you."
+      },
+      {
+        "heading": "Do not out them",
+        "text": "Who knows, and when, is their decision. That includes other family, their school and their doctor."
+      },
+      {
+        "heading": "Practical help",
+        "text": "Offer the lift, sit in the waiting room, help find a bulk billing practice. Practical support asks nothing of them emotionally, which is often what is needed."
+      },
+      {
+        "heading": "Look after yourself too",
+        "text": "Support groups for parents and partners exist so that your questions land somewhere other than on the person you are supporting."
+      }
+    ]
+  },
+  {
+    "slug": "gender-affirming-care-in-victoria",
+    "title": "Gender affirming care in Victoria",
+    "category": "health-guides",
+    "featured": 0,
+    "summary": "Informed consent, referrals, and what the pathway actually looks like.",
+    "image": "/images/gender-affirming-care-in-victoria.jpeg",
+    "readMinutes": 8,
+    "body": [
+      {
+        "heading": "Informed consent",
+        "text": "Under an informed consent model your GP discusses the effects, risks and reversibility of treatment with you, and you decide. It does not require a mental health assessment first."
+      },
+      {
+        "heading": "Finding a prescriber",
+        "text": "Some GPs prescribe directly, others refer to an endocrinologist. Our directory filters by informed consent so you can see the difference before you call."
+      },
+      {
+        "heading": "Cost",
+        "text": "Some consultations attract a Medicare rebate. Blood tests and prescriptions carry their own costs, and a bulk billing practice will say so."
+      }
+    ]
+  },
+  {
+    "slug": "browsing-safely-on-a-shared-device",
+    "title": "Browsing safely on a shared device",
+    "category": "digital-safety",
+    "featured": 0,
+    "summary": "Private windows, history, saved passwords, and what Exit Site can and cannot do.",
+    "image": "/images/browsing-safely-on-a-shared-device.jpeg",
+    "readMinutes": 4,
+    "body": [
+      {
+        "heading": "What Exit Site does",
+        "text": "It replaces the current tab with a neutral site and takes this page out of your back button history. It cannot clear your whole history or undo a saved password."
+      },
+      {
+        "heading": "Private windows",
+        "text": "A private or incognito window keeps history, cookies and saved form entries out of the browser once you close it. It does not hide anything from a network administrator."
+      },
+      {
+        "heading": "Clearing what is already there",
+        "text": "Every browser has a clear browsing data screen. Clearing everything from the last hour draws less attention than clearing everything."
+      },
+      {
+        "heading": "Notifications",
+        "text": "A message preview on a lock screen is the most common way something is seen by accident. Reminders from us show the date and time only unless you turn that off."
+      }
+    ]
+  },
+  {
+    "slug": "hiv-and-ageing-well",
+    "title": "HIV and ageing well",
+    "category": "health-guides",
+    "featured": 0,
+    "summary": "Living well with HIV over 50, and what routine care should cover.",
+    "image": "/images/hiv-and-ageing-well.jpeg",
+    "readMinutes": 6,
+    "body": [
+      {
+        "heading": "Routine monitoring",
+        "text": "Undetectable means untransmittable. Regular monitoring keeps it that way, and telehealth review appointments are available if getting to a clinic is difficult."
+      },
+      {
+        "heading": "Other conditions",
+        "text": "Bone density, heart health and mental health all deserve attention alongside HIV care. A GP experienced in HIV will raise these without being asked."
+      },
+      {
+        "heading": "Your workplace",
+        "text": "You are not required to disclose your HIV status to an employer. Discrimination on that basis is unlawful in Victoria."
+      }
+    ]
+  },
+  {
+    "slug": "talking-to-your-doctor-multilingual",
+    "title": "Talking to your doctor, in your language",
+    "category": "multilingual",
+    "featured": 0,
+    "summary": "Free interpreters, and how to ask for one without an awkward conversation.",
+    "image": "/images/talking-to-your-doctor-multilingual.jpeg",
+    "readMinutes": 3,
+    "body": [
+      {
+        "heading": "Interpreters are free",
+        "text": "Any Victorian health service can book a free interpreter through the national service. You can ask for a specific gender of interpreter, and for one who is not from your local community if that matters to you."
+      },
+      {
+        "heading": "Ask when you book",
+        "text": "Tell reception at the time of booking so the interpreter is arranged for the appointment rather than found on the day."
+      },
+      {
+        "heading": "By phone",
+        "text": "The Translating and Interpreting Service is on 131 450 and can connect you to a service while you are on the line."
+      }
+    ]
+  },
+  {
+    "slug": "first-nations-and-lgbtiqa-health",
+    "title": "First Nations and LGBTIQA+ health",
+    "category": "health-guides",
+    "featured": 0,
+    "summary": "Culturally safe care, and services that hold both parts of who you are.",
+    "image": "/images/first-nations-and-lgbtiqa-health.jpeg",
+    "readMinutes": 5,
+    "body": [
+      {
+        "heading": "Both, not either",
+        "text": "You should not have to choose between a service that understands your culture and one that understands your identity. The directory filters on both so you can find practices that hold the two together."
+      },
+      {
+        "heading": "Aboriginal Community Controlled Health Organisations",
+        "text": "ACCHOs deliver care designed and run by community. Several in Victoria have specific LGBTIQA+ programs."
+      },
+      {
+        "heading": "Bringing someone with you",
+        "text": "You can bring family, a support person or an Aboriginal Health Worker to any appointment."
+      }
+    ]
+  }
+]

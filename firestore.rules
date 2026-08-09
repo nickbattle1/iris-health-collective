@@ -61,6 +61,19 @@ service cloud.firestore {
         && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']);
     }
 
+    // what the charity is running. same as resources, read by anyone, written
+    // by the seed only
+    match /events/{slug} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // published guides. readable by anyone with no account, which is the point
+    match /resources/{slug} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     // what the charity offers. anyone can read so the wizard works without an
     // account. nobody can write, these are seeded and then maintained by staff
     // through the admin SDK
