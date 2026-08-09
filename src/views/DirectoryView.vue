@@ -1,10 +1,13 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 import { useDirectoryStore } from '@/stores/directory'
 import { APPROACH_TAGS, ACCESS_FIELDS, DISCIPLINES } from '@/constants/tags'
 import { BADGES } from '@/constants/badges'
 import FilterChips from '@/components/directory/FilterChips.vue'
+import LocationBar from '@/components/directory/LocationBar.vue'
+import ProviderMap from '@/components/directory/ProviderMap.vue'
 import ProviderCard from '@/components/directory/ProviderCard.vue'
 
 /* find affirming care, figure 3 of the design report. serves US-3: filter by
@@ -25,6 +28,16 @@ const {
 } = storeToRefs(store)
 
 const filtersOpen = ref(false)
+
+/* list or map, one at a time. side by side looks tidy on a desktop and is
+   unusable on a phone, and this is a mobile first design, so the same control
+   drives both sizes */
+const view = ref('list')
+const router = useRouter()
+
+const {
+  originLabel, usingPrecise, locating, locationError, origin, radiusKm,
+} = storeToRefs(store)
 
 /* trust means somebody else checked, so only the two claims from the wireframe
    go here. HIV experienced is a clinical focus rather than an inclusion
@@ -99,6 +112,17 @@ onMounted(() => store.load())
       </button>
     </div>
 
+    <LocationBar
+      :label="originLabel"
+      :locating="locating"
+      :using-precise="usingPrecise"
+      :error="locationError"
+      :radius-km="radiusKm"
+      @update:radius-km="(km) => (radiusKm = km)"
+      @locate="store.useMyLocation"
+      @reset="store.resetLocation"
+    />
+
     <div v-show="filtersOpen" id="filter-panel" class="filter-panel">
       <FilterChips
         legend="Trust and approach"
@@ -146,14 +170,37 @@ onMounted(() => store.load())
         <span v-if="loading">Loading providers</span>
         <span v-else>Showing {{ resultCount }} {{ resultCount === 1 ? 'result' : 'results' }}</span>
       </p>
-      <button
-        v-if="filterCount"
-        type="button"
-        class="btn btn-link fw-semibold p-0"
-        @click="store.clearFilters"
-      >
-        Clear filters
-      </button>
+      <div class="d-flex align-items-center gap-3">
+        <div class="view-toggle" role="group" aria-label="Show results as">
+          <button
+            type="button"
+            class="view-toggle__btn"
+            :class="{ 'is-on': view === 'list' }"
+            :aria-pressed="view === 'list'"
+            @click="view = 'list'"
+          >
+            <i class="bi bi-list-ul" aria-hidden="true"></i> List
+          </button>
+          <button
+            type="button"
+            class="view-toggle__btn"
+            :class="{ 'is-on': view === 'map' }"
+            :aria-pressed="view === 'map'"
+            @click="view = 'map'"
+          >
+            <i class="bi bi-geo-alt" aria-hidden="true"></i> Map
+          </button>
+        </div>
+
+        <button
+          v-if="filterCount"
+          type="button"
+          class="btn btn-link fw-semibold p-0"
+          @click="store.clearFilters"
+        >
+          Clear filters
+        </button>
+      </div>
     </div>
 
     <p v-if="error" class="alert alert-danger" role="alert">{{ error }}</p>
@@ -170,6 +217,15 @@ onMounted(() => store.load())
         Clear filters
       </button>
     </div>
+
+    <ProviderMap
+      v-else-if="view === 'map'"
+      :providers="results"
+      :origin="origin"
+      :origin-label="originLabel"
+      :radius-km="radiusKm"
+      @select="(slug) => router.push(`/directory/${slug}`)"
+    />
 
     <ProviderCard v-for="provider in results" v-else :key="provider.id" :provider="provider" />
 
@@ -189,6 +245,28 @@ onMounted(() => store.load())
   background: var(--iris-surface-muted);
   border-left: 4px solid var(--iris-purple-500);
   border-radius: var(--iris-radius-sm);
+}
+
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--iris-border);
+  border-radius: var(--iris-radius-pill);
+  overflow: hidden;
+}
+
+.view-toggle__btn {
+  border: 0;
+  background: var(--iris-surface);
+  padding: 0.4rem 0.9rem;
+  min-height: 40px;
+  color: var(--iris-purple-900);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.view-toggle__btn.is-on {
+  background: var(--iris-purple-900);
+  color: #fff;
 }
 
 .search-row {
@@ -256,3 +334,4 @@ onMounted(() => store.load())
   background: var(--iris-surface-muted);
 }
 </style>
+

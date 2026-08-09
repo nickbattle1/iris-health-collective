@@ -5,6 +5,7 @@ import { fetchProviderBySlug } from '@/services/providerService'
 import { fetchApprovedReviews } from '@/services/reviewService'
 import ReviewList from '@/components/directory/ReviewList.vue'
 import ReviewForm from '@/components/directory/ReviewForm.vue'
+import ProviderMap from '@/components/directory/ProviderMap.vue'
 import { BADGES, INCLUSION_BASIS } from '@/constants/badges'
 import { APPROACH_TAGS, ACCESS_FIELDS, DISCIPLINES } from '@/constants/tags'
 
@@ -149,6 +150,27 @@ const statusLabel = {
           <a :href="`tel:${provider.contactPhone.replace(/\s/g, '')}`">{{ provider.contactPhone }}</a>
         </p>
         <p class="mb-0 text-muted">{{ provider.hours }}</p>
+      </section>
+
+      <section v-if="provider.lat && provider.lng" class="mb-4" aria-labelledby="getting-there">
+        <h2 id="getting-there" class="h5 mb-3">Getting there</h2>
+
+        <ProviderMap
+          :providers="[provider]"
+          :origin="{ lat: provider.lat, lng: provider.lng }"
+          origin-label="This practice"
+          height="280px"
+        />
+
+        <a
+          class="btn-iris-outline mt-3"
+          :href="`https://www.google.com/maps/dir/?api=1&destination=${provider.lat},${provider.lng}`"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="bi bi-signpost-2" aria-hidden="true"></i>
+          Directions<span class="visually-hidden">, opens in a new tab</span>
+        </a>
       </section>
 
       <section class="mb-4" aria-labelledby="reviews">
