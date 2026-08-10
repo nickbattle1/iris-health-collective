@@ -219,7 +219,9 @@ router.afterEach((to, from) => {
 
   nextTick(() => {
     announce(`${pageTitle} page loaded`)
-    document.getElementById('main-content')?.focus()
+    // skip the initial load. from.name is undefined then, and focusing main
+    // would put the skip link behind the tab order before anyone can reach it
+    if (from.name !== undefined) document.getElementById('main-content')?.focus()
   })
 })
 

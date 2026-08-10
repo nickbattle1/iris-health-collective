@@ -55,7 +55,7 @@ every width, so they can be found without being looked for.
 Crisis help sits ahead of the navigation and ahead of the logo. Assessment 1 set
 a target of reaching a real person within a minute of landing, and that ordering
 is what meets it. The support services page behind the button lists what is open
-right now, because QLife closes at midnight and the page exists for the hours it
+right now, because QLife closes at 9pm and the page exists for the hours it
 is shut.
 
 ![Crisis help on desktop and mobile, showing the persistent header control and the support services behind it](public/images/screenshots/crisis.png)
@@ -121,7 +121,7 @@ explains why it is expected here.
   until they do
 - **Functions:** the region is set to `australia-southeast2` in
   `functions/index.js` and must match the database, because a Firestore trigger
-  runs through Eventarc in the database's region
+  runs through Eventarc in the database's region.
 
 ### 4. The one secret
 
@@ -258,4 +258,4 @@ Iris Health Collective is fictional and built for a university assessment. The
 crisis contacts throughout the application are real and current.
 
 Card payments are not enabled. The donation form validates and submits an
-expression of interest, with the payment step visibly disabled since this is a fictional chartity.
+expression of interest, with the payment step visibly disabled since this is a fictional charity.

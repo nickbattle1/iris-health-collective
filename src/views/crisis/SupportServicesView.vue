@@ -6,7 +6,7 @@ import {
 /* the page behind "more support options" on the crisis screen.
 
    ordered by what someone in trouble needs first. always open at the top,
-   because QLife closes at midnight and this page exists for the hours it is
+   because QLife closes at 9pm and this page exists for the hours it is
    shut. community specific next, then acute assessment, then reading, then
    overseas.
 
@@ -34,7 +34,7 @@ import {
     <section class="mb-5" aria-labelledby="always-open">
       <h2 id="always-open" class="section-heading">Open right now, whatever the hour</h2>
       <p class="mb-3">
-        QLife runs from 3pm to midnight. These four do not close, so start here
+        QLife runs from 3pm – 9pm. These four do not close, so start here
         if it is the middle of the night.
       </p>
 

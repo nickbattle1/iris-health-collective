@@ -8,8 +8,14 @@
       name="description"
       content="Iris Health Collective helps you find LGBTIQ+ affirming health services across Victoria."
     />
-    <link rel="icon" type="image/png" href="/images/tab-icon.png" />
-    <link rel="apple-touch-icon" href="/images/tab-icon.png" />
+    <!-- safari keeps favicons in its own store that outlives clearing website
+         data, so the ?v= is what actually forces an iphone to let go of the old
+         one. bump it if the artwork ever changes again. -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+    <link rel="icon" type="image/png" href="/images/tab-icon.png?v=2" />
+    <!-- 180x180 and opaque. ios composites anything transparent onto black, and
+         it probes this exact root path when it wants a home screen icon. -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
 
     <!-- puts a thumbnail on the link when someone shares it. adds legitimacy-->
     <meta property="og:type" content="website" />
