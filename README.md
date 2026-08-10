@@ -113,8 +113,12 @@ explains why it is expected here.
 
 ### 3. Firebase console setup
 
-- **Authentication → Sign-in method:** enable Email/Password, Google and Anonymous
-- **Firestore Database:** create it in `australia-southeast2`
+- **Authentication → Sign-in method:** enable Email/Password, Google and
+  Anonymous. Google will not save until a project support email is chosen, and
+  anonymous is what lets someone browse before they decide to sign up
+- **Firestore Database:** create it in `australia-southeast2`, in production
+  mode. The rules deploy in step 6, and test mode leaves the database open
+  until they do
 - **Functions:** the region is set to `australia-southeast2` in
   `functions/index.js` and must match the database, because a Firestore trigger
   runs through Eventarc in the database's region
