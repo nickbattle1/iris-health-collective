@@ -32,6 +32,8 @@ Three findings from the Assessment 1 research shape most of what follows:
 The dashboard is only reachable with a staff role on the account. A member
 signing in gets their bookings and nothing else.
 
+The UI is optimised for mobile as well:
+
 ![The same four pages at phone width](public/images/screenshots/mobile.png)
 
 ## Safety by design
@@ -182,7 +184,7 @@ one operation, and a browser cannot be trusted with either.
 
 **Firestore** holds nine collections. `providers`, `services`, `resources` and
 `events` are readable by anyone. `availability` is public because it holds
-counts and nothing else. The UI was also optimised for mobile: `bookings`, `enquiries` and `users` are private, and
+counts and nothing else. `bookings`, `enquiries` and `users` are private, and
 none of them accept a client write.
 
 **Derived data is never written by hand.** `onReviewWrite` recomputes a
