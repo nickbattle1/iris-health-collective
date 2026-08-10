@@ -182,7 +182,7 @@ one operation, and a browser cannot be trusted with either.
 
 **Firestore** holds nine collections. `providers`, `services`, `resources` and
 `events` are readable by anyone. `availability` is public because it holds
-counts and nothing else. `bookings`, `enquiries` and `users` are private, and
+counts and nothing else. The UI was also optimised for mobile: `bookings`, `enquiries` and `users` are private, and
 none of them accept a client write.
 
 **Derived data is never written by hand.** `onReviewWrite` recomputes a
