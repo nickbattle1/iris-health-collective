@@ -66,12 +66,11 @@ const doughnutOptions = {
 const totalBookings = computed(() => store.confirmedBookings.length)
 
 const roleSaved = ref('')
-const form = useZodForm(roleRequestSchema, { email: '', role: 'provider' })
+const form = useZodForm(roleRequestSchema, { email: '', role: 'admin' })
 const { values, errors, summary, submitting } = form
 
 const roleOptions = [
   { value: 'member', label: 'Community member' },
-  { value: 'provider', label: 'Provider' },
   { value: 'admin', label: 'Charity staff' },
 ]
 

@@ -299,15 +299,11 @@ export const submitReview = onCall(async (request) => {
     throw new HttpsError('permission-denied', 'Please create an account to leave a review.')
   }
 
-  /* staff moderate reviews and providers are the ones being reviewed. either
-     one rating a listing is a conflict of interest, and staff could then
-     approve their own. members only */
+  // staff approve reviews, so a staff review would be approved by whoever wrote
+  // it. members only
   const role = request.auth.token.role
-  if (role === 'admin' || role === 'provider') {
-    throw new HttpsError(
-      'permission-denied',
-      'Staff and provider accounts cannot leave reviews.',
-    )
+  if (role === 'admin') {
+    throw new HttpsError('permission-denied', 'Staff accounts cannot leave reviews.')
   }
 
   const parsed = reviewRequestSchema.safeParse(request.data)

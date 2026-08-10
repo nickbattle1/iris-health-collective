@@ -3,6 +3,18 @@
 
 import { z } from 'zod'
 
+/* zod compiles a faster object parser with new Function when it can, and works
+   out whether it can by calling one inside a try. under an enforcing CSP that
+   attempt is blocked and reported, even though zod catches it and falls back.
+
+   this has to sit here rather than in main.js. the check runs when z.object()
+   is constructed, and every schema below is constructed the moment this module
+   is evaluated, which can be before an entry file statement ever runs.
+
+   the functions copy inherits it too. no CSP there, and parsing a handful of
+   small objects per request will not notice the difference. */
+z.config({ jitless: true })
+
 // one schema for the form and for createBooking. the client copy is so you
 // find out about a typo before pressing a button, the server copy is the one
 // that decides.
@@ -261,7 +273,7 @@ export const donationSchema = z.object({
 
 export const roleRequestSchema = z.object({
   email: z.string().trim().regex(EMAIL, 'Enter a valid email address'),
-  role: z.enum(['member', 'provider', 'admin']),
+  role: z.enum(['member', 'admin']),
 })
 
 // zod gives a list of issues, a form needs one message per field. first issue

@@ -21,19 +21,13 @@ service cloud.firestore {
     // what a provider is allowed to change on their own listing.
     // accreditations, inclusionBasis, ratings and listingStatus are missing on
     // purpose, a practice can't award itself a badge or move its own ranking
-    function providerEditableFields() {
-      return request.resource.data.diff(resource.data).affectedKeys().hasOnly([
-        'practiceName', 'contactPhone', 'hours', 'languages',
-        'telehealth', 'inPerson', 'bulkBilling', 'wheelchairAccess',
-        'auslanAvailable', 'afterHours', 'approachTags', 'photoUrl', 'updatedAt'
-      ]);
-    }
-
     match /providers/{providerId} {
       allow read: if resource.data.listingStatus == 'published' || isAdmin();
       allow create, delete: if isAdmin();
-      allow update: if isAdmin()
-        || (isOwner(resource.data.ownerUid) && providerEditableFields());
+      // listings are maintained by staff. a practice contacts us to change its
+      // details, which is the only version consistent with the charity being the
+      // one that vouches for every listing on the directory
+      allow update: if isAdmin();
 
       /* approved reviews are public, your own is visible to you whatever its
          status, and staff see everything.

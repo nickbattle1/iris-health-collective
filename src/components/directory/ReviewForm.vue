@@ -32,7 +32,7 @@ const done = ref(false)
 const existing = ref(null)
 const checking = ref(true)
 
-const isStaffOrProvider = computed(() => auth.role === 'admin' || auth.role === 'provider')
+const isStaff = computed(() => auth.role === 'admin')
 
 const form = useZodForm(reviewSchema, { rating: 0, comment: '', displayName: '' })
 const { values, errors, summary, submitting } = form
@@ -46,7 +46,7 @@ async function send() {
 
 // one read to find out whether this person has already had their say here
 onMounted(async () => {
-  if (auth.isAuthenticated && !isStaffOrProvider.value) {
+  if (auth.isAuthenticated && !isStaff.value) {
     try {
       existing.value = await fetchMyReview(props.providerId, auth.user.uid)
     } catch (err) {
@@ -93,13 +93,11 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div v-else-if="isStaffOrProvider" class="alert alert-light border mb-0">
+    <div v-else-if="isStaff" class="alert alert-light border mb-0">
       <p class="fw-bold mb-1">Reviews are for community members</p>
       <p class="small mb-0">
-        You are signed in as
-        {{ auth.role === 'admin' ? 'charity staff' : 'a provider' }}. Staff
-        approve reviews and providers are the ones being reviewed, so neither
-        can leave one.
+You are signed in as charity staff. Staff approve reviews, so a staff
+        review would be approved by whoever wrote it.
       </p>
     </div>
 

@@ -273,7 +273,7 @@ export const donationSchema = z.object({
 
 export const roleRequestSchema = z.object({
   email: z.string().trim().regex(EMAIL, 'Enter a valid email address'),
-  role: z.enum(['member', 'provider', 'admin']),
+  role: z.enum(['member', 'admin']),
 })
 
 // zod gives a list of issues, a form needs one message per field. first issue
