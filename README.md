@@ -244,7 +244,7 @@ demand by service, and how each listing earned its place in the directory.
 
 **4. Offline support.** A progressive web app that precaches the application
 shell, so the crisis page and its phone numbers work with no connection. Map
-tiles are cached, Firestore is deliberately network-only, and an offline banner
+tiles are cached, Firestore is left out of the service worker entirely, and an offline banner
 says which parts still work. The support services list is a static module for
 this reason, so it never depends on a Firestore read.
 

@@ -60,12 +60,10 @@ export default defineConfig({
               expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 14 },
             },
           },
-          {
-            // firestore is deliberately network only. a stale provider listing
-            // or a cached booking would be worse than an honest error
-            urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/i,
-            handler: 'NetworkOnly',
-          },
+          /* firestore is not listed here on purpose. NetworkOnly still puts
+             workbox in front of Listen/channel, and every reconnect throws
+             no-response in the console. no matching route means the SW never
+             calls respondWith, so the browser talks to firestore directly. */
         ],
       },
     }),
