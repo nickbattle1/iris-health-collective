@@ -46,7 +46,12 @@ import {
         </div>
         <div class="service__actions">
           <a :href="`tel:${service.tel}`" class="btn-iris service__call">{{ service.phone }}</a>
-          <a :href="service.url" target="_blank" rel="noopener noreferrer" class="small">
+          <a
+            :href="service.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="small service__website"
+          >
             Website<span class="visually-hidden">, opens in a new tab</span>
           </a>
         </div>
@@ -64,7 +69,12 @@ import {
         </div>
         <div class="service__actions">
           <a :href="`tel:${service.tel}`" class="btn-iris service__call">{{ service.phone }}</a>
-          <a :href="service.url" target="_blank" rel="noopener noreferrer" class="small">
+          <a
+            :href="service.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="small service__website"
+          >
             Website<span class="visually-hidden">, opens in a new tab</span>
           </a>
         </div>
@@ -189,6 +199,19 @@ import {
 
   .service__actions {
     flex: 1 1 auto;
+    gap: 0.75rem;
+  }
+
+  /* only a thumb needs the room. the website link sat a few pixels under the
+     call button, close enough that aiming for one could land on the other, so
+     here it gets the full 48px target and a gap to go with it. left on at
+     desktop width the two just looked adrift of each other. */
+  .service__website {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--iris-target);
+    padding: 0 0.75rem;
   }
 }
 
