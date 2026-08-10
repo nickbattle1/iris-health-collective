@@ -38,17 +38,25 @@ The UI is optimised for mobile as well:
 
 ## Safety by design
 
-A normal booking site does neither of these two things, and between them they
-explain a lot of the layout decisions elsewhere.
+Crisis help and Quick exit sit in the header of every page. A normal booking
+site has neither, and between them they explain a lot of the layout decisions
+elsewhere. On a phone there is not room for both of them and the full logo, so
+the logo gives way to the Iris eye on its own. Brand recognition matters less
+here than a way to reach someone and a way out.
+
+The personas from Assessment 1 are the reason. They browse on borrowed or
+shared phones, they are not always out to the people around them, and some of
+them are looking for help at the worst moment of their week. None of that
+leaves room to hunt through a menu. Both controls stay in the same place at
+every width, so they can be found without being looked for.
 
 ### Crisis help in the header
 
-Crisis help sits in the header of every page at every width, alongside Quick
-exit and ahead of both the navigation and the logo. Assessment 1 set a target of
-reaching a real person within a minute of landing, and that ordering is what
-meets it. The support services page behind the button lists what is open right
-now, because QLife closes at midnight and the page exists for the hours it is
-shut.
+Crisis help sits ahead of the navigation and ahead of the logo. Assessment 1 set
+a target of reaching a real person within a minute of landing, and that ordering
+is what meets it. The support services page behind the button lists what is open
+right now, because QLife closes at midnight and the page exists for the hours it
+is shut.
 
 ![Crisis help on desktop and mobile, showing the persistent header control and the support services behind it](public/images/screenshots/crisis.png)
 
