@@ -2,6 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import * as adminService from '@/services/adminService'
 import * as reviewService from '@/services/reviewService'
+import { cancelBooking } from '@/services/bookingService'
 import { fetchPublishedProviders } from '@/services/providerService'
 
 /* one store behind the three staff screens, because the tables and the charts
@@ -54,6 +55,19 @@ export const useAdminStore = defineStore('admin', () => {
     pending.value = pending.value.filter((item) => item.id !== review.id)
   }
 
+  /* the same callable a member uses on their own booking. the function checks
+     the caller's role claim and lets staff cancel anyone's, which is what
+     happens when somebody rings up rather than doing it themselves.
+
+     the row updates in place rather than refetching, so the table does not jump
+     back to page one under whoever pressed the button. */
+  async function cancel(booking) {
+    await cancelBooking(booking.id)
+    bookings.value = bookings.value.map((item) =>
+      item.id === booking.id ? { ...item, status: 'cancelled' } : item,
+    )
+  }
+
   const confirmedBookings = computed(() => bookings.value.filter((b) => b.status === 'confirmed'))
 
   // bookings per week, oldest first, for the trend chart
@@ -89,6 +103,6 @@ export const useAdminStore = defineStore('admin', () => {
   return {
     bookings, providers, pending, enquiries, loading, error,
     confirmedBookings, bookingsByWeek, bookingsByService, providersByBasis,
-    load, moderate,
+    load, moderate, cancel,
   }
 })

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAdminStore } from '@/stores/admin'
 import AdminNav from '@/components/admin/AdminNav.vue'
@@ -29,6 +29,27 @@ const columns = [
   { key: 'emailStatus', label: 'Confirmation' },
 ]
 
+const working = ref('')
+const actionError = ref('')
+
+/* cancelling here goes through the same callable a member uses on their own
+   booking. the function reads the caller's role claim and lets staff cancel
+   anyone's, which is what happens when somebody rings up rather than doing it
+   themselves. the transaction releases the slot either way. */
+async function cancel(booking) {
+  actionError.value = ''
+  working.value = booking.id
+  try {
+    await store.cancel(booking)
+  } catch (err) {
+    actionError.value = err?.message ?? 'We could not cancel that booking.'
+  } finally {
+    working.value = ''
+  }
+}
+
+const isPast = (booking) => !booking.startAt || booking.startAt < new Date()
+
 onMounted(() => store.load())
 </script>
 
@@ -43,6 +64,7 @@ onMounted(() => store.load())
     <AdminNav />
 
     <p v-if="error" class="alert alert-danger" role="alert">{{ error }}</p>
+    <p v-if="actionError" class="alert alert-danger" role="alert">{{ actionError }}</p>
 
     <DataTable
       :rows="bookings"
@@ -54,7 +76,24 @@ onMounted(() => store.load())
       caption="All bookings, filterable by column and reporting period"
       export-name="bookings"
       empty-text="No bookings yet."
-    />
+    >
+      <template #actions="{ row }">
+        <span v-if="row.status === 'cancelled'" class="text-muted small">Cancelled</span>
+        <span v-else-if="isPast(row)" class="text-muted small">Session passed</span>
+        <button
+          v-else
+          type="button"
+          class="btn btn-sm btn-outline-danger"
+          :disabled="working === row.id"
+          @click="cancel(row)"
+        >
+          {{ working === row.id ? 'Cancelling...' : 'Cancel' }}
+          <span class="visually-hidden">
+            booking {{ row.reference }}, {{ row.serviceName }}
+          </span>
+        </button>
+      </template>
+    </DataTable>
 
     <p class="text-muted small border rounded p-3 mt-4">
       Chosen names and contact details are deliberately not shown here. Staff who
