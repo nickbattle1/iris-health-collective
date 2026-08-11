@@ -32,5 +32,16 @@ export default defineConfig([
 
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
+  // the cloud functions and the seed scripts run on node, not in a browser.
+  // without this they are linted against browser globals and every process or
+  // Buffer reads as undefined
+  {
+    name: 'app/node-scripts',
+    files: ['functions/**/*.js', 'seed/**/*.js'],
+    languageOptions: {
+      globals: { ...globals.node },
+    },
+  },
+
   skipFormatting,
 ])

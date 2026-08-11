@@ -49,7 +49,7 @@ export const useAdminStore = defineStore('admin', () => {
   async function moderate(review, decision) {
     await reviewService.moderateReview({
       providerId: review.providerId,
-      reviewId: review.id,
+      reviewId: review.reviewId,
       decision,
     })
     pending.value = pending.value.filter((item) => item.id !== review.id)

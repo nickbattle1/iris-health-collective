@@ -55,8 +55,17 @@ export async function fetchMyReview(providerId, uid) {
 
 /* the moderation queue reads across every provider at once, so this is a
    collection group query rather than 40 subcollection reads. needs the index
-   in firestore.indexes.json and the /{path=**}/reviews rule */
+   in firestore.indexes.json and the /{path=**}/reviews rule.
+
+   the document id is the reviewer's uid, which is unique inside one practice
+   and not across them: one person reviewing three practices gives three rows
+   sharing an id. so the row is keyed by its full path, and the uid travels
+   separately as reviewId for the callable that needs it. */
 export async function fetchReviewsByStatus(status) {
   const q = query(collectionGroup(db, 'reviews'), where('status', '==', status), orderBy('createdAt', 'desc'))
-  return (await getDocs(q)).docs.map(toReview)
+  return (await getDocs(q)).docs.map((snap) => ({
+    ...toReview(snap),
+    id: snap.ref.path,
+    reviewId: snap.id,
+  }))
 }

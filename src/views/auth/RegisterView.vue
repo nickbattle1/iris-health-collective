@@ -45,7 +45,9 @@ async function submit() {
   try {
     await auth.register(form.value)
     router.push(route.query.redirect ?? '/account')
-  } catch {}
+  } catch {
+    // the store holds the message, nothing to do here
+  }
 }
 </script>
 

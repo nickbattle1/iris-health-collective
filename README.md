@@ -4,7 +4,7 @@ A web application for a fictional Melbourne LGBTIQ+ health charity, built for
 Monash ITO5032 Assessment 3.
 
 - **Live site:** https://iris-health-collective.web.app
-- **Video demonstration:** 
+- **Video demonstration:** https://youtu.be/QYyLoFDkg9I
 
 The charity provides counselling, peer support and a vetted directory of
 affirming GPs across Victoria. The site lets people search that directory, book
@@ -16,8 +16,9 @@ Three findings from the Assessment 1 research shape most of what follows:
   work with no account and no session.
 - **The exit is always there.** A Quick exit control sits in the header of every
   page and responds to the Esc key.
-- **Nobody writes their own credentials.** Accreditations, ratings and inclusion
-  status are computed on the server. A practice cannot award itself a badge.
+- **Nobody writes their own credentials.** Ratings and inclusion status are
+  computed on the server from moderated reviews, and accreditations are recorded
+  by the charity. A practice cannot award itself a badge.
 
 ## Screenshots
 
@@ -30,7 +31,8 @@ Three findings from the Assessment 1 research shape most of what follows:
 | ![Step one of the booking wizard with the slot calendar](public/images/screenshots/booking.jpeg) | ![Staff dashboard with live charts and role assignment](public/images/screenshots/dashboard.jpeg) |
 
 The dashboard is only reachable with a staff role on the account. A member
-signing in gets their bookings and nothing else.
+signing in gets their own bookings, their profile and their privacy settings.
+[Who can do what](#who-can-do-what) sets out the three levels in full.
 
 The UI is optimised for mobile as well:
 
@@ -73,6 +75,86 @@ It cannot clear a full browser history or undo a saved password. The site says
 so plainly, and the digital safety guide under Resources covers what it can and
 cannot do.
 
+## Who can do what
+
+There are three levels of access: a visitor with no account, a signed in member,
+and charity staff.
+
+A role is a custom claim on the Firebase ID token, written only by the
+`setUserRole` function. Staff carry `role: 'admin'`; a member is the absence of a
+claim, so there is no value to misread and nothing in a document for its owner to
+edit. `firestore.rules` reads the claim rather than any stored field, which is
+why the boundary holds for someone who skips the app and calls the API directly.
+The router guards are convenience on top of that, not the boundary itself.
+
+| | Visitor | Member | Staff |
+| --- | --- | --- | --- |
+| Browse the directory, resources and crisis contacts | Yes | Yes | Yes |
+| Book a session and get a PDF confirmation by email | Yes | Yes | Yes |
+| Cancel a booking | Own, from the confirmation screen | Own, any time | Anyone's |
+| Send any contact form | Yes | Yes | Yes |
+| Read approved reviews | Yes | Yes | Yes |
+| Leave a review | No | One per practice | **No** |
+| Account area: profile, own bookings, data download, deletion | No | Yes | Yes |
+| Staff dashboard: charts, queues, CSV export, role assignment | No | No | Yes |
+
+### Visitors, with no account
+
+Browsing leaves no trace, so the directory, the guides and the crisis pages need
+no account and no session. Booking creates an anonymous session rather than an
+account, and `claimBooking` moves that booking onto a real account later if the
+person decides they want one. The confirmation screen can cancel the booking it
+just made, so a visitor is not stuck with an appointment they cannot undo, but
+there is no account area listing it afterwards. Contact forms take no auth at
+all: someone reporting a practice that treated them badly should not have to
+identify themselves to do it.
+
+A visitor cannot leave a review. An anonymous session is free to throw away and
+make again, and moderating that is a losing game, so reviews need an account
+somebody had to create.
+
+### Members
+
+A member gets everything above plus their own account area: chosen name and
+pronouns, their upcoming bookings with a cancel button, their reminder
+preference, a CSV of their own data, and account deletion. They can read their
+own review whatever its status, which nobody else outside staff can.
+
+**One review per person per practice.** The review document is named after the
+reviewer's uid, so a second attempt on the same practice is refused by
+`submitReview` rather than quietly replacing the first. One disgruntled visit
+cannot become ten ratings, and an approved review cannot be silently reverted to
+pending by rewriting it.
+
+A member cannot approve their own review, read anyone else's booking, enquiry or
+pending review, edit a listing, award an accreditation badge, or change their own
+role. The rules deny the last one field by field, so an update that touches
+`role` fails even from the owner of the document.
+
+### Staff
+
+Staff get the dashboard at `/admin`, and it is the only place any of this
+happens:
+
+- **Approve or reject reviews** in the moderation queue. Nothing counts toward a
+  practice's rating until a staff member decides on it.
+- **See the data**: bookings per week, demand by service, and how each listing
+  earned its place in the directory, all over live Firestore data.
+- **Export CSV** from all three tables, respecting whatever filters and
+  reporting period are on screen.
+- **Track every enquiry** submitted through any form on the site, across all
+  eight topics, in one queue.
+- **Cancel any booking**, which is what happens when somebody rings up instead
+  of doing it themselves, and **assign roles** by email address.
+
+**Staff cannot leave reviews.** `submitReview` refuses an admin token and the
+review form on a listing says so instead of rendering. Staff are the ones who
+approve reviews, so a staff review would be approved by whoever wrote it, and
+the ratings stay community driven. Nor is a rating something staff type in:
+`firestore.rules` denies every client write to a review, whoever is asking, and
+`onReviewWrite` is the only thing that writes `ratingAvg`, `ratingCount` and
+`inclusionBasis`, recomputed from the approved reviews each time one changes.
+
 ## Stack
 
 Vue 3 with the Composition API, Vite, Pinia, Vue Router, Bootstrap 5.
@@ -82,8 +164,9 @@ Resend for email, pdf-lib for the booking confirmation.
 
 ## Running it locally
 
-You need Node 22 or later, a Firebase project on the Blaze plan, and the
-Firebase CLI (`npm install -g firebase-tools`).
+You need Node 22.18 or later (24.12 and up also works), a Firebase project on the
+Blaze plan, and the Firebase CLI (`npm install -g firebase-tools`). The functions
+themselves deploy on the Node 22 runtime.
 
 ### 1. Install
 
@@ -136,7 +219,8 @@ firebase functions:secrets:set RESEND_API_KEY
 
 The key goes to Google Secret Manager and is mounted into the function at
 runtime, so it never appears in the repository, the bundle or an environment
-file. `functions/.env.iris-health-collective` holds the sender address only.
+file. `functions/.env.iris-health-collective` holds the sender address and an
+optional recipient override for testing, and nothing secret.
 
 ### 5. Seed data
 
@@ -167,7 +251,7 @@ deployed callables instead of an emulator, so booking will not work until they
 are up.
 
 ```bash
-npm run test:unit     # 26 unit tests over the shared date and validation logic
+npm run test:unit     # 37 unit tests over the shared slot and validation logic
 npm run build
 firebase deploy --only hosting
 ```
@@ -194,10 +278,12 @@ writes the new one atomically. That is why `firestore.rules` denies every client
 write to `bookings`. Preventing a double booking means reading and writing in
 one operation, and a browser cannot be trusted with either.
 
-**Firestore** holds nine collections. `providers`, `services`, `resources` and
-`events` are readable by anyone. `availability` is public because it holds
-counts and nothing else. `bookings`, `enquiries` and `users` are private, and
-none of them accept a client write.
+**Firestore** holds nine collections. Published `providers`, active `services`,
+`resources` and `events` are readable by anyone. `availability` is public because
+it holds counts and nothing else. `bookings` and `enquiries` are readable by the
+person they belong to and by staff, and accept no client write at all. `users` is
+the one collection a browser writes: you can edit your own profile, but an update
+that touches `role` is denied field by field, so nobody hands themselves a role.
 
 **Derived data is never written by hand.** `onReviewWrite` recomputes a
 provider's rating and inclusion basis from its approved reviews every time one
@@ -207,13 +293,13 @@ changes, always from scratch instead of adjusting a running total.
 
 | Criterion | Where to find it |
 | --- | --- |
-| **A.1** Development stack | Vue 3, Vite, Pinia, Vue Router. Modular structure, 26 unit tests, ESLint and Prettier |
+| **A.1** Development stack | Vue 3, Vite, Pinia, Vue Router. Modular structure, 37 unit tests, ESLint, oxlint and Prettier |
 | **A.2** Responsiveness | Mobile first throughout, 48px touch targets, no horizontal scroll at 320px |
 | **B.1** Validations | Five types in one Zod schema: required and length, format, range, cross-field, and server-side. `src/lib/schemas.js`, `src/composables/useZodForm.js` |
 | **B.2** Dynamic data | Every list is Firestore backed. Directory filters, sorting and search all run over live data |
 | **C.1** Authentication | Email and password, plus password reset, in `src/views/auth/` |
-| **C.2** Role based access | Two roles as custom claims on the token, member and staff. Guarded routes plus `firestore.rules` as the real boundary |
-| **C.3** Rating | Members submit, staff moderate, `onReviewWrite` aggregates on the server. `functions/lib/reviews.js` |
+| **C.2** Role based access | Two roles as custom claims on the token: staff carry `role: 'admin'`, a member is the absence of a claim. Guarded routes plus `firestore.rules` as the real boundary. [Who can do what](#who-can-do-what) |
+| **C.3** Rating | Members submit one review per practice, staff moderate and cannot review, `onReviewWrite` aggregates on the server. `functions/lib/reviews.js` |
 | **C.4** Security | Content Security Policy in enforcing mode, no client writes to sensitive collections, data minimisation on every form |
 | **D.1** External authentication | Firebase Auth with Google sign-in and anonymous sessions that upgrade in place |
 | **D.2** Email | Resend, with a PDF confirmation built by `pdf-lib` and a neutral sender when discreet reminders are on |
@@ -222,7 +308,7 @@ changes, always from scratch instead of adjusting a running total.
 | **E.1** Cloud Functions | Nine functions, callable and Firestore triggered. `functions/index.js` |
 | **E.2** Geolocation | Leaflet with OpenStreetMap, list and map toggle, browser geolocation and a search radius |
 | **E.3** Accessibility | Targets WCAG 2.2 AA. Skip link, route announcements, focus management, `aria-sort` on tables, keyboard operable maps |
-| **E.4** Export | PDF booking confirmation by email, and CSV export from every staff table |
+| **E.4** Export | PDF booking confirmation by email, CSV export from every staff table, and a CSV of their own data for any member |
 | **F.1** Innovation | Four features, below |
 
 ### F.1: the four innovative features
@@ -236,8 +322,11 @@ picker, because its grid was mouse-first and the conflict handling is the part
 being marked.
 
 **2. Staff dashboard.** A separate area behind a role claim, with a review
-moderation queue, an enquiries queue covering seven different forms, a bookings
-table staff can cancel from, and role assignment.
+moderation queue, an enquiries queue that collects every form on the site under
+eight topics (general contact, bookings, events, donations, volunteering, listing
+applications, feedback and complaints), a bookings table staff can cancel from,
+and role assignment. Staff approve reviews and cannot write them, so the ratings
+stay community driven.
 
 **3. Interactive charts.** Chart.js over live Firestore data: bookings per week,
 demand by service, and how each listing earned its place in the directory.

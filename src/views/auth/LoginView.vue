@@ -45,7 +45,9 @@ async function google() {
   try {
     await auth.loginGoogle(form.value.remember)
     router.push(route.query.redirect ?? '/account')
-  } catch {}
+  } catch {
+    // the store holds the message, nothing to do here
+  }
 }
 
 function openReset() {

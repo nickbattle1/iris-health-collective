@@ -313,8 +313,7 @@ const escalation = [
   background: #eaf5f0;
 }
 
-/* the safety bar is sticky and 68px tall, so an anchor jump parks the heading
-   underneath it. this stops the scroll short by the height of the bar plus a
+/*this stops the scroll short by the height of the bar plus a
    gap, which lands you above "Send us a message" rather than past it */
 #enquiry-form {
   scroll-margin-top: 5.5rem;

@@ -23,7 +23,7 @@ import ErrorSummary from '@/components/ui/ErrorSummary.vue'
 Chart.register(ArcElement, BarElement, CategoryScale, LinearScale, Legend, Tooltip)
 
 const store = useAdminStore()
-const { bookingsByWeek, bookingsByService, providersByBasis, providers, loading, error } =
+const { bookingsByWeek, bookingsByService, providersByBasis, providers, error } =
   storeToRefs(store)
 
 const PURPLE = '#522e63'
