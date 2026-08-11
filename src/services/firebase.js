@@ -8,6 +8,8 @@ import { getFunctions } from 'firebase/functions'
 //
 // these keys are public by design and ship in the bundle. the rules are the
 // protection, not hiding the key
+//
+// read https://firebase.google.com/docs/projects/api-keys to confirm it's safe
 
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
